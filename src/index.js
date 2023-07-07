@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import UserSignUpPage from './UserSignUpPage';
+import UserRegisterPage from './UserRegisterPage';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <UserSignUpPage />
+    <UserRegisterPage />
   </React.StrictMode>
 );
 

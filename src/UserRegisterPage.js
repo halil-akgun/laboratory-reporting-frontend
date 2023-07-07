@@ -1,11 +1,14 @@
 import React from "react";
+import axios from "axios";
 
-class UserSignUpPage extends React.Component {
+class UserRegisterPage extends React.Component {
 
     state = {
         name: null,
         surname: null,
-        hospitalID: null,
+        username: null,
+        hospitalIdNumber: null,
+        role: null,
         password: null,
         passwordRepeat: null,
         agreedClicked: false
@@ -46,7 +49,7 @@ class UserSignUpPage extends React.Component {
         // const value = event.target.value;
 
         const { name, value } = event.target;
-        
+
         this.setState({
             [name]: value
         })
@@ -57,7 +60,28 @@ class UserSignUpPage extends React.Component {
         console.log(this.state);
         this.setState({
             agreedClicked: event.target.checked
-        })
+        });
+    };
+
+    onClickRegister = event => {
+        event.preventDefault();
+        // The browser's automatic sending of form content is blocked.
+        // The content should be taken from the state, not the form.
+
+        const { username, name, surname, hospitalIdNumber, password, role } = this.state;
+
+        const body = {
+            // username: username,
+            // If the variable names of key and value are the same, it is sufficient to write one of them.
+            username,
+            name,
+            surname,
+            hospitalIdNumber,
+            password,
+            role
+        };
+
+        axios.post('/admins/save', body)
     }
 
     render() {
@@ -73,8 +97,16 @@ class UserSignUpPage extends React.Component {
                     <input name="surname" onChange={this.onChange} />
                 </div>
                 <div>
+                    <label>Username</label>
+                    <input name="username" onChange={this.onChange} />
+                </div>
+                <div>
                     <label>Hospital ID Number</label>
-                    <input name="hospitalID" onChange={this.onChange} />
+                    <input name="hospitalIdNumber" onChange={this.onChange} />
+                </div>
+                <div>
+                    <label>User Role</label>
+                    <input name="role" onChange={this.onChange} />
                 </div>
                 <div>
                     <label>Password</label>
@@ -86,10 +118,12 @@ class UserSignUpPage extends React.Component {
                 </div>
                 <input type="checkbox" onChange={this.onChangeAgree} /> Agreed
                 <br />
-                <button disabled={!this.state.agreedClicked}>Sign Up</button>
+                <button
+                    onClick={this.onClickRegister}
+                    disabled={!this.state.agreedClicked}>Sign Up</button>
             </form>
         )
     }
 }
 
-export default UserSignUpPage;
+export default UserRegisterPage;
