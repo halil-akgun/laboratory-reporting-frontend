@@ -24,6 +24,14 @@ class UserRegisterPage extends React.Component {
         const errors = { ...this.state.errors }
         errors[name] = undefined
 
+        if (name === "password" || name === "passwordRepeat") {
+            if (name === "password" && value !== this.state.passwordRepeat) {
+                errors.passwordRepeat = "Password mismatch.";
+            } else if (name === "passwordRepeat" && value !== this.state.password) {
+                errors.passwordRepeat = "Password mismatch.";
+            } else errors.passwordRepeat = undefined;
+        }
+
         this.setState({
             [name]: value,
             errors // short version of errors: errors
@@ -70,7 +78,7 @@ class UserRegisterPage extends React.Component {
 
     render() {
         const { pendingApiCall, errors } = this.state;
-        const { username, name, surname, hospitalIdNumber, password } = errors;
+        const { username, name, surname, hospitalIdNumber, password, passwordRepeat } = errors;
 
         return (
             <div className="container">
@@ -82,7 +90,7 @@ class UserRegisterPage extends React.Component {
                     <Input name="username" label="Username" error={username} onChange={this.onChange} />
                     <Input name="hospitalIdNumber" label="Hospital ID Number" error={hospitalIdNumber} onChange={this.onChange} />
                     <Input name="password" label="Password" error={password} onChange={this.onChange} type="password" />
-                    <Input name="password" label="Password Repeat" error={password} onChange={this.onChange} type="password" />
+                    <Input name="passwordRepeat" label="Password Repeat" error={passwordRepeat} onChange={this.onChange} type="password" />
 
                     <input type="checkbox" onChange={this.onChangeAgree} /> I accept the accuracy of the above information.
                     <br />
@@ -90,7 +98,7 @@ class UserRegisterPage extends React.Component {
                         <button
                             className="btn btn-primary"
                             onClick={this.onClickRegister}
-                            disabled={!this.state.agreedClicked || pendingApiCall}>
+                            disabled={!this.state.agreedClicked || pendingApiCall || passwordRepeat !== undefined}>
                             {pendingApiCall && <span className="spinner-border spinner-border-sm"></span>}
                             Register
                         </button>
