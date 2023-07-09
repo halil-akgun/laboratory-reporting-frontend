@@ -16,36 +16,6 @@ class UserRegisterPage extends React.Component {
         errors: {}
     };
 
-    // onChangeName = (event) => {
-    //     this.setState({
-    //         name: event.target.value
-    //     });
-    // };
-
-    // onChangeSurname = (event) => {
-    //     this.setState({
-    //         surname: event.target.value
-    //     });
-    // };
-
-    // onChangeSurHospitalID = (event) => {
-    //     this.setState({
-    //         hospitalID: event.target.value
-    //     });
-    // };
-
-    // onChangeSurPassword = (event) => {
-    //     this.setState({
-    //         password: event.target.value
-    //     });
-    // };
-
-    // onChangeSurPasswordRepeat = (event) => {
-    //     this.setState({
-    //         passwordRepeat: event.target.value
-    //     });
-    // };
-
     onChange = event => {
         // const name = event.target.name;
         // const value = event.target.value;
@@ -56,7 +26,7 @@ class UserRegisterPage extends React.Component {
 
         this.setState({
             [name]: value,
-            errors
+            errors // short version of errors: errors
         })
     }
 
