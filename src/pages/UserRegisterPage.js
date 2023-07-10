@@ -1,6 +1,7 @@
 import React from "react";
-import { register } from '../api/apiCalls';
+import { register, changeLanguage } from '../api/apiCalls';
 import Input from "../component/input";
+import { WithTranslation, withTranslation } from "react-i18next";
 
 class UserRegisterPage extends React.Component {
 
@@ -20,15 +21,16 @@ class UserRegisterPage extends React.Component {
         // const name = event.target.name;
         // const value = event.target.value;
 
+        const { t } = this.props;
         const { name, value } = event.target;
         const errors = { ...this.state.errors }
         errors[name] = undefined
 
         if (name === "password" || name === "passwordRepeat") {
             if (name === "password" && value !== this.state.passwordRepeat) {
-                errors.passwordRepeat = "Password mismatch.";
+                errors.passwordRepeat = t("Password mismatch.");
             } else if (name === "passwordRepeat" && value !== this.state.password) {
-                errors.passwordRepeat = "Password mismatch.";
+                errors.passwordRepeat = t("Password mismatch.");
             } else errors.passwordRepeat = undefined;
         }
 
@@ -76,23 +78,35 @@ class UserRegisterPage extends React.Component {
             });
     }
 
+    onChangeLanguage = language => {
+        const { i18n } = this.props;
+        i18n.changeLanguage(language);
+        changeLanguage(language);
+    }
+
     render() {
         const { pendingApiCall, errors } = this.state;
         const { username, name, surname, hospitalIdNumber, password, passwordRepeat } = errors;
+        const { t } = this.props;
 
         return (
             <div className="container">
+                <div style={{ textAlign: "right" }}>
+                    <img src="https://flagsapi.com/TR/flat/24.png" alt="tr_flag" onClick={() => this.onChangeLanguage('tr')} style={{ cursor: 'pointer' }}></img>
+                    <img src="https://flagsapi.com/US/flat/24.png" alt="us_flag" onClick={() => this.onChangeLanguage('en')} style={{ cursor: 'pointer' }}></img>
+                </div>
                 <form>
-                    <h1 className="text-center">Register</h1>
+                    <h1 className="text-center">{t('Register')}</h1>
 
-                    <Input name="name" label="Name" error={name} onChange={this.onChange} />
-                    <Input name="surname" label="Surname" error={surname} onChange={this.onChange} />
-                    <Input name="username" label="Username" error={username} onChange={this.onChange} />
-                    <Input name="hospitalIdNumber" label="Hospital ID Number" error={hospitalIdNumber} onChange={this.onChange} />
-                    <Input name="password" label="Password" error={password} onChange={this.onChange} type="password" />
-                    <Input name="passwordRepeat" label="Password Repeat" error={passwordRepeat} onChange={this.onChange} type="password" />
+                    <Input name="name" label={t('Name')} error={name} onChange={this.onChange} />
+                    <Input name="surname" label={t('Surname')} error={surname} onChange={this.onChange} />
+                    <Input name="username" label={t('Username')} error={username} onChange={this.onChange} />
+                    <Input name="hospitalIdNumber" label={t('Hospital ID Number')} error={hospitalIdNumber} onChange={this.onChange} />
+                    <Input name="password" label={t('Password')} error={password} onChange={this.onChange} type="password" />
+                    <Input name="passwordRepeat" label={t('Password Repeat')} error={passwordRepeat} onChange={this.onChange} type="password" />
 
-                    <input type="checkbox" onChange={this.onChangeAgree} /> I accept the accuracy of the above information.
+                    <input type="checkbox" onChange={this.onChangeAgree} /> {t('I accept the accuracy of the above information.')}
+                    <br />
                     <br />
                     <div className="text-center">
                         <button
@@ -100,7 +114,7 @@ class UserRegisterPage extends React.Component {
                             onClick={this.onClickRegister}
                             disabled={!this.state.agreedClicked || pendingApiCall || passwordRepeat !== undefined}>
                             {pendingApiCall && <span className="spinner-border spinner-border-sm"></span>}
-                            Register
+                            {t('Register')}
                         </button>
                     </div>
                 </form>
@@ -109,4 +123,7 @@ class UserRegisterPage extends React.Component {
     }
 }
 
-export default UserRegisterPage;
+
+const UserRegisterPageWithTranslation = withTranslation()(UserRegisterPage);
+
+export default UserRegisterPageWithTranslation;
