@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Input from '../component/input';
 import { WithTranslation, withTranslation } from "react-i18next";
+import { login } from '../api/apiCalls';
 
 class LoginPage extends Component {
 
@@ -16,6 +17,15 @@ class LoginPage extends Component {
         })
     }
 
+    onClickLogin = event => {
+        event.preventDefault();
+        const { username, password } = this.state;
+        const creds = {
+            username,
+            password
+        }
+        login(creds)
+    }
 
     render() {
         const { t } = this.props;
@@ -29,6 +39,7 @@ class LoginPage extends Component {
                     <br />
                     <div className="text-center">
                         <button
+                            onClick={this.onClickLogin}
                             className="btn btn-primary">
                             {t('Login')}
                         </button>

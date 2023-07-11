@@ -7,3 +7,7 @@ export const register = (body) => {
 export const changeLanguage = language => {
     axios.defaults.headers['Accept-Language'] = language;
 }
+
+export const login = creds => {
+    return axios.post('/auth', {}, { auth: creds });
+}
