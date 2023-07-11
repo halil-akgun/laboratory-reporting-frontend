@@ -9,11 +9,12 @@ i18n.use(initReactI18next).init({
                 'Password mismatch.': 'Password mismatch.',
                 'Name': 'Name',
                 'Surname': 'Surname',
-                'Uername': 'Uername',
+                'Username': 'Username',
                 'Password': 'Password',
                 'Password Repeat': 'Password Repeat',
                 'Hospital ID Number': 'Hospital ID Number',
-                'I accept the accuracy of the above information.': 'I accept the accuracy of the above information.'
+                'I accept the accuracy of the above information.': 'I accept the accuracy of the above information.',
+                'Login': 'Login'
             }
         },
         tr: {
@@ -22,11 +23,12 @@ i18n.use(initReactI18next).init({
                 'Password mismatch.': 'Aynı şifreyi giriniz.',
                 'Name': 'İsim',
                 'Surname': 'Soyisim',
-                'Uername': 'Kullanıcı İsmi',
+                'Username': 'Kullanıcı İsmi',
                 'Password': 'Şifre',
                 'Password Repeat': 'Şifreyi Tekrarlayın',
                 'Hospital ID Number': 'Hastane ID Numarası',
-                'I accept the accuracy of the above information.': 'Yukarıdaki bilgilerin doğruluğunu kabul ediyorum.'
+                'I accept the accuracy of the above information.': 'Yukarıdaki bilgilerin doğruluğunu kabul ediyorum.',
+                'Login': 'Giriş'
             }
         }
     },

@@ -1,7 +1,7 @@
 import React from "react";
-import { register, changeLanguage } from '../api/apiCalls';
+import { register } from '../api/apiCalls';
 import Input from "../component/input";
-import { WithTranslation, withTranslation } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class UserRegisterPage extends React.Component {
 
@@ -78,11 +78,6 @@ class UserRegisterPage extends React.Component {
             });
     }
 
-    onChangeLanguage = language => {
-        const { i18n } = this.props;
-        i18n.changeLanguage(language);
-        changeLanguage(language);
-    }
 
     render() {
         const { pendingApiCall, errors } = this.state;
@@ -91,10 +86,6 @@ class UserRegisterPage extends React.Component {
 
         return (
             <div className="container">
-                <div style={{ textAlign: "right" }}>
-                    <img src="https://flagsapi.com/TR/flat/24.png" alt="tr_flag" onClick={() => this.onChangeLanguage('tr')} style={{ cursor: 'pointer' }}></img>
-                    <img src="https://flagsapi.com/US/flat/24.png" alt="us_flag" onClick={() => this.onChangeLanguage('en')} style={{ cursor: 'pointer' }}></img>
-                </div>
                 <form>
                     <h1 className="text-center">{t('Register')}</h1>
 
