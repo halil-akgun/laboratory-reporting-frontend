@@ -3,7 +3,11 @@ import UserRegisterPage from '../pages/UserRegisterPage';
 import LoginPage from '../pages/LoginPage';
 import LanguageSelector from '../component/LanguageSelector';
 import HomePage from "../pages/HomePage";
-import { HashRouter, Route, Redirect, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import TopBar from "../component/TopBar";
+
+/* alias is used in import. Thus, there is no need to make changes
+in the codes below in HashRouter-BrowserRouter transitions. */
 
 /* HashRouter was used instead of BrowserRouter.
 BrowserRouter communicates with the backend on every page load. */
@@ -11,7 +15,8 @@ BrowserRouter communicates with the backend on every page load. */
 function App() {
   return (
     <div>
-      <HashRouter>
+      <Router>
+        <TopBar />
         <LanguageSelector />
         <Switch>
           <Route exact path="/" component={HomePage} />
@@ -19,7 +24,7 @@ function App() {
           <Route path="/login" component={LoginPage} />
           <Redirect to='/' />
         </Switch>
-      </HashRouter>
+      </Router>
     </div>
   );
 }
