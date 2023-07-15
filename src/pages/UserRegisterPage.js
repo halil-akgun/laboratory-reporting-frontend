@@ -2,6 +2,8 @@ import React from "react";
 import { register } from '../api/apiCalls';
 import Input from "../component/input";
 import { withTranslation } from "react-i18next";
+import ButtonWithProgress from '../component/ButtonWithProgress';
+import { withApiProgress } from "../shared/ApiProgress";
 
 class UserRegisterPage extends React.Component {
 
@@ -13,7 +15,6 @@ class UserRegisterPage extends React.Component {
         password: null,
         passwordRepeat: null,
         agreedClicked: false,
-        pendingApiCall: false,
         errors: {}
     };
 
@@ -64,25 +65,21 @@ class UserRegisterPage extends React.Component {
             password
         };
 
-        this.setState({ pendingApiCall: true });
-
         register(body)
             .then(response => {
-                this.setState({ pendingApiCall: false });
             }) // then/catch is used because axios.post works asynchronously. "await" could also be used.
             .catch(error => {
-                if (error.response.data.errors) {
-                    this.setState({ errors: error.response.data.errors })
+                if (error.response.data.validationErrors) {
+                    this.setState({ errors: error.response.data.validationErrors })
                 }
-                this.setState({ pendingApiCall: false });
             });
     }
 
 
     render() {
-        const { pendingApiCall, errors } = this.state;
+        const { errors, agreedClicked } = this.state;
         const { username, name, surname, hospitalIdNumber, password, passwordRepeat } = errors;
-        const { t } = this.props;
+        const { pendingApiCall, t } = this.props;
 
         return (
             <div className="container">
@@ -100,13 +97,12 @@ class UserRegisterPage extends React.Component {
                     <br />
                     <br />
                     <div className="text-center">
-                        <button
-                            className="btn btn-primary"
+                        <ButtonWithProgress
                             onClick={this.onClickRegister}
-                            disabled={!this.state.agreedClicked || pendingApiCall || passwordRepeat !== undefined}>
-                            {pendingApiCall && <span className="spinner-border spinner-border-sm"></span>}
-                            {t('Register')}
-                        </button>
+                            disabled={!agreedClicked || pendingApiCall || passwordRepeat !== undefined}
+                            pendingApiCall={pendingApiCall}
+                            text={t('Register')}
+                        />
                     </div>
                 </form>
             </div>
@@ -115,6 +111,7 @@ class UserRegisterPage extends React.Component {
 }
 
 
-const UserRegisterPageWithTranslation = withTranslation()(UserRegisterPage);
+const UserRegisterPageWithApiProgress = withApiProgress(UserRegisterPage, "/assistants/save");
+const UserRegisterPageWithTranslation = withTranslation()(UserRegisterPageWithApiProgress);
 
 export default UserRegisterPageWithTranslation;
