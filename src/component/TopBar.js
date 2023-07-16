@@ -8,29 +8,51 @@ If we will use BrowserRouter in the future,
 we will not have to update the links. */
 
 class TopBar extends Component {
+
     render() {
-        const { t } = this.props;
+        const { t, isLoggedIn, username, onLogoutSucces } = this.props;
+
+        let links = (
+            <ul className="navbar-nav ms-auto mb-auto">
+                <li>
+                    <Link className="nav-link" to="/login">
+                        {t('Login')}
+                    </Link>
+                </li>
+                <li>
+                    <Link className="nav-link" to="/register">
+                        {t('Register')}
+                    </Link>
+                </li>
+            </ul>
+        )
+
+        if (isLoggedIn) {
+            links = (
+                <ul className="navbar-nav ms-auto mb-auto">
+                    <li>
+                        <Link className="nav-link" to={`/user/${username}`}>
+                            {username}
+                        </Link>
+                    </li>
+                    <li>
+                        <Link className="nav-link" to="/">
+                            <span onClick={onLogoutSucces}>{t('Logout')}</span>
+                        </Link>
+                    </li>
+                </ul>
+            )
+        }
 
         return (
             <div className="shadow-sm bg-light mb-2">
                 <nav className="navbar navbar-light container navbar-expand">
                     <Link className="navbar-brand" to="/">
                         {/* <a className="navbar-brand" href="#/"> */}
-                        <img src={logo} width='50' alt='logo' />
+                        <img src={logo} width='35' alt='logo' />
                         LABORATORY REPORTING APPLICATION
                     </Link>
-                    <ul className="navbar-nav ms-auto">
-                        <li>
-                            <Link className="nav-link" to="/login">
-                                {t('Login')}
-                            </Link>
-                        </li>
-                        <li>
-                            <Link className="nav-link" to="/register">
-                                {t('Register')}
-                            </Link>
-                        </li>
-                    </ul>
+                    {links}
                 </nav>
             </div>
         );

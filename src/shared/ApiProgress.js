@@ -19,11 +19,11 @@ export function withApiProgress(WrappedComponent, apiPath) {
         componentDidMount() {
             /* This code is used to monitor the status of API requests
             made using Axios and update the UI accordingly. */
-            axios.interceptors.request.use(request => {
+            this.requestInterceptor = axios.interceptors.request.use(request => {
                 this.updateApiCallFor(request.url, true);
                 return request;
             }); // runs when a request is sent
-            axios.interceptors.response.use(response => {
+            this.reesponseInterceptor = axios.interceptors.response.use(response => {
                 this.updateApiCallFor(response.config.url, false);
                 return response;
             }, // runs when a response is received
@@ -31,6 +31,11 @@ export function withApiProgress(WrappedComponent, apiPath) {
                     this.updateApiCallFor(error.config.url, false);
                     throw error;
                 }); // runs when an error is received
+        }
+
+        componentWillUnmount() {
+            axios.interceptors.request.eject(this.requestInterceptor);
+            axios.interceptors.request.eject(this.reesponseInterceptor);
         }
 
         updateApiCallFor = (url, isProgress) => {

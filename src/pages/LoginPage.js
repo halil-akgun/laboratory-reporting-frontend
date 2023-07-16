@@ -4,6 +4,7 @@ import { WithTranslation, withTranslation } from "react-i18next";
 import { login } from '../api/apiCalls';
 import ButtonWithProgress from '../component/ButtonWithProgress';
 import { withApiProgress } from '../shared/ApiProgress';
+import { use } from 'i18next';
 
 class LoginPage extends Component {
 
@@ -24,15 +25,21 @@ class LoginPage extends Component {
     onClickLogin = async event => {
         event.preventDefault();
         const { username, password } = this.state;
+        const { onLoginSucces } = this.props;
         const creds = {
             username,
             password
         }
+
+        const { push } = this.props.history;
+
         this.setState({
             error: null
         })
         try {
             await login(creds)
+            push('/'); // redirect after successful login
+            onLoginSucces(username);
         } catch (apiError) {
             this.setState({
                 error: apiError.response.data.message

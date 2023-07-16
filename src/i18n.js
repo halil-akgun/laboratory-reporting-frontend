@@ -14,7 +14,8 @@ i18n.use(initReactI18next).init({
                 'Password Repeat': 'Password Repeat',
                 'Hospital ID Number': 'Hospital ID Number',
                 'I accept the accuracy of the above information.': 'I accept the accuracy of the above information.',
-                'Login': 'Login'
+                'Login': 'Login',
+                'Logout': 'Logout'
             }
         },
         tr: {
@@ -28,7 +29,8 @@ i18n.use(initReactI18next).init({
                 'Password Repeat': 'Şifreyi Tekrarlayın',
                 'Hospital ID Number': 'Hastane ID Numarası',
                 'I accept the accuracy of the above information.': 'Yukarıdaki bilgilerin doğruluğunu kabul ediyorum.',
-                'Login': 'Giriş'
+                'Login': 'Giriş',
+                'Logout': 'Çıkış'
             }
         }
     },
