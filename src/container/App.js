@@ -6,6 +6,7 @@ import HomePage from "../pages/HomePage";
 import { HashRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import TopBar from "../component/TopBar";
 import UserPage from "../pages/UserPage";
+import { connect } from "react-redux";
 
 /* alias is used in import. Thus, there is no need to make changes
 in the codes below in HashRouter-BrowserRouter transitions. */
@@ -15,32 +16,14 @@ BrowserRouter communicates with the backend on every page load. */
 
 class App extends React.Component {
 
-  state = {
-    isLoggedIn: false,
-    username: undefined
-  }
-
-  onLoginSucces = (username) => {
-    this.setState({
-      username,
-      isLoggedIn: true
-    })
-  }
-
-  onLogoutSucces = () => {
-    this.setState({
-      username: undefined,
-      isLoggedIn: false
-    })
-  }
-
   render() {
-    const { isLoggedIn, username } = this.state;
+    const { isLoggedIn } = this.props;
 
     return (
       <div>
         <Router>
-          <TopBar isLoggedIn={isLoggedIn} onLogoutSucces={this.onLogoutSucces} username={username} />
+          {/* <TopBar isLoggedIn={isLoggedIn} onLogoutSucces={this.onLogoutSucces} username={username} /> */}
+          <TopBar />
           <LanguageSelector />
           <Switch>
             <Route exact path="/" component={HomePage} />
@@ -58,4 +41,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = (store) => { // store: state in redux(loggedInState)
+  return {
+    isLoggedIn: store.isLoggedIn
+  };
+};
+
+export default connect(mapStateToProps)(App);

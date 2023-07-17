@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
+import { connect } from 'react-redux';
+import { logoutSuccess } from '../redux/authActions';
 
 /* Link: With 'Link' we don't have to use '#' in links.
 If we will use BrowserRouter in the future,
@@ -10,7 +12,7 @@ we will not have to update the links. */
 class TopBar extends Component {
 
     render() {
-        const { t, isLoggedIn, username, onLogoutSucces } = this.props;
+        const { t, isLoggedIn, username, onLogoutSuccess } = this.props;
 
         let links = (
             <ul className="navbar-nav ms-auto mb-auto">
@@ -37,7 +39,7 @@ class TopBar extends Component {
                     </li>
                     <li>
                         <Link className="nav-link" to="/">
-                            <span onClick={onLogoutSucces}>{t('Logout')}</span>
+                            <span onClick={onLogoutSuccess}>{t('Logout')}</span>
                         </Link>
                     </li>
                 </ul>
@@ -59,5 +61,19 @@ class TopBar extends Component {
     }
 }
 
+const TopBarWithTranslation = withTranslation()(TopBar);
 
-export default withTranslation()(TopBar);
+const mapStateToProps = (store) => { // store: state in redux(loggedInState)
+    return {
+        isLoggedIn: store.isLoggedIn,
+        username: store.username
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogoutSuccess: () => dispatch(logoutSuccess())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopBarWithTranslation);
