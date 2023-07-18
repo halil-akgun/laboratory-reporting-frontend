@@ -46,10 +46,8 @@ export function withApiProgress(WrappedComponent, apiPath) {
 
 
         render() {
-            const { children } = this.props;
-            const { pendingApiCall } = this.state;
-
-            return <WrappedComponent pendingApiCall={pendingApiCall} {...this.props} />
+            const pendingApiCall = this.state.pendingApiCall || this.props.pendingApiCall;
+            return <WrappedComponent {...this.props} pendingApiCall={pendingApiCall} />
             // {...this.props} = allows properties to pass to other layers
         }
     }

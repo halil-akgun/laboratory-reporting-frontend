@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Input from '../component/input';
+import Input from '../component/Input';
 import { withTranslation } from "react-i18next";
 import ButtonWithProgress from '../component/ButtonWithProgress';
 import { withApiProgress } from '../shared/ApiProgress';
@@ -54,7 +54,7 @@ class LoginPage extends Component {
 
         return (
             <div className='container'>
-                <frorm>
+                <form>
                     <h1 className="text-center">{t('Login')}</h1>
                     <Input label={t('Username')} name="username" onChange={this.onChange} />
                     <Input label={t('Password')} name="password" type="password" onChange={this.onChange} />
@@ -68,7 +68,7 @@ class LoginPage extends Component {
                             text={t('Login')}
                         />
                     </div>
-                </frorm>
+                </form>
             </div>
         );
     }

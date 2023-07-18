@@ -1,9 +1,11 @@
 import React from "react";
 import { register } from '../api/apiCalls';
-import Input from "../component/input";
+import Input from "../component/Input";
 import { withTranslation } from "react-i18next";
 import ButtonWithProgress from '../component/ButtonWithProgress';
 import { withApiProgress } from "../shared/ApiProgress";
+import { connect } from "react-redux";
+import { registerHandler } from "../redux/authActions";
 
 class UserRegisterPage extends React.Component {
 
@@ -48,11 +50,13 @@ class UserRegisterPage extends React.Component {
         });
     };
 
-    onClickRegister = event => {
+    onClickRegister = async event => {
         event.preventDefault();
         // The browser's automatic sending of form content is blocked.
         // The content should be taken from the state, not the form.
 
+        const { history, dispatch } = this.props;
+        const { push } = history;
         const { username, name, surname, hospitalIdNumber, password } = this.state;
 
         const body = {
@@ -65,14 +69,14 @@ class UserRegisterPage extends React.Component {
             password
         };
 
-        register(body)
-            .then(response => {
-            }) // then/catch is used because axios.post works asynchronously. "await" could also be used.
-            .catch(error => {
-                if (error.response.data.validationErrors) {
-                    this.setState({ errors: error.response.data.validationErrors })
-                }
-            });
+        try {
+            await dispatch(registerHandler(body));
+            push('/');
+        } catch (error) {
+            if (error.response.data.validationErrors) {
+                this.setState({ errors: error.response.data.validationErrors })
+            }
+        } // "await" is used because axios.post works asynchronously. "then/catch" could also be used.
     }
 
 
@@ -111,7 +115,8 @@ class UserRegisterPage extends React.Component {
 }
 
 
-const UserRegisterPageWithApiProgress = withApiProgress(UserRegisterPage, "/assistants/save");
-const UserRegisterPageWithTranslation = withTranslation()(UserRegisterPageWithApiProgress);
+const UserRegisterPageWithApiProgressForRegisterRequest = withApiProgress(UserRegisterPage, "/assistants/save");
+const UserRegisterPageWithApiProgressForLoginRequest = withApiProgress(UserRegisterPageWithApiProgressForRegisterRequest, "/auth");
+const UserRegisterPageWithTranslation = withTranslation()(UserRegisterPageWithApiProgressForLoginRequest);
 
-export default UserRegisterPageWithTranslation;
+export default connect()(UserRegisterPageWithTranslation);
