@@ -1,10 +1,14 @@
 import React from 'react';
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { useParams } from 'react-router-dom';
 
 const UserPage = props => {
-    const pathUsername = props.match.params.username;
+
+    const { username: loggedInUsername } = useSelector(store => ({ username: store.username }))
+    const routeParams = useParams();
+    const pathUsername = routeParams.username;
     let message = 'we cannot edit';
-    if (pathUsername === props.logedInUsername) {
+    if (pathUsername === loggedInUsername) {
         message = 'we can edit';
     }
 
@@ -15,10 +19,4 @@ const UserPage = props => {
     );
 };
 
-const mapStateToProps = (store) => { // store: state in redux(loggedInState)
-    return {
-        logedInUsername: store.username
-    };
-};
-
-export default connect(mapStateToProps)(UserPage);
+export default UserPage;
