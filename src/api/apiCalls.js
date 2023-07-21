@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const register = (body) => {
-    return axios.post('/assistants/save', body);
+    return axios.post('/users/save', body);
 } // export: to make it accessible from outside
 
 export const changeLanguage = language => {
@@ -10,4 +10,8 @@ export const changeLanguage = language => {
 
 export const login = creds => {
     return axios.post('/auth', {}, { auth: creds });
+}
+
+export const getUsers = () => {
+    return axios.get('/users/getUsers');
 }

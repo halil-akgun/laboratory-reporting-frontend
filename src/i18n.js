@@ -15,7 +15,8 @@ i18n.use(initReactI18next).init({
                 'Hospital ID Number': 'Hospital ID Number',
                 'I accept the accuracy of the above information.': 'I accept the accuracy of the above information.',
                 'Login': 'Login',
-                'Logout': 'Logout'
+                'Logout': 'Logout',
+                'Users': 'Users'
             }
         },
         tr: {
@@ -30,7 +31,8 @@ i18n.use(initReactI18next).init({
                 'Hospital ID Number': 'Hastane ID Numarası',
                 'I accept the accuracy of the above information.': 'Yukarıdaki bilgilerin doğruluğunu kabul ediyorum.',
                 'Login': 'Giriş',
-                'Logout': 'Çıkış'
+                'Logout': 'Çıkış',
+                'Users': 'Kullanıcılar'
             }
         }
     },

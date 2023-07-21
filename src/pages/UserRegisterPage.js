@@ -65,7 +65,7 @@ const UserRegisterPage = props => {
     const { t } = useTranslation();
 
     const { username: usernameError, name: nameError, surname: surnameError, hospitalIdNumber: hospitalIdNumberError, password: passwordError } = errors;
-    const pendingApiCallRegister = useApiProgress("/assistants/save");
+    const pendingApiCallRegister = useApiProgress("/users/save");
     const pendingApiCallLogin = useApiProgress("/auth");
 
     const pendingApiCall = pendingApiCallLogin || pendingApiCallRegister;
