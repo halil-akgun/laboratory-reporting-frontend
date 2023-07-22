@@ -12,6 +12,6 @@ export const login = creds => {
     return axios.post('/auth', {}, { auth: creds });
 }
 
-export const getUsers = () => {
-    return axios.get('/users/getUsers');
+export const getUsers = (page = 0, size = 5) => {
+    return axios.get(`/users/getUsers?page=${page}&size=${size}`);
 }

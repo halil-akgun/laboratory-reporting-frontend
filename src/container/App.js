@@ -32,7 +32,7 @@ const App = () => {
           {/* login page will not open if logged in */}
           {!isLoggedIn && <Route path="/register" component={UserRegisterPage} />}
           {/* register page will not open if logged in */}
-          <Route path="/user/:username" component={UserPage} />
+          <Route path="/users/:username" component={UserPage} />
           <Redirect to='/' />
         </Switch>
       </Router>

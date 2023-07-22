@@ -43,7 +43,7 @@ const TopBar = (props) => {
         links = (
             <ul className="navbar-nav ms-auto mb-auto">
                 <li>
-                    <Link className="nav-link" to={`/user/${username}`}>
+                    <Link className="nav-link" to={`/users/${username}`}>
                         {username}
                     </Link>
                 </li>

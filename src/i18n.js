@@ -16,6 +16,8 @@ i18n.use(initReactI18next).init({
                 'I accept the accuracy of the above information.': 'I accept the accuracy of the above information.',
                 'Login': 'Login',
                 'Logout': 'Logout',
+                'Next': 'Next >',
+                'Previous': '< Previous',
                 'Users': 'Users'
             }
         },
@@ -32,6 +34,8 @@ i18n.use(initReactI18next).init({
                 'I accept the accuracy of the above information.': 'Yukarıdaki bilgilerin doğruluğunu kabul ediyorum.',
                 'Login': 'Giriş',
                 'Logout': 'Çıkış',
+                'Next': 'Sonraki >',
+                'Previous': '< Önceki',
                 'Users': 'Kullanıcılar'
             }
         }
