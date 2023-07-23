@@ -2,14 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { getUsers } from '../api/apiCalls';
 import { useTranslation } from 'react-i18next';
 import UserListItem from './UserListItem';
+import { useSelector } from 'react-redux';
 
 const UserList = () => {
 
     const [page, setPage] = useState({
         content: [],
-        size: 3,
+        size: 5,
         number: 0
     });
+
+    const { username, password } = useSelector(store => ({
+        username: store.username,
+        password: store.password
+    }))
 
     useEffect(() => {
         loadUsers();
@@ -25,8 +31,8 @@ const UserList = () => {
         loadUsers(previousPage);
     };
 
-    const loadUsers = page => {
-        getUsers(page).then(response => {
+    const loadUsers = (pageNumber) => {
+        getUsers(pageNumber, page.size, username, password).then(response => {
             setPage(response.data);
         });
     };
@@ -55,3 +61,4 @@ const UserList = () => {
 }
 
 export default UserList;
+
