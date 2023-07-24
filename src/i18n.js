@@ -18,6 +18,8 @@ i18n.use(initReactI18next).init({
                 'Logout': 'Logout',
                 'Next': 'Next >',
                 'Previous': '< Previous',
+                'Load Failure': 'Load Failure',
+                'User not found.': 'User not found.',
                 'Users': 'Users'
             }
         },
@@ -36,6 +38,8 @@ i18n.use(initReactI18next).init({
                 'Logout': 'Çıkış',
                 'Next': 'Sonraki >',
                 'Previous': '< Önceki',
+                'Load Failure': 'Liste Alınamadı',
+                'User not found.': 'Kullanıcı bulunamadı.',
                 'Users': 'Kullanıcılar'
             }
         }

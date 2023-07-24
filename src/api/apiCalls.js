@@ -13,7 +13,7 @@ export const login = creds => {
 }
 
 export const getUsers = (page = 0, size = 5, username, password) => {
-    return axios.get(`/users/getUsers?page=${page}&size=${size}`, { auth: { username, password } });
+    return axios.get(`/users/getAllUsers?page=${page}&size=${size}`, { auth: { username, password } });
 }
 
 export const setAuthorizationHeader = ({ username, password, isLoggedIn }) => {
@@ -21,4 +21,8 @@ export const setAuthorizationHeader = ({ username, password, isLoggedIn }) => {
         const authorizationHeaderValue = `Basic ${btoa(username + ':' + password)}`;
         axios.defaults.headers['Authorization'] = authorizationHeaderValue;
     } else delete axios.defaults.headers['Authorization'];
+}
+
+export const getUser = username => {
+    return axios.get(`/users/${username}`);
 }
