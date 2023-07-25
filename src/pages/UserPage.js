@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import ProfileCard from '../component/ProfileCard';
+import ProfileCard from '../components/ProfileCard';
 import { getUser } from '../api/apiCalls'
 import { useTranslation } from 'react-i18next';
-
+import { useApiProgress } from '../shared/ApiProgress';
+import Spinner from '../components/Spinner';
 
 const UserPage = props => {
 
@@ -11,6 +12,8 @@ const UserPage = props => {
 
     const { username } = props.match.params;
     const { t } = useTranslation();
+
+    const pendingApiCall = useApiProgress('/users/' + username);
 
 
     useEffect(() => {
@@ -26,6 +29,12 @@ const UserPage = props => {
         loadUser();
     }, [username]);
     /* useEffect runs whenever username is changed */
+
+    if (pendingApiCall) {
+        return (
+            <Spinner />
+        )
+    }
 
     if (notFound) {
         return (

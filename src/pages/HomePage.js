@@ -1,5 +1,5 @@
 import React from 'react';
-import UserList from '../component/UserList';
+import UserList from '../components/UserList';
 
 const HomePage = () => {
     return (

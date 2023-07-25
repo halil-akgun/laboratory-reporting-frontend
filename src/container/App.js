@@ -1,10 +1,10 @@
 import React from "react";
 import UserRegisterPage from '../pages/UserRegisterPage';
 import LoginPage from '../pages/LoginPage';
-import LanguageSelector from '../component/LanguageSelector';
+import LanguageSelector from '../components/LanguageSelector';
 import HomePage from "../pages/HomePage";
 import { HashRouter as Router, Route, Redirect, Switch } from "react-router-dom";
-import TopBar from "../component/TopBar";
+import TopBar from "../components/TopBar";
 import UserPage from "../pages/UserPage";
 import { useSelector } from "react-redux";
 

@@ -1,25 +1,22 @@
 import React from 'react';
-import defaultPicture from '../assets/profile.png'
 import { Link } from 'react-router-dom';
+import ProfileImageWithDefault from './ProfileImageWithDefault';
 
 const UserListItem = (props) => {
 
     const { user } = props;
     const { username, name, surname, image } = user;
-    let imageSource = defaultPicture;
-    if (image) {
-        imageSource = image;
-    }
 
     return (
         <Link to={`/users/${username}`} className='list-group-item list-group-item-action' >
             <table>
                 <tr>
                     <td>
-                        <img
+                        <ProfileImageWithDefault
                             className='rounded-circle'
                             width="55"
-                            alt={`${username}'s profile picture`} src={imageSource} />
+                            height="55"
+                            image={image} />
                     </td>
                     <td>
                         <span className='fs-5 ps-2'>

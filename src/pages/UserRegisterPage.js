@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Input from "../component/Input";
+import Input from "../components/Input";
 import { useTranslation } from "react-i18next";
-import ButtonWithProgress from '../component/ButtonWithProgress';
+import ButtonWithProgress from '../components/ButtonWithProgress';
 import { useApiProgress } from "../shared/ApiProgress";
 import { useDispatch } from "react-redux";
 import { registerHandler } from "../redux/authActions";

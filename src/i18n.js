@@ -20,6 +20,9 @@ i18n.use(initReactI18next).init({
                 'Previous': '< Previous',
                 'Load Failure': 'Load Failure',
                 'User not found.': 'User not found.',
+                'Edit': 'Edit',
+                'Save': 'Save',
+                'Cancel': 'Cancel',
                 'Users': 'Users'
             }
         },
@@ -40,6 +43,9 @@ i18n.use(initReactI18next).init({
                 'Previous': '< Önceki',
                 'Load Failure': 'Liste Alınamadı',
                 'User not found.': 'Kullanıcı bulunamadı.',
+                'Edit': 'Düzenle',
+                'Save': 'Kaydet',
+                'Cancel': 'İptal',
                 'Users': 'Kullanıcılar'
             }
         }
