@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import ProfileImageWithDefault from './ProfileImageWithDefault';
@@ -8,13 +8,38 @@ import Input from '../components/Input';
 const ProfileCard = props => {
 
     const [inEditMode, setInEditMode] = useState(false);
-    const { username: loggedInUsername } = useSelector(store => ({ username: store.username }))
+    const [updatedName, setUpdatedName] = useState("");
+    const [updatedSurname, setUpdatedSurname] = useState("");
+    const [updatedUsername, setUpdatedUsername] = useState("");
+    const [updatedHospitalIdNumber, setUpdatedHospitalIdNumber] = useState("");
+    const [updatedPassword, setUpdatedPassword] = useState("");
+    const { username: loggedInUsername } = useSelector(store => ({ username: store.username }));
     const routeParams = useParams();
-
-    const { t } = useTranslation();
 
     const { user } = props;
     const { username, name, surname, hospitalIdNumber, image } = user;
+    const { t } = useTranslation();
+
+    useEffect(() => {
+        if (!inEditMode) {
+            setUpdatedName(undefined);
+            setUpdatedSurname(undefined);
+            setUpdatedUsername(undefined);
+            setUpdatedHospitalIdNumber(undefined);
+            setUpdatedPassword(undefined);
+        } else {
+            setUpdatedName(name);
+            setUpdatedSurname(surname);
+            setUpdatedUsername(username);
+            setUpdatedHospitalIdNumber(hospitalIdNumber);
+            setUpdatedPassword(undefined);
+        }
+    }, [inEditMode])
+
+    const onClickSave = () => {
+        console.log(updatedName, updatedSurname, updatedUsername, updatedHospitalIdNumber, updatedPassword);
+    }
+
 
     const pathUsername = routeParams.username;
     let message = 'we cannot edit';
@@ -45,9 +70,15 @@ const ProfileCard = props => {
                             </span></>}
                     {inEditMode && (
                         <div>
-                            <Input label='Change' />
+                            <Input label={t('Name')} defaultValue={name} onChange={event => { setUpdatedName(event.target.value); }} />
+                            <Input name="surname" label={t('Surname')} defaultValue={surname} onChange={(event) => { setUpdatedSurname(event.target.value) }} />
+                            <Input name="username" label={t('Username')} defaultValue={username} onChange={(event) => { setUpdatedUsername(event.target.value) }} />
+                            <Input name="hospitalIdNumber" label={t('Hospital ID Number')} defaultValue={hospitalIdNumber} onChange={(event) => { setUpdatedHospitalIdNumber(event.target.value) }} />
+                            <Input name="password" label={t('Password')} type="password" onChange={(event) => { setUpdatedPassword(event.target.value) }} />
+                            <Input name="passwordRepeat" label={t('Password Repeat')} type="password" />
+                            <br />
                             <div>
-                                <button className='btn btn-primary me-2'>
+                                <button className='btn btn-primary me-2' onClick={onClickSave}>
                                     <i class="me-2 fa-solid fa-floppy-disk fa-sm"></i>
                                     {t("Save")}
                                 </button>
@@ -72,3 +103,5 @@ const ProfileCard = props => {
 };
 
 export default ProfileCard;
+
+
