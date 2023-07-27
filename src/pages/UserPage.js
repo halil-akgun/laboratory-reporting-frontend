@@ -13,7 +13,7 @@ const UserPage = props => {
     const { username } = props.match.params;
     const { t } = useTranslation();
 
-    const pendingApiCall = useApiProgress('/users/' + username);
+    const pendingApiCall = useApiProgress('get', '/users/' + username);
 
 
     useEffect(() => {

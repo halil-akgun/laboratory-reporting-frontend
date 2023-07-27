@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom';
 import ProfileImageWithDefault from './ProfileImageWithDefault';
 import { useTranslation } from 'react-i18next';
 import Input from '../components/Input';
+import { updateUser } from '../api/apiCalls';
+import { useApiProgress } from '../shared/ApiProgress';
+import ButtonWithProgress from './ButtonWithProgress';
 
 const ProfileCard = props => {
 
@@ -15,9 +18,13 @@ const ProfileCard = props => {
     const [updatedPassword, setUpdatedPassword] = useState("");
     const { username: loggedInUsername } = useSelector(store => ({ username: store.username }));
     const routeParams = useParams();
+    const [user, setUser] = useState({});
 
-    const { user } = props;
-    const { username, name, surname, hospitalIdNumber, image } = user;
+    useEffect(() => {
+        setUser(props.user);
+    }, [props.user])
+
+    const { username, name, surname, hospitalIdNumber, image, password } = user;
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -34,11 +41,28 @@ const ProfileCard = props => {
             setUpdatedHospitalIdNumber(hospitalIdNumber);
             setUpdatedPassword(undefined);
         }
-    }, [inEditMode])
+    }, [inEditMode, username, name, surname, hospitalIdNumber])
 
-    const onClickSave = () => {
-        console.log(updatedName, updatedSurname, updatedUsername, updatedHospitalIdNumber, updatedPassword);
+    const onClickSave = async () => {
+        const body = {
+            name: updatedName,
+            surname: updatedSurname,
+            username: updatedUsername,
+            hospitalIdNumber: updatedHospitalIdNumber,
+            password: updatedPassword
+        };
+        try {
+            const response = await updateUser(username, body);
+            setInEditMode(false);
+            setUser(response.data.object);
+        } catch (error) {
+            console.log(username);
+            console.log(body);
+            console.log("Error while updating user:", error);
+        }
     }
+
+    const pendingApiCall = useApiProgress('put', '/users/' + username);
 
 
     const pathUsername = routeParams.username;
@@ -78,12 +102,23 @@ const ProfileCard = props => {
                             <Input name="passwordRepeat" label={t('Password Repeat')} type="password" />
                             <br />
                             <div>
-                                <button className='btn btn-primary me-2' onClick={onClickSave}>
-                                    <i class="me-2 fa-solid fa-floppy-disk fa-sm"></i>
-                                    {t("Save")}
-                                </button>
-                                <button className='btn btn-light' onClick={() => setInEditMode(false)}>
-                                    <i class="me-2 fa-solid fa-xmark fa-sm"></i>
+                                <ButtonWithProgress
+                                    className='btn btn-primary'
+                                    onClick={onClickSave}
+                                    disabled={pendingApiCall}
+                                    pendingApiCall={pendingApiCall}
+                                    text={
+                                        <>
+                                            <i className="me-2 fa-solid fa-floppy-disk fa-sm"></i>
+                                            {t("Save")}
+                                        </>
+                                    }
+                                />
+                                <button
+                                    className='btn btn-light ms-2'
+                                    onClick={() => setInEditMode(false)}
+                                    disabled={pendingApiCall}>
+                                    <i className="me-2 fa-solid fa-xmark fa-sm"></i>
                                     {t("Cancel")}
                                 </button>
                             </div>

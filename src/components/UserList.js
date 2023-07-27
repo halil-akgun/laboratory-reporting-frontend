@@ -21,7 +21,7 @@ const UserList = () => {
         password: store.password
     }));
 
-    const pendingApiCall = useApiProgress('/users/getAllUsers?page');
+    const pendingApiCall = useApiProgress('get', '/users/getAllUsers?page');
 
     useEffect(() => {
         loadUsers();
