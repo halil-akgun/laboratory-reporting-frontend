@@ -3,7 +3,7 @@ import defaultPicture from '../assets/profile.png'
 
 const ProfileImageWithDefault = (props) => {
 
-    const { image } = props;
+    const { image, tempImage } = props;
     let imageSource = defaultPicture;
     if (image) {
         imageSource = image;
@@ -11,8 +11,9 @@ const ProfileImageWithDefault = (props) => {
 
     return (
         <img
-            {...props}
-            alt={`profile picture`} src={imageSource} />
+            alt={`profile picture`}
+            src={tempImage || imageSource}
+            {...props} />
     );
 };
 

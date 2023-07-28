@@ -15,41 +15,46 @@ const ProfileCard = props => {
     const [updatedSurname, setUpdatedSurname] = useState("");
     const [updatedUsername, setUpdatedUsername] = useState("");
     const [updatedHospitalIdNumber, setUpdatedHospitalIdNumber] = useState("");
-    const [updatedPassword, setUpdatedPassword] = useState("");
     const { username: loggedInUsername } = useSelector(store => ({ username: store.username }));
     const routeParams = useParams();
+    const pathUsername = routeParams.username;
     const [user, setUser] = useState({});
+    const [editable, setEditable] = useState(false);
+    const [newImage, setNewImage] = useState();
 
     useEffect(() => {
         setUser(props.user);
     }, [props.user])
 
-    const { username, name, surname, hospitalIdNumber, image, password } = user;
+    useEffect(() => {
+        setEditable(pathUsername === loggedInUsername);
+    }, [pathUsername, loggedInUsername])
+
+    const { username, name, surname, hospitalIdNumber, image } = user;
     const { t } = useTranslation();
 
     useEffect(() => {
         if (!inEditMode) {
+            setNewImage(undefined);
             setUpdatedName(undefined);
             setUpdatedSurname(undefined);
             setUpdatedUsername(undefined);
             setUpdatedHospitalIdNumber(undefined);
-            setUpdatedPassword(undefined);
         } else {
             setUpdatedName(name);
             setUpdatedSurname(surname);
             setUpdatedUsername(username);
             setUpdatedHospitalIdNumber(hospitalIdNumber);
-            setUpdatedPassword(undefined);
         }
     }, [inEditMode, username, name, surname, hospitalIdNumber])
 
     const onClickSave = async () => {
         const body = {
+            image: newImage,
             name: updatedName,
             surname: updatedSurname,
             username: updatedUsername,
             hospitalIdNumber: updatedHospitalIdNumber,
-            password: updatedPassword
         };
         try {
             const response = await updateUser(username, body);
@@ -62,14 +67,16 @@ const ProfileCard = props => {
         }
     }
 
-    const pendingApiCall = useApiProgress('put', '/users/' + username);
-
-
-    const pathUsername = routeParams.username;
-    let message = 'we cannot edit';
-    if (pathUsername === loggedInUsername) {
-        message = 'we can edit';
+    const onChangeFile = (event) => {
+        const file = event.target.files[0];
+        const fileReader = new FileReader();
+        fileReader.onloadend = () => {
+            setNewImage(fileReader.result);
+        }
+        fileReader.readAsDataURL(file);
     }
+
+    const pendingApiCall = useApiProgress('put', '/users/' + username);
 
     return (
         <div>
@@ -79,7 +86,9 @@ const ProfileCard = props => {
                         className='rounded-circle shadow'
                         width="200"
                         height="200"
-                        image={image} />
+                        image={image}
+                        tempImage={newImage}
+                    />
                 </div>
                 <div className='card-body'>
                     {!inEditMode &&
@@ -98,9 +107,8 @@ const ProfileCard = props => {
                             <Input name="surname" label={t('Surname')} defaultValue={surname} onChange={(event) => { setUpdatedSurname(event.target.value) }} />
                             <Input name="username" label={t('Username')} defaultValue={username} onChange={(event) => { setUpdatedUsername(event.target.value) }} />
                             <Input name="hospitalIdNumber" label={t('Hospital ID Number')} defaultValue={hospitalIdNumber} onChange={(event) => { setUpdatedHospitalIdNumber(event.target.value) }} />
-                            <Input name="password" label={t('Password')} type="password" onChange={(event) => { setUpdatedPassword(event.target.value) }} />
-                            <Input name="passwordRepeat" label={t('Password Repeat')} type="password" />
                             <br />
+                            <input type='file' onChange={onChangeFile} />
                             <div>
                                 <ButtonWithProgress
                                     className='btn btn-primary'
@@ -128,10 +136,10 @@ const ProfileCard = props => {
             </div>
             {!inEditMode &&
                 <div className='text-center mt-3'>
-                    <button className='btn btn-success' onClick={() => setInEditMode(true)}>
+                    {editable && <button className='btn btn-success' onClick={() => setInEditMode(true)}>
                         <i className="me-2 fa-sharp fa-solid fa-pen fa-sm"></i>
                         {t("Edit")}
-                    </button>
+                    </button>}
                 </div>}
         </div>
     );
