@@ -50,7 +50,7 @@ const ProfileCard = props => {
 
     const onClickSave = async () => {
         const body = {
-            image: newImage,
+            image: newImage.split(',')[1],
             name: updatedName,
             surname: updatedSurname,
             username: updatedUsername,
@@ -86,8 +86,7 @@ const ProfileCard = props => {
                         className='rounded-circle shadow'
                         width="200"
                         height="200"
-                        image={image}
-                        tempImage={newImage}
+                        image={newImage || image}
                     />
                 </div>
                 <div className='card-body'>
@@ -117,7 +116,7 @@ const ProfileCard = props => {
                                     pendingApiCall={pendingApiCall}
                                     text={
                                         <>
-                                            <i className="me-2 fa-solid fa-floppy-disk fa-sm"></i>
+                                            <i className="ms-2 me-2 fa-solid fa-floppy-disk fa-sm"></i>
                                             {t("Save")}
                                         </>
                                     }

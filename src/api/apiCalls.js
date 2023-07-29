@@ -13,7 +13,7 @@ export const login = creds => {
 }
 
 export const getUsers = (page = 0, size = 5, username, password) => {
-    return axios.get(`/users/getAllUsers?page=${page}&size=${size}`, { auth: { username, password } });
+    return axios.get(`/users/getAllUsers?page=${page}&size=${size}&sort=ASC`, { auth: { username, password } });
 }
 
 export const setAuthorizationHeader = ({ username, password, isLoggedIn }) => {
