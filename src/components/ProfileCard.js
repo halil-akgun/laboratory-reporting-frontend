@@ -60,11 +60,7 @@ const ProfileCard = props => {
             const response = await updateUser(username, body);
             setInEditMode(false);
             setUser(response.data.object);
-        } catch (error) {
-            console.log(username);
-            console.log(body);
-            console.log("Error while updating user:", error);
-        }
+        } catch (error) { }
     }
 
     const onChangeFile = (event) => {
@@ -86,7 +82,8 @@ const ProfileCard = props => {
                         className='rounded-circle shadow'
                         width="200"
                         height="200"
-                        image={newImage || image}
+                        image={image}
+                        tempimage={newImage}
                     />
                 </div>
                 <div className='card-body'>
