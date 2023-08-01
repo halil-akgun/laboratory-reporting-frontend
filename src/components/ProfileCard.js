@@ -49,8 +49,13 @@ const ProfileCard = props => {
     }, [inEditMode, username, name, surname, hospitalIdNumber])
 
     const onClickSave = async () => {
+        let imageTemp;
+        if (newImage) {
+            imageTemp = newImage.split(',')[1];
+        }
+
         const body = {
-            image: newImage.split(',')[1],
+            image: imageTemp,
             name: updatedName,
             surname: updatedSurname,
             username: updatedUsername,
@@ -64,6 +69,9 @@ const ProfileCard = props => {
     }
 
     const onChangeFile = (event) => {
+        if (event.target.files.length < 1) {
+            return;
+        }
         const file = event.target.files[0];
         const fileReader = new FileReader();
         fileReader.onloadend = () => {
