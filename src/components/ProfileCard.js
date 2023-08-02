@@ -21,6 +21,7 @@ const ProfileCard = props => {
     const [user, setUser] = useState({});
     const [editable, setEditable] = useState(false);
     const [newImage, setNewImage] = useState();
+    const [validationErrors, setValidationErrors] = useState({});
 
     useEffect(() => {
         setUser(props.user);
@@ -29,6 +30,29 @@ const ProfileCard = props => {
     useEffect(() => {
         setEditable(pathUsername === loggedInUsername);
     }, [pathUsername, loggedInUsername])
+
+    useEffect(() => {
+        setValidationErrors(previousValidationErrors => {
+            const updatedErrors = { ...previousValidationErrors };
+
+            if (updatedName) {
+                delete updatedErrors['name'];
+            }
+            if (updatedSurname) {
+                delete updatedErrors['surname'];
+            }
+            if (updatedUsername) {
+                delete updatedErrors['username'];
+            }
+            if (updatedHospitalIdNumber) {
+                delete updatedErrors['hospitalIdNumber'];
+            }
+            if (newImage) {
+                delete updatedErrors['image'];
+            }
+            return updatedErrors;
+        });
+    }, [updatedName, updatedSurname, updatedUsername, updatedHospitalIdNumber, newImage])
 
     const { username, name, surname, hospitalIdNumber, image } = user;
     const { t } = useTranslation();
@@ -65,7 +89,9 @@ const ProfileCard = props => {
             const response = await updateUser(username, body);
             setInEditMode(false);
             setUser(response.data.object);
-        } catch (error) { }
+        } catch (error) {
+            setValidationErrors(error.response.data.validationErrors);
+        }
     }
 
     const onChangeFile = (event) => {
@@ -81,6 +107,8 @@ const ProfileCard = props => {
     }
 
     const pendingApiCall = useApiProgress('put', '/users/' + username);
+
+    const { name: nameError, surname: surnameError, username: usernameError, hospitalIdNumber: hospitalIdNumberError, image: imageError } = validationErrors;
 
     return (
         <div>
@@ -107,12 +135,34 @@ const ProfileCard = props => {
                             </span></>}
                     {inEditMode && (
                         <div>
-                            <Input label={t('Name')} defaultValue={name} onChange={event => { setUpdatedName(event.target.value); }} />
-                            <Input name="surname" label={t('Surname')} defaultValue={surname} onChange={(event) => { setUpdatedSurname(event.target.value) }} />
-                            <Input name="username" label={t('Username')} defaultValue={username} onChange={(event) => { setUpdatedUsername(event.target.value) }} />
-                            <Input name="hospitalIdNumber" label={t('Hospital ID Number')} defaultValue={hospitalIdNumber} onChange={(event) => { setUpdatedHospitalIdNumber(event.target.value) }} />
+                            <Input
+                                label={t('Name')}
+                                defaultValue={name}
+                                onChange={event => { setUpdatedName(event.target.value); }}
+                                error={nameError} />
+                            <Input
+                                name="surname"
+                                label={t('Surname')}
+                                defaultValue={surname}
+                                onChange={(event) => { setUpdatedSurname(event.target.value) }}
+                                error={surnameError} />
+                            <Input
+                                name="username"
+                                label={t('Username')}
+                                defaultValue={username}
+                                onChange={(event) => { setUpdatedUsername(event.target.value) }}
+                                error={usernameError} />
+                            <Input
+                                name="hospitalIdNumber"
+                                label={t('Hospital ID Number')}
+                                defaultValue={hospitalIdNumber}
+                                onChange={(event) => { setUpdatedHospitalIdNumber(event.target.value) }}
+                                error={hospitalIdNumberError} />
                             <br />
-                            <input type='file' onChange={onChangeFile} />
+                            <Input
+                                type='file'
+                                onChange={onChangeFile}
+                                error={imageError} />
                             <div>
                                 <ButtonWithProgress
                                     className='btn btn-primary'
