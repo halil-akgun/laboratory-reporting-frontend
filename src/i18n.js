@@ -23,6 +23,7 @@ i18n.use(initReactI18next).init({
                 'Edit': 'Edit',
                 'Save': 'Save',
                 'Cancel': 'Cancel',
+                'My Profile': 'My Profile',
                 'Users': 'Users'
             }
         },
@@ -46,6 +47,7 @@ i18n.use(initReactI18next).init({
                 'Edit': 'Düzenle',
                 'Save': 'Kaydet',
                 'Cancel': 'İptal',
+                'My Profile': 'Hesabım',
                 'Users': 'Kullanıcılar'
             }
         }
