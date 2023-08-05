@@ -24,6 +24,7 @@ i18n.use(initReactI18next).init({
                 'Save': 'Save',
                 'Cancel': 'Cancel',
                 'My Profile': 'My Profile',
+                'Save Report': 'Save Report',
                 'Users': 'Users'
             }
         },
@@ -48,6 +49,7 @@ i18n.use(initReactI18next).init({
                 'Save': 'Kaydet',
                 'Cancel': 'İptal',
                 'My Profile': 'Hesabım',
+                'Save Report': 'Rapor Kaydet',
                 'Users': 'Kullanıcılar'
             }
         }

@@ -7,6 +7,7 @@ import { HashRouter as Router, Route, Redirect, Switch } from "react-router-dom"
 import TopBar from "../components/TopBar";
 import UserPage from "../pages/UserPage";
 import { useSelector } from "react-redux";
+import SaveReport from "../pages/SaveReport";
 
 /* alias is used in import. Thus, there is no need to make changes
 in the codes below in HashRouter-BrowserRouter transitions. */
@@ -32,6 +33,7 @@ const App = () => {
           {/* login page will not open if logged in */}
           {!isLoggedIn && <Route path="/register" component={UserRegisterPage} />}
           {/* register page will not open if logged in */}
+          {isLoggedIn && <Route path="/reports/save" component={SaveReport} />}
           <Route path="/users/:username" component={UserPage} />
           <Redirect to='/' />
         </Switch>

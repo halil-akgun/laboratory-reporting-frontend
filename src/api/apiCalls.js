@@ -31,3 +31,6 @@ export const updateUser = (username, body) => {
     return axios.put(`/users/${username}`, body);
 }
 
+export const saveReport = (body) => {
+    return axios.post('/reports/save', body);
+}

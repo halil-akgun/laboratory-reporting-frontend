@@ -75,6 +75,10 @@ const TopBar = (props) => {
                         <span className='nav-link dropdown-toggle'>{name} {surname}</span>
                     </div>
                     <div className={dropdownClass}>
+                        <Link className="dropdown-item p-2" to={`/reports/save`}>
+                            <i className="fa-solid fa-folder-plus me-2 text-success"></i>
+                            {t('Save Report')}
+                        </Link>
                         <Link className="dropdown-item p-2" to={`/users/${username}`}>
                             <i className="fa-solid fa-user me-2 text-info"></i>
                             {t('My Profile')}
