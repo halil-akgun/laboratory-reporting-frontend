@@ -5,6 +5,7 @@ import ButtonWithProgress from '../components/ButtonWithProgress';
 import { useApiProgress } from "../shared/ApiProgress";
 import { useDispatch } from "react-redux";
 import { saveReport } from "../api/apiCalls";
+import ReportImageWithDefault from '../components/ReportImageWithDefault';
 
 const SaveReport = props => {
 
@@ -19,6 +20,7 @@ const SaveReport = props => {
         imageOfReport: null
     })
     const [errors, setErrors] = useState({});
+    const [newImage, setNewImage] = useState();
 
     const dispatch = useDispatch();
 
@@ -37,23 +39,24 @@ const SaveReport = props => {
         const file = event.target.files[0];
         const fileReader = new FileReader();
         fileReader.onloadend = () => {
-            // setNewImage(fileReader.result);
-            setForm(prevForm => ({
-                ...prevForm,
-                imageOfReport: fileReader.result
-            }));
-        }
+            setNewImage(fileReader.result);
+        };
         fileReader.readAsDataURL(file);
     }
 
-    const onClickRegister = async event => {
+    const onClickSaveReport = async event => {
         event.preventDefault();
         // The browser's automatic sending of form content is blocked.
         // The content should be taken from the state, not the form.
 
         const { history } = props;
         const { push } = history;
-        const { fileNumber, patientName, patientSurname, patientIdNumber, diagnosisTitle, diagnosisDetails, dateOfReport, imageOfReport } = form;
+        const { fileNumber, patientName, patientSurname, patientIdNumber, diagnosisTitle, diagnosisDetails, dateOfReport } = form;
+
+        let imageTemp;
+        if (newImage) {
+            imageTemp = newImage.split(',')[1];
+        }
 
         const body = {
             // username: username,
@@ -65,17 +68,23 @@ const SaveReport = props => {
             diagnosisTitle,
             diagnosisDetails,
             dateOfReport,
-            imageOfReport
+            imageOfReport: imageTemp
         };
 
         try {
             await saveReport(body);
-            push('/');
+            props.history.goBack();
+            // push('/');
         } catch (error) {
             if (error.response.data.validationErrors) {
                 setErrors(error.response.data.validationErrors);
             }
         } // "await" is used because axios.post works asynchronously. "then/catch" could also be used.
+    }
+
+    const onClearImage = () => {
+        setNewImage(null);
+        setForm((previousForm) => ({ ...previousForm, imageOfReport: null })); // Formda bulunan resmi temizle
     }
 
     const { t } = useTranslation();
@@ -85,32 +94,60 @@ const SaveReport = props => {
 
     return (
         <div className="container">
-            <form>
+            <div className="row">
                 <h1 className="text-center">{t('Save Report')}</h1>
+                <div className="col-md-6">
+                    <form>
 
-                <Input name="fileNumber" label={t('File Number')} error={fileNumberError} onChange={onChange} />
-                <Input name="patientName" label={t('Patient Name')} error={patientNameError} onChange={onChange} />
-                <Input name="patientSurname" label={t('Patient Surname')} error={patientSurnameError} onChange={onChange} />
-                <Input name="patientIdNumber" label={t('Patient Id Number')} error={patientIdNumberError} onChange={onChange} />
-                <Input name="diagnosisTitle" label={t('Diagnosis Title')} error={diagnosisTitleError} onChange={onChange} />
-                <Input name="diagnosisDetails" label={t('Diagnosis Details')} error={diagnosisDetailsError} onChange={onChange} />
-                <Input name="dateOfReport" label={t('Date of Report')} error={dateOfReportError} onChange={onChange} />
-                <Input
-                    label={t('Image of Report')}
-                    type='file'
-                    onChange={onChangeFile}
-                    error={imageOfReportError} />
-                <br />
-                <br />
-                <div className="text-center">
-                    <ButtonWithProgress
-                        onClick={onClickRegister}
-                        disabled={pendingApiCall}
-                        pendingApiCall={pendingApiCall}
-                        text={t('Save')}
-                    />
+                        <Input name="fileNumber" label={t('File Number')} error={fileNumberError} onChange={onChange} />
+                        <Input name="patientName" label={t('Patient Name')} error={patientNameError} onChange={onChange} />
+                        <Input name="patientSurname" label={t('Patient Surname')} error={patientSurnameError} onChange={onChange} />
+                        <Input name="patientIdNumber" label={t('Patient Id Number')} error={patientIdNumberError} onChange={onChange} />
+                        <Input name="diagnosisTitle" label={t('Diagnosis Title')} error={diagnosisTitleError} onChange={onChange} />
+                        <Input name="diagnosisDetails" label={t('Diagnosis Details')} error={diagnosisDetailsError} onChange={onChange} />
+                        <Input type='date' name="dateOfReport" label={t('Date of Report')} error={dateOfReportError} onChange={onChange} />
+                        <Input
+                            label={t('Image of Report')}
+                            type='file'
+                            onChange={onChangeFile}
+                            error={imageOfReportError} />
+
+                    </form>
                 </div>
-            </form>
+                <div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
+                    <ReportImageWithDefault
+                        width="100%"
+                        image={form.imageOfReport}
+                        tempimage={newImage} />
+                    {newImage && <button
+                        className='btn btn-light mb-2 text-danger p-0  mt-1'
+                        onClick={onClearImage}>
+                        <i class="fa-regular fa-trash-can fa-sm me-2"></i>
+                        {t("Remove Image")}
+                    </button>}
+                </div>
+            </div>
+            <div className="text-center mb-5 mt-3">
+                <ButtonWithProgress
+                    className='btn btn-primary'
+                    onClick={onClickSaveReport}
+                    disabled={pendingApiCall}
+                    pendingApiCall={pendingApiCall}
+                    text={
+                        <>
+                            <i className="ms-2 me-2 fa-solid fa-floppy-disk fa-sm"></i>
+                            {t("Save")}
+                        </>
+                    }
+                />
+                <button
+                    className='btn btn-light ms-2'
+                    onClick={(e) => { e.preventDefault(); props.history.goBack(); }}
+                    disabled={pendingApiCall}>
+                    <i className="me-2 fa-solid fa-xmark fa-sm"></i>
+                    {t("Cancel")}
+                </button>
+            </div>
         </div>
     )
 }

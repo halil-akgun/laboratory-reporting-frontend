@@ -1,10 +1,10 @@
 import React from 'react';
-import UserList from '../components/UserList';
+import ReportList from '../components/ReportList';
 
 const HomePage = () => {
     return (
         <div className='container'>
-            <UserList />
+            <ReportList />
         </div>
     );
 };

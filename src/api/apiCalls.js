@@ -34,3 +34,7 @@ export const updateUser = (username, body) => {
 export const saveReport = (body) => {
     return axios.post('/reports/save', body);
 }
+
+export const getReports = (page = 0, size = 5, username, password) => {
+    return axios.get(`/reports/getAllReports?page=${page}&size=${size}&sort=ASC`, { auth: { username, password } });
+}
