@@ -61,20 +61,41 @@ const ReportList = () => {
         );
     };
     return (
-        <div className='card'>
-            <h3 className='card-header text-center'>
-                {t("Reports")}
-            </h3>
-            <div className='list-group list-group-flush'>
-                {
-                    reports.map(report => (
-                        <ReportListItem key={report.fileNumber} report={report} />
-                    )
-                    )
-                }
+        <div className='row'>
+            <h1 className="text-center mb-4">{t('Reports')}</h1>
+            <div className='col-md-1 col-lg-2'></div>
+            <div className='col-md-10 col-lg-8'>
+                <div className='card'>
+                    <div className='card-header list-group list-group-flush p-1'>
+                        <table className='table mb-0'>
+                            <tr className='d-flex justify-content-around'>
+                                <th id='reportsTableH1'>File Number</th>
+                                <th id='reportsTableH2'>Date of Report</th>
+                                <th id='reportsTableH3'>Patient Name</th>
+                                <th id='reportsTableH4'>Patient Surname</th>
+                                <th id='reportsTableH5'>Laborant Name Surname</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <table className='table mb-0'>
+                        <tbody>
+                            {/* <tr className='list-group list-group-flush'> */}
+                            <div className='list-group list-group-flush'>
+                                {
+                                    reports.map(report => (
+                                        <ReportListItem key={report.fileNumber} report={report} />
+                                    )
+                                    )
+                                }
+                            </div>
+                            {/* </tr> */}
+                        </tbody>
+                    </table>
+                    {actionDiv}
+                    {loadFailure && <div className='text-center text-danger'>{t('Load Failure')}</div>}
+                </div>
             </div>
-            {actionDiv}
-            {loadFailure && <div className='text-center text-danger'>{t('Load Failure')}</div>}
+            <div className='col-md-1 col-lg-2'></div>
         </div>
     );
 }

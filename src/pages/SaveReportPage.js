@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { saveReport } from "../api/apiCalls";
 import ReportImageWithDefault from '../components/ReportImageWithDefault';
 
-const SaveReport = props => {
+const SaveReportPage = props => {
 
     const [form, setForm] = useState({
         fileNumber: null,
@@ -95,7 +95,7 @@ const SaveReport = props => {
     return (
         <div className="container">
             <div className="row">
-                <h1 className="text-center">{t('Save Report')}</h1>
+                <h1 className="text-center mb-4">{t('Save Report')}</h1>
                 <div className="col-md-6">
                     <form>
 
@@ -127,7 +127,7 @@ const SaveReport = props => {
                     </button>}
                 </div>
             </div>
-            <div className="text-center mb-5 mt-3">
+            <div className="text-center mb-3 mt-2">
                 <ButtonWithProgress
                     className='btn btn-primary'
                     onClick={onClickSaveReport}
@@ -152,4 +152,4 @@ const SaveReport = props => {
     )
 }
 
-export default SaveReport;
+export default SaveReportPage;

@@ -168,31 +168,32 @@ const ProfileCard = props => {
                                     type='file'
                                     onChange={onChangeFile}
                                     error={imageError} />
-                                <div>
-                                    <ButtonWithProgress
-                                        className='btn btn-primary'
-                                        onClick={onClickSave}
-                                        disabled={pendingApiCall}
-                                        pendingApiCall={pendingApiCall}
-                                        text={
-                                            <>
-                                                <i className="ms-2 me-2 fa-solid fa-floppy-disk fa-sm"></i>
-                                                {t("Save")}
-                                            </>
-                                        }
-                                    />
-                                    <button
-                                        className='btn btn-light ms-2'
-                                        onClick={() => setInEditMode(false)}
-                                        disabled={pendingApiCall}>
-                                        <i className="me-2 fa-solid fa-xmark fa-sm"></i>
-                                        {t("Cancel")}
-                                    </button>
-                                </div>
                             </div>
                         )}
                     </div>
                 </div>
+                {inEditMode &&
+                    <div className='text-center mt-3'>
+                        <ButtonWithProgress
+                            className='btn btn-primary'
+                            onClick={onClickSave}
+                            disabled={pendingApiCall}
+                            pendingApiCall={pendingApiCall}
+                            text={
+                                <>
+                                    <i className="ms-2 me-2 fa-solid fa-floppy-disk fa-sm"></i>
+                                    {t("Save")}
+                                </>
+                            }
+                        />
+                        <button
+                            className='btn btn-light ms-2'
+                            onClick={() => setInEditMode(false)}
+                            disabled={pendingApiCall}>
+                            <i className="me-2 fa-solid fa-xmark fa-sm"></i>
+                            {t("Cancel")}
+                        </button>
+                    </div>}
                 {!inEditMode &&
                     <div className='text-center mt-3'>
                         {editable && <button className='btn btn-success' onClick={() => setInEditMode(true)}>

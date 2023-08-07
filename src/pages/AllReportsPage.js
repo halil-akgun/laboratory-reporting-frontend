@@ -1,12 +1,12 @@
 import React from 'react';
 import ReportList from '../components/ReportList';
 
-const HomePage = () => {
+const AllReportsPage = () => {
     return (
         <div className='container'>
-            HOMEPAGE
+            <ReportList />
         </div>
     );
 };
 
-export default HomePage;
+export default AllReportsPage;

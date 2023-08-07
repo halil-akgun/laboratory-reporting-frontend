@@ -1,0 +1,60 @@
+#reportsTableCol1 {
+    width: 79px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#reportsTableCol2 {
+    width: 87px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#reportsTableCol3 {
+    width: 97px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#reportsTableCol4 {
+    width: 97px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#reportsTableCol5 {
+    width: 121px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+@media (max-width: 525px) {
+    #reportsTableCol5 {
+        width: 95px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    #reportsTableH5 {
+        font-size: 0.9rem;
+    }
+}
+
+#reportsTableH1 {
+    width: 79px;
+}
+
+#reportsTableH2 {
+    width: 87px;
+}
+
+#reportsTableH3 {
+    width: 97px;
+}
+
+#reportsTableH4 {
+    width: 97px;
+}
+
+#reportsTableH5 {
+    width: 121px;
+}

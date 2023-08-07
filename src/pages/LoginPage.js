@@ -47,21 +47,28 @@ const LoginPage = props => {
 
     return (
         <div className='container'>
-            <form>
-                <h1 className="text-center">{t('Login')}</h1>
-                <Input label={t('Username')} onChange={event => setUsername(event.target.value)} />
-                <Input label={t('Password')} type="password" onChange={event => setPassword(event.target.value)} />
-                {error && <div className="alert alert-danger"> {error} </div>}
-                <br />
-                <div className="text-center">
-                    <ButtonWithProgress
-                        disabled={!buttonEnabled || pendingApiCall}
-                        pendingApiCall={pendingApiCall}
-                        onClick={onClickLogin}
-                        text={t('Login')}
-                    />
+            <div className='row'>
+                <div className='col-md-3'></div>
+                <div className='col-md-6'>
+                    <form>
+                        <h1 className="text-center">{t('Login')}</h1>
+                        <Input label={t('Username')} onChange={event => setUsername(event.target.value)} />
+                        <Input label={t('Password')} type="password" onChange={event => setPassword(event.target.value)} />
+                        {error && <div className="alert alert-danger"> {error} </div>}
+                        <br />
+                        <div className="text-center">
+                            <ButtonWithProgress
+                                disabled={!buttonEnabled || pendingApiCall}
+                                pendingApiCall={pendingApiCall}
+                                onClick={onClickLogin}
+                                text={t('Login')}
+                            />
+                        </div>
+                    </form>
                 </div>
-            </form>
+                <div className='col-md-3'></div>
+            </div>
+
         </div>
     );
 }

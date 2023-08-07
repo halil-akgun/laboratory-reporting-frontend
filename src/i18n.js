@@ -35,6 +35,8 @@ i18n.use(initReactI18next).init({
                 'Date of Report': 'Date of Report',
                 'Image of Report': 'Image of Report',
                 'Reports': 'Reports',
+                'All Reports': 'All Reports',
+                'All Users': 'All Users',
                 'Users': 'Users'
             }
         },
@@ -70,6 +72,8 @@ i18n.use(initReactI18next).init({
                 'Date of Report': 'Rapor Tarihi',
                 'Image of Report': 'Raporun Resmi',
                 'Reports': 'Raporlar',
+                'All Reports': 'Tüm Raporlar',
+                'All Users': 'Tum Kullanıcılar',
                 'Users': 'Kullanıcılar'
             }
         }
