@@ -115,8 +115,8 @@ const ProfileCard = props => {
 
     return (
         <div className='row'>
-            <div className='col-md-3'></div>
-            <div className='col-md-6'>
+            <div className='col-md-2 col-lg-3'></div>
+            <div className='col-md-8 col-lg-6'>
                 <div className='card text-center'>
                     <div className='card-header'>
                         <ProfileImageWithDefault
@@ -142,6 +142,7 @@ const ProfileCard = props => {
                             <div>
                                 <Input
                                     label={t('Name')}
+                                    name="name"
                                     defaultValue={name}
                                     onChange={event => { setUpdatedName(event.target.value); }}
                                     error={nameError} />
@@ -173,7 +174,7 @@ const ProfileCard = props => {
                     </div>
                 </div>
                 {inEditMode &&
-                    <div className='text-center mt-3'>
+                    <div className='text-center mt-3 mb-3'>
                         <ButtonWithProgress
                             className='btn btn-primary'
                             onClick={onClickSave}
@@ -195,14 +196,14 @@ const ProfileCard = props => {
                         </button>
                     </div>}
                 {!inEditMode &&
-                    <div className='text-center mt-3'>
+                    <div className='text-center mt-3 mb-3'>
                         {editable && <button className='btn btn-success' onClick={() => setInEditMode(true)}>
                             <i className="me-2 fa-sharp fa-solid fa-pen fa-sm"></i>
                             {t("Edit")}
                         </button>}
                     </div>}
             </div>
-            <div className='col-md-3'></div>
+            <div className='col-md-2 col-lg-3'></div>
         </div>
     );
 };

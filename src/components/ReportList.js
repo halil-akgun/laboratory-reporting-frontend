@@ -47,6 +47,10 @@ const ReportList = () => {
         }
     };
 
+    const onClickDeneme = () => {
+        console.log('qwe');
+    }
+
     const { t } = useTranslation();
     const { content: reports, first, last } = page;
     let actionDiv = (
@@ -69,7 +73,7 @@ const ReportList = () => {
                     <div className='card-header list-group list-group-flush p-1'>
                         <table className='table mb-0'>
                             <tr className='d-flex justify-content-around'>
-                                <th id='reportsTableH1'>File Number</th>
+                                <th onClick={onClickDeneme} id='reportsTableH1'>File Number</th>
                                 <th id='reportsTableH2'>Date of Report</th>
                                 <th id='reportsTableH3'>Patient Name</th>
                                 <th id='reportsTableH4'>Patient Surname</th>

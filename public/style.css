@@ -34,27 +34,34 @@
         overflow: hidden;
         white-space: nowrap;
     }
+
     #reportsTableH5 {
         font-size: 0.9rem;
+        cursor: pointer;
     }
 }
 
 #reportsTableH1 {
     width: 79px;
+    cursor: pointer;
 }
 
 #reportsTableH2 {
     width: 87px;
+    cursor: pointer;
 }
 
 #reportsTableH3 {
     width: 97px;
+    cursor: pointer;
 }
 
 #reportsTableH4 {
     width: 97px;
+    cursor: pointer;
 }
 
 #reportsTableH5 {
     width: 121px;
+    cursor: pointer;
 }

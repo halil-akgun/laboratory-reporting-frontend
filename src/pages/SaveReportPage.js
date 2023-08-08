@@ -116,7 +116,8 @@ const SaveReportPage = props => {
                 </div>
                 <div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
                     <ReportImageWithDefault
-                        width="100%"
+                        // width="100%"
+                        width={ (newImage || form.imageOfReport) ? "100%" : "75%"}
                         image={form.imageOfReport}
                         tempimage={newImage} />
                     {newImage && <button

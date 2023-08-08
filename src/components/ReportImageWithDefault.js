@@ -13,6 +13,7 @@ const ReportImageWithDefault = (props) => {
         <img
             alt={`report picture`}
             src={tempimage || imageSource}
+            width={ !(tempimage || image) && "50px"}
             {...props}
             onError={event => event.target.src = defaultPicture}
         />
