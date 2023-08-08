@@ -11,7 +11,12 @@ const ReportList = () => {
     const [page, setPage] = useState({
         content: [],
         size: 5,
-        number: 0
+        number: 0,
+    });
+
+    const [order, setOrder] = useState({
+        sortColumn: 'fileNumber',
+        sortOrder: 'ASC'
     });
 
     const [loadFailure, setLoadFailure] = useState(false);
@@ -24,8 +29,9 @@ const ReportList = () => {
     const pendingApiCall = useApiProgress('get', '/reports/getAllReports?page');
 
     useEffect(() => {
+        console.log('useEffect')
         loadReports();
-    }, [])
+    }, []);
 
     const onClickNext = () => {
         const nextPage = page.number + 1;
@@ -40,16 +46,23 @@ const ReportList = () => {
     const loadReports = async pageNumber => {
         setLoadFailure(false);
         try {
-            const response = await getReports(pageNumber, page.size, username, password);
+            const response = await getReports(pageNumber, page.size, username, password, order.sortColumn, order.sortOrder);
             setPage(response.data);
         } catch {
             setLoadFailure(true);
         }
     };
 
-    const onClickDeneme = () => {
-        console.log('qwe');
-    }
+    const handleSort = (columnName) => {
+        const sortOrder = order.sortColumn === columnName ? (order.sortOrder === 'ASC' ? 'DESC' : 'ASC') : 'ASC';
+        if (order.sortColumn === columnName) {
+            setOrder({ ...order, sortOrder });
+        } else {
+            setOrder({ sortColumn: columnName, sortOrder });
+        }
+
+        loadReports();
+    };
 
     const { t } = useTranslation();
     const { content: reports, first, last } = page;
@@ -73,7 +86,7 @@ const ReportList = () => {
                     <div className='card-header list-group list-group-flush p-1'>
                         <table className='table mb-0'>
                             <tr className='d-flex justify-content-around'>
-                                <th onClick={onClickDeneme} id='reportsTableH1'>File Number</th>
+                                <th onClick={() => handleSort('fileNumber')} id='reportsTableH1'>File Number</th>
                                 <th id='reportsTableH2'>Date of Report</th>
                                 <th id='reportsTableH3'>Patient Name</th>
                                 <th id='reportsTableH4'>Patient Surname</th>
