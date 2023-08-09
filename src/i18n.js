@@ -37,6 +37,8 @@ i18n.use(initReactI18next).init({
                 'Reports': 'Reports',
                 'All Reports': 'All Reports',
                 'All Users': 'All Users',
+                'Show More Reports': 'Show More Reports',
+                'All Reports Displayed': 'All Reports Displayed',
                 'Users': 'Users'
             }
         },
@@ -74,6 +76,8 @@ i18n.use(initReactI18next).init({
                 'Reports': 'Raporlar',
                 'All Reports': 'Tüm Raporlar',
                 'All Users': 'Tum Kullanıcılar',
+                'Show More Reports': 'Daha Fazla Rapor Göster',
+                'All Reports Displayed': 'Tüm Raporlar Görüntülendi',
                 'Users': 'Kullanıcılar'
             }
         }

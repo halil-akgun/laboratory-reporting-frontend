@@ -13,7 +13,7 @@ export const login = creds => {
 }
 
 export const getUsers = (page = 0, size = 5, username, password) => {
-    return axios.get(`/users/getAllUsers?page=${page}&size=${size}&sort=ASC`, { auth: { username, password } });
+    return axios.get(`/users/getAllUsers?page=${page}&size=${size}&sort=name,ASC`, { auth: { username, password } });
 }
 
 export const setAuthorizationHeader = ({ username, password, isLoggedIn }) => {
@@ -35,9 +35,10 @@ export const saveReport = (body) => {
     return axios.post('/reports/save', body);
 }
 
-export const getReports = (page = 0, size = 5, username, password, sortColumn, sortOrder) => {
-    sortOrder = sortOrder || 'ASC';
-    sortColumn = sortColumn || 'fileNumber';
-    return axios.get(`/reports/getAllReports?page=${page}&size=${size}&sort=${sortColumn},${sortOrder}`, { auth: { username, password } });
+export const getReports = (page = 0, sortColumn = 'fileNumber', sortOrder = 'ASC', username, password) => {
+    return axios.get(`/reports/getAllReports?page=${page}&size=10&sort=${sortColumn},${sortOrder}`, { auth: { username, password } });
 }
 
+export const getReportsSortedByLaborant = (page = 0, sortOrder = 'ASC', username, password) => {
+    return axios.get(`/reports/getReportsSortedByLaborant?page=${page}&size=10&type=${sortOrder}`, { auth: { username, password } });
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getReports } from '../api/apiCalls';
+import { getReports, getReportsSortedByLaborant } from '../api/apiCalls';
 import { useTranslation } from 'react-i18next';
 import ReportListItem from './ReportListItem';
 import { useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ const ReportList = () => {
         content: [],
         size: 5,
         number: 0,
+        last: true
     });
 
     const [order, setOrder] = useState({
@@ -29,68 +30,90 @@ const ReportList = () => {
     const pendingApiCall = useApiProgress('get', '/reports/getAllReports?page');
 
     useEffect(() => {
-        console.log('useEffect')
         loadReports();
     }, []);
 
-    const onClickNext = () => {
-        const nextPage = page.number + 1;
-        loadReports(nextPage);
-    };
-
-    const onClickPrevious = () => {
-        const previousPage = page.number - 1;
-        loadReports(previousPage);
-    };
-
-    const loadReports = async pageNumber => {
+    const loadReports = async (page, sortOrder, columnName) => {
         setLoadFailure(false);
         try {
-            const response = await getReports(pageNumber, page.size, username, password, order.sortColumn, order.sortOrder);
-            setPage(response.data);
+            if (columnName === 'laborant' || order.sortColumn === 'laborant') {
+                if (page === undefined) {
+                    const response = await getReportsSortedByLaborant(0, sortOrder, username, password);
+                    setPage(response.data);
+                } else {
+                    const response = await getReportsSortedByLaborant(page, order.sortOrder, username, password);
+                    setPage(previousPage => ({
+                        ...response.data,
+                        content: [...previousPage.content, ...response.data.content]
+                    }));
+                }
+            } else {
+                if (page === undefined) {
+                    const response = await getReports(0, columnName, sortOrder, username, password);
+                    setPage(response.data);
+                } else {
+                    const response = await getReports(page, order.sortColumn, order.sortOrder, username, password);
+                    setPage(previousPage => ({
+                        ...response.data,
+                        content: [...previousPage.content, ...response.data.content]
+                    }));
+                }
+            }
         } catch {
             setLoadFailure(true);
         }
     };
 
     const handleSort = (columnName) => {
-        const sortOrder = order.sortColumn === columnName ? (order.sortOrder === 'ASC' ? 'DESC' : 'ASC') : 'ASC';
+        const newSortOrder = order.sortColumn === columnName ? (order.sortOrder === 'ASC' ? 'DESC' : 'ASC') : 'ASC';
         if (order.sortColumn === columnName) {
-            setOrder({ ...order, sortOrder });
+            setOrder({ ...order, sortOrder: newSortOrder });
         } else {
-            setOrder({ sortColumn: columnName, sortOrder });
+            setOrder({ sortColumn: columnName, sortOrder: newSortOrder });
         }
 
-        loadReports();
+        loadReports(undefined, newSortOrder, columnName);
     };
 
     const { t } = useTranslation();
-    const { content: reports, first, last } = page;
+    const { content: reports, last, number } = page;
     let actionDiv = (
-        <div>
-            {first === false && (<button className='btn btn-sm btn-light' onClick={onClickPrevious}>{t("Previous")}</button>)}
-            {last === false && (<button className='btn btn-sm btn-light float-end' onClick={onClickNext}>{t("Next")}</button>)}
+        <div onClick={pendingApiCall ? () => { } : () => loadReports(number + 1)} className='mt-1 p-4 alert alert-secondary text-center' style={{ cursor: pendingApiCall ? 'not-allowed' : 'pointer' }}>
+            {pendingApiCall ? <Spinner size="23px" /> :
+                last ? t("All Reports Displayed") :
+                    t("Show More Reports")}
         </div>
     );
-    if (pendingApiCall) {
-        actionDiv = (
-            <Spinner />
-        );
-    };
+
+    const sortDesc = (
+        <div className="icon-container">
+            <svg id='sortDesc' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><path d="M182.6 470.6c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128z" /></svg>
+        </div>
+    )
+    const sortAsc = (
+        <div className="icon-container">
+            <svg id='sortAsc' xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z" /></svg>
+        </div>
+    )
+
     return (
         <div className='row'>
             <h1 className="text-center mb-4">{t('Reports')}</h1>
             <div className='col-md-1 col-lg-2'></div>
-            <div className='col-md-10 col-lg-8'>
-                <div className='card'>
-                    <div className='card-header list-group list-group-flush p-1'>
-                        <table className='table mb-0'>
+            <div id='reports' className='col-md-10 col-lg-8'>
+                <div className='card table-responsive'>
+                    <div className='card-header px-2 list-group list-group-flush p-1 pb-2'>
+                        <table className='table mb-1'>
                             <tr className='d-flex justify-content-around'>
-                                <th onClick={() => handleSort('fileNumber')} id='reportsTableH1'>File Number</th>
-                                <th id='reportsTableH2'>Date of Report</th>
-                                <th id='reportsTableH3'>Patient Name</th>
-                                <th id='reportsTableH4'>Patient Surname</th>
-                                <th id='reportsTableH5'>Laborant Name Surname</th>
+                                <th onClick={() => handleSort('fileNumber')} id='reportsTableH1'>
+                                    File Number
+                                    {sortDesc} </th>
+                                <th onClick={() => handleSort('dateOfReport')} id='reportsTableH2'>
+                                    Date of Report
+                                    {sortAsc}</th>
+                                <th onClick={() => handleSort('patientName')} id='reportsTableH3'>Patient Name</th>
+                                <th onClick={() => handleSort('patientSurname')} id='reportsTableH4'>Patient Surname</th>
+                                <th onClick={() => handleSort('laborant')} id='reportsTableH5'>Laborant Name Surname</th>
                             </tr>
                         </table>
                     </div>
@@ -108,9 +131,9 @@ const ReportList = () => {
                             {/* </tr> */}
                         </tbody>
                     </table>
-                    {actionDiv}
                     {loadFailure && <div className='text-center text-danger'>{t('Load Failure')}</div>}
                 </div>
+                {actionDiv}
             </div>
             <div className='col-md-1 col-lg-2'></div>
         </div>
@@ -118,4 +141,3 @@ const ReportList = () => {
 }
 
 export default ReportList;
-

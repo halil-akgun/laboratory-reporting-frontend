@@ -104,7 +104,7 @@ const SaveReportPage = props => {
                         <Input name="patientSurname" label={t('Patient Surname')} error={patientSurnameError} onChange={onChange} />
                         <Input name="patientIdNumber" label={t('Patient Id Number')} error={patientIdNumberError} onChange={onChange} />
                         <Input name="diagnosisTitle" label={t('Diagnosis Title')} error={diagnosisTitleError} onChange={onChange} />
-                        <Input name="diagnosisDetails" label={t('Diagnosis Details')} error={diagnosisDetailsError} onChange={onChange} />
+                        <Input type='textarea' name="diagnosisDetails" label={t('Diagnosis Details')} error={diagnosisDetailsError} onChange={onChange} />
                         <Input type='date' name="dateOfReport" label={t('Date of Report')} error={dateOfReportError} onChange={onChange} />
                         <Input
                             label={t('Image of Report')}
@@ -116,8 +116,7 @@ const SaveReportPage = props => {
                 </div>
                 <div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
                     <ReportImageWithDefault
-                        // width="100%"
-                        width={ (newImage || form.imageOfReport) ? "100%" : "75%"}
+                        width={(newImage || form.imageOfReport) ? "100%" : "67%"}
                         image={form.imageOfReport}
                         tempimage={newImage} />
                     {newImage && <button

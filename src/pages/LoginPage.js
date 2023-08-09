@@ -48,10 +48,10 @@ const LoginPage = props => {
     return (
         <div className='container'>
             <div className='row'>
-                <div className='col-md-3'></div>
-                <div className='col-md-6'>
+                <div className='col-md-4'></div>
+                <div className='col-md-4'>
                     <form>
-                        <h1 className="text-center">{t('Login')}</h1>
+                        <h1 className="text-center mb-4">{t('Login')}</h1>
                         <Input label={t('Username')} onChange={event => setUsername(event.target.value)} />
                         <Input label={t('Password')} type="password" onChange={event => setPassword(event.target.value)} />
                         {error && <div className="alert alert-danger"> {error} </div>}
@@ -66,7 +66,7 @@ const LoginPage = props => {
                         </div>
                     </form>
                 </div>
-                <div className='col-md-3'></div>
+                <div className='col-md-4'></div>
             </div>
 
         </div>

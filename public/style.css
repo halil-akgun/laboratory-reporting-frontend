@@ -1,5 +1,5 @@
 #reportsTableCol1 {
-    width: 79px;
+    width: 83px;
     overflow: hidden;
     white-space: nowrap;
 }
@@ -29,20 +29,13 @@
 }
 
 @media (max-width: 525px) {
-    #reportsTableCol5 {
-        width: 95px;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-
-    #reportsTableH5 {
-        font-size: 0.9rem;
-        cursor: pointer;
+    #reports .card-header {
+        width: 500px !important;
     }
 }
 
-#reportsTableH1 {
-    width: 79px;
+#reports .card #reportsTableH1 {
+    width: 83px;
     cursor: pointer;
 }
 
@@ -64,4 +57,23 @@
 #reportsTableH5 {
     width: 121px;
     cursor: pointer;
+}
+
+.icon-container {
+    position: relative;
+    background-color: #f8f8f8 !important;
+    padding: 0px !important;
+    text-align: center;
+}
+
+#sortAsc {
+    position: absolute;
+    bottom: -17px;
+    right: 50%;
+}
+
+#sortDesc {
+    position: absolute;
+    bottom: -9px;
+    right: 50%;
 }
