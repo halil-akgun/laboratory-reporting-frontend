@@ -62,11 +62,6 @@ const TopBar = (props) => {
 
     if (isLoggedIn) {
 
-        let dropdownClass = 'dropdown-menu p-0 shadow';
-        if (menuVisible) {
-            dropdownClass += ' show';
-        }
-
         links = (
             <ul className="navbar-nav ms-auto mb-auto">
                 <li className='nav-item dropdown'>
@@ -74,7 +69,7 @@ const TopBar = (props) => {
                         <ProfileImageWithDefault image={image} width='33' height='33' className='rounded-circle m-auto' />
                         <span className='nav-link dropdown-toggle'>{name} {surname}</span>
                     </div>
-                    <div className={dropdownClass}>
+                    <div className={`dropdown-menu ${menuVisible ? 'show' : ''} p-0 shadow`} style={{ right: 4 }} >
                         <Link className="dropdown-item p-2" to={`/reports/save`}>
                             <i className="fa-solid fa-folder-plus me-2 text-success"></i>
                             {t('Save Report')}
@@ -85,7 +80,7 @@ const TopBar = (props) => {
                         </Link>
                         <Link className="dropdown-item p-2" to={`/users/getAllUsers`}>
                             <i className="fa-solid fa-user-group me-1 text-success"></i>
-                            {t('All Users')}
+                            {t('Other Users')}
                         </Link>
                         <Link className="dropdown-item p-2" to={`/users/${username}`}>
                             <i className="fa-solid fa-user me-2 text-info"></i>

@@ -77,3 +77,29 @@
     bottom: -9px;
     right: 50%;
 }
+
+#reportsTableH3 {
+    position: relative;
+    vertical-align: bottom !important;
+}
+
+#reportsTableH3 span {
+    padding: 0;
+    margin: 0;
+    background-color: #f8f8f8 !important;
+    position: absolute;
+    bottom: 0;
+}
+
+#orderIcon {
+    padding: 0;
+    margin: 0;
+    background-color: #f8f8f8 !important;
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+}
+
+#showMoreReports:hover {
+    background-image: linear-gradient(to bottom, #e2e3e5, rgb(192, 191, 189));
+}

@@ -36,9 +36,14 @@ i18n.use(initReactI18next).init({
                 'Image of Report': 'Image of Report',
                 'Reports': 'Reports',
                 'All Reports': 'All Reports',
-                'All Users': 'All Users',
+                'Other Users': 'Other Users',
                 'Show More Reports': 'Show More Reports',
                 'All Reports Displayed': 'All Reports Displayed',
+                'File Number': 'File Number',
+                'Date of Report': 'Date of Report',
+                'Patient Name': 'Patient Name',
+                'Patient Surname': 'Patient Surname',
+                'Laborant Name Surname': 'Laborant Name Surname',
                 'Users': 'Users'
             }
         },
@@ -75,14 +80,19 @@ i18n.use(initReactI18next).init({
                 'Image of Report': 'Raporun Resmi',
                 'Reports': 'Raporlar',
                 'All Reports': 'Tüm Raporlar',
-                'All Users': 'Tum Kullanıcılar',
+                'Other Users': 'Diğer Kullanıcılar',
                 'Show More Reports': 'Daha Fazla Rapor Göster',
                 'All Reports Displayed': 'Tüm Raporlar Görüntülendi',
+                'File Number': 'Dosya Numarası',
+                'Date of Report': 'Rapor Tarihi',
+                'Patient Name': 'Hasta Adı',
+                'Patient Surname': 'Hasta Soyadı',
+                'Laborant Name Surname': 'Laborant Adı Soyadı',
                 'Users': 'Kullanıcılar'
             }
         }
     },
-    fallbackLng: 'en',
+    fallbackLng: localStorage.getItem('lang') || 'en',
     ns: ['translations'],
     defaultNS: 'translations',
     keySeparator: false,

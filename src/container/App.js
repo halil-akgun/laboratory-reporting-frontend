@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import UserRegisterPage from '../pages/UserRegisterPage';
 import LoginPage from '../pages/LoginPage';
 import LanguageSelector from '../components/LanguageSelector';
@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import SaveReportPage from "../pages/SaveReportPage";
 import AllUsersPage from "../pages/AllUsersPage";
 import AllReportsPage from "../pages/AllReportsPage";
+import { changeLanguage } from '../api/apiCalls';
 
 /* alias is used in import. Thus, there is no need to make changes
 in the codes below in HashRouter-BrowserRouter transitions. */
@@ -22,6 +23,10 @@ const App = () => {
   const { isLoggedIn } = useSelector(store => ({
     isLoggedIn: store.isLoggedIn
   }))
+
+  useEffect(() => {
+    changeLanguage();
+  }, []);
 
   return (
     <div>

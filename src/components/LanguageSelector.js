@@ -2,12 +2,12 @@ import React from 'react';
 import { useTranslation } from "react-i18next";
 import { changeLanguage } from '../api/apiCalls';
 
-
 const LanguageSelector = (props) => {
 
     const { i18n } = useTranslation();
 
     const onChangeLanguage = language => {
+        localStorage.setItem('lang', language);
         i18n.changeLanguage(language);
         changeLanguage(language);
     }

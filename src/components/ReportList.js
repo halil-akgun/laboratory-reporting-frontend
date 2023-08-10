@@ -33,26 +33,34 @@ const ReportList = () => {
         loadReports();
     }, []);
 
-    const loadReports = async (page, sortOrder, columnName) => {
+    const loadReports = async (pageNumber, sortOrder, columnName) => {
         setLoadFailure(false);
         try {
-            if (columnName === 'laborant' || order.sortColumn === 'laborant') {
-                if (page === undefined) {
+            console.log(page.number);
+            console.log(order.sortOrder);
+            console.log(order.sortColumn);
+            console.log(pageNumber);
+            console.log(sortOrder);
+            console.log(columnName);
+            if (columnName === 'laborant') {
+                if (pageNumber === undefined) {
+                    console.log('if', pageNumber);
                     const response = await getReportsSortedByLaborant(0, sortOrder, username, password);
                     setPage(response.data);
                 } else {
-                    const response = await getReportsSortedByLaborant(page, order.sortOrder, username, password);
+                    console.log('else', pageNumber);
+                    const response = await getReportsSortedByLaborant(pageNumber, order.sortOrder, username, password);
                     setPage(previousPage => ({
                         ...response.data,
                         content: [...previousPage.content, ...response.data.content]
                     }));
                 }
             } else {
-                if (page === undefined) {
+                if (pageNumber === undefined) {
                     const response = await getReports(0, columnName, sortOrder, username, password);
                     setPage(response.data);
                 } else {
-                    const response = await getReports(page, order.sortColumn, order.sortOrder, username, password);
+                    const response = await getReports(pageNumber, order.sortColumn, order.sortOrder, username, password);
                     setPage(previousPage => ({
                         ...response.data,
                         content: [...previousPage.content, ...response.data.content]
@@ -76,10 +84,10 @@ const ReportList = () => {
     };
 
     const { t } = useTranslation();
-    const { content: reports, last, number } = page;
+    const { content: reports, last, number, totalElements } = page;
     let actionDiv = (
-        <div onClick={pendingApiCall ? () => { } : () => loadReports(number + 1)} className='mt-1 p-4 alert alert-secondary text-center' style={{ cursor: pendingApiCall ? 'not-allowed' : 'pointer' }}>
-            {pendingApiCall ? <Spinner size="23px" /> :
+        <div id='showMoreReports' onClick={(pendingApiCall || last) ? () => { } : () => loadReports((number + 1), order.sortOrder, order.sortColumn)} className='mt-1 py-3 alert alert-secondary text-center' style={{ cursor: (pendingApiCall || last) ? 'not-allowed' : 'pointer' }}>
+            {pendingApiCall ? <Spinner size="24px" /> :
                 last ? t("All Reports Displayed") :
                     t("Show More Reports")}
         </div>
@@ -106,14 +114,25 @@ const ReportList = () => {
                         <table className='table mb-1'>
                             <tr className='d-flex justify-content-around'>
                                 <th onClick={() => handleSort('fileNumber')} id='reportsTableH1'>
-                                    File Number
-                                    {sortDesc} </th>
+                                    {t('File Number')}
+                                    {order.sortColumn === 'fileNumber' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
+                                </th>
                                 <th onClick={() => handleSort('dateOfReport')} id='reportsTableH2'>
-                                    Date of Report
-                                    {sortAsc}</th>
-                                <th onClick={() => handleSort('patientName')} id='reportsTableH3'>Patient Name</th>
-                                <th onClick={() => handleSort('patientSurname')} id='reportsTableH4'>Patient Surname</th>
-                                <th onClick={() => handleSort('laborant')} id='reportsTableH5'>Laborant Name Surname</th>
+                                    {t('Date of Report')}
+                                    {order.sortColumn === 'dateOfReport' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
+                                </th>
+                                <th onClick={() => handleSort('patientName')} id='reportsTableH3'>
+                                    <span>{t('Patient Name')}</span>
+                                    <span id='orderIcon'>{order.sortColumn === 'patientName' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}</span>
+                                </th>
+                                <th onClick={() => handleSort('patientSurname')} id='reportsTableH4'>
+                                    {t('Patient Surname')}
+                                    {order.sortColumn === 'patientSurname' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
+                                </th>
+                                <th onClick={() => handleSort('laborant')} id='reportsTableH5'>
+                                    {t('Laborant Name Surname')}
+                                    {order.sortColumn === 'laborant' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
+                                </th>
                             </tr>
                         </table>
                     </div>
@@ -133,7 +152,15 @@ const ReportList = () => {
                     </table>
                     {loadFailure && <div className='text-center text-danger'>{t('Load Failure')}</div>}
                 </div>
-                {actionDiv}
+                <div className='row'>
+                    <div className='col-2'></div>
+                    <div className='col-8'>
+                        {actionDiv}
+                    </div>
+                    <div className='col-2 text-end'>
+                        <span>{reports.length}/{totalElements || 0}</span>
+                    </div>
+                </div>
             </div>
             <div className='col-md-1 col-lg-2'></div>
         </div>
