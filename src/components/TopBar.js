@@ -101,8 +101,10 @@ const TopBar = (props) => {
             <nav className="navbar navbar-light container navbar-expand">
                 <Link className="navbar-brand" to="/">
                     {/* <a className="navbar-brand" href="#/"> */}
-                    <img src={logo} width='35' alt='logo' />
-                    LABORATORY
+                    <span className='d-flex align-items-center'>
+                        <img src={logo} width='35' alt='logo' />
+                        LABORATORY
+                    </span>
                 </Link>
                 {links}
             </nav>

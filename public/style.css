@@ -68,13 +68,13 @@
 
 #sortAsc {
     position: absolute;
-    bottom: -17px;
+    bottom: -16px;
     right: 50%;
 }
 
 #sortDesc {
     position: absolute;
-    bottom: -9px;
+    bottom: -8px;
     right: 50%;
 }
 
@@ -92,14 +92,15 @@
 }
 
 #orderIcon {
-    padding: 0;
-    margin: 0;
     background-color: #f8f8f8 !important;
     position: absolute;
-    bottom: 0;
     right: 50%;
 }
 
 #showMoreReports:hover {
     background-image: linear-gradient(to bottom, #e2e3e5, rgb(192, 191, 189));
+}
+
+.footer {
+    background-image: linear-gradient(to bottom, #e4e7e8, #c3c8cb, #757e85);
 }

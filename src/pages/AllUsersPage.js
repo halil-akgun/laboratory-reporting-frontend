@@ -5,11 +5,11 @@ const AllUsersPage = () => {
     return (
         <div className='container'>
             <div className='row'>
-                <div className='col-md-2'></div>
-                <div className='col-md-8'>
+                <div className='col-md-2 col-lg-3'></div>
+                <div className='col-md-8 col-lg-6'>
                     <UserList />
                 </div>
-                <div className='col-md-2'></div>
+                <div className='col-md-2 col-lg-3'></div>
             </div>
         </div>
     );

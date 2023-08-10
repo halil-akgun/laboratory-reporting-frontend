@@ -86,7 +86,7 @@ const ReportList = () => {
     const { t } = useTranslation();
     const { content: reports, last, number, totalElements } = page;
     let actionDiv = (
-        <div id='showMoreReports' onClick={(pendingApiCall || last) ? () => { } : () => loadReports((number + 1), order.sortOrder, order.sortColumn)} className='mt-1 py-3 alert alert-secondary text-center' style={{ cursor: (pendingApiCall || last) ? 'not-allowed' : 'pointer' }}>
+        <div id='showMoreReports' onClick={(pendingApiCall || last) ? () => { } : () => loadReports((number + 1), order.sortOrder, order.sortColumn)} className='mt-1 py-2 alert alert-secondary text-center' style={{ cursor: (pendingApiCall || last) ? 'not-allowed' : 'pointer' }}>
             {pendingApiCall ? <Spinner size="24px" /> :
                 last ? t("All Reports Displayed") :
                     t("Show More Reports")}
@@ -111,7 +111,7 @@ const ReportList = () => {
             <div id='reports' className='col-md-10 col-lg-8'>
                 <div className='card table-responsive'>
                     <div className='card-header px-2 list-group list-group-flush p-1 pb-2'>
-                        <table className='table mb-1'>
+                        <table className='table mb-0'>
                             <tr className='d-flex justify-content-around'>
                                 <th onClick={() => handleSort('fileNumber')} id='reportsTableH1'>
                                     {t('File Number')}
