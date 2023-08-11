@@ -30,34 +30,63 @@
 
 @media (max-width: 561px) {
     #reports .card-header {
-        width: 518px !important;
+        width: 494px !important;
     }
+
     .filterByDateFontSize {
         font-size: 9px !important;
     }
 }
 
+@media (min-width: 800px) {
+    #reportsTableCol5 {
+        width: 145px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    #reportsTableH5 {
+        width: 145px !important;
+        cursor: pointer;
+    }
+}
+
+#reports .card-header {
+    padding-bottom: 7px !important;
+    background-color: #f3f1f1f6 !important;
+}
+
+#reports th {
+    border: none !important;
+    background-color: #f3f1f1f6 !important;
+}
+
 #reports .card #reportsTableH1 {
+    padding: 1px;
     width: 83px;
     cursor: pointer;
 }
 
 #reportsTableH2 {
+    padding: 1px;
     width: 87px;
     cursor: pointer;
 }
 
 #reportsTableH3 {
-    width: 97px;
+    padding: 1px;
+    width: 97px !important;
     cursor: pointer;
 }
 
 #reportsTableH4 {
+    padding: 1px;
     width: 97px;
     cursor: pointer;
 }
 
 #reportsTableH5 {
+    padding: 1px;
     width: 121px;
     cursor: pointer;
 }
@@ -78,25 +107,6 @@
 #sortDesc {
     position: absolute;
     bottom: -8px;
-    right: 50%;
-}
-
-#reportsTableH3 {
-    position: relative;
-    vertical-align: bottom !important;
-}
-
-#reportsTableH3 span {
-    padding: 0;
-    margin: 0;
-    background-color: #f8f8f8 !important;
-    position: absolute;
-    bottom: 0;
-}
-
-#orderIcon {
-    background-color: #f8f8f8 !important;
-    position: absolute;
     right: 50%;
 }
 

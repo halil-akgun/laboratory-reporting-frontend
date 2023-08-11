@@ -181,44 +181,42 @@ const ReportList = () => {
                     </div>
                 </div>
                 <div id='reports' className='card table-responsive'>
-                    <div className='card-header px-2 list-group list-group-flush p-1 pb-2'>
+                    <div className='card-header py-0 px-2 list-group list-group-flush p-1 pb-2'>
                         <table className='table mb-0'>
-                            <tr className='d-flex justify-content-around'>
-                                <th onClick={() => handleSort('fileNumber')} id='reportsTableH1'>
-                                    {t('File Number')}
-                                    {order.sortColumn === 'fileNumber' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
-                                </th>
-                                <th onClick={() => handleSort('dateOfReport')} id='reportsTableH2'>
-                                    {t('Date of Report')}
-                                    {order.sortColumn === 'dateOfReport' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
-                                </th>
-                                <th onClick={() => handleSort('patientName')} id='reportsTableH3'>
-                                    <span>{t('Patient Name')}</span>
-                                    <span id='orderIcon'>{order.sortColumn === 'patientName' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}</span>
-                                </th>
-                                <th onClick={() => handleSort('patientSurname')} id='reportsTableH4'>
-                                    {t('Patient Surname')}
-                                    {order.sortColumn === 'patientSurname' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
-                                </th>
-                                <th onClick={() => handleSort('laborant')} id='reportsTableH5'>
-                                    {t('Laborant Name Surname')}
-                                    {order.sortColumn === 'laborant' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
-                                </th>
-                            </tr>
+                            <thead>
+                                <tr className='d-flex justify-content-around'>
+                                    <th onClick={() => handleSort('fileNumber')} id='reportsTableH1'>
+                                        {t('File Number')}
+                                        {order.sortColumn === 'fileNumber' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
+                                    </th>
+                                    <th onClick={() => handleSort('dateOfReport')} id='reportsTableH2'>
+                                        {t('Date of Report')}
+                                        {order.sortColumn === 'dateOfReport' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
+                                    </th>
+                                    <th onClick={() => handleSort('patientName')} id='reportsTableH3'>
+                                        <span>{t('Patient Name')}</span>
+                                        <span id='orderIcon'>{order.sortColumn === 'patientName' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}</span>
+                                    </th>
+                                    <th onClick={() => handleSort('patientSurname')} id='reportsTableH4'>
+                                        {t('Patient Surname')}
+                                        {order.sortColumn === 'patientSurname' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
+                                    </th>
+                                    <th onClick={() => handleSort('laborant')} id='reportsTableH5'>
+                                        {t('Laborant Name Surname')}
+                                        {order.sortColumn === 'laborant' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
+                                    </th>
+                                </tr>
+                            </thead>
                         </table>
                     </div>
                     <table className='table mb-0'>
                         <tbody>
-                            {/* <tr className='list-group list-group-flush'>
-                                <td className='p-0'> */}
-                                    {
-                                        reports.map(report => (
-                                            <ReportListItem key={report.fileNumber} report={report} />
-                                        )
-                                        )
-                                    }
-                                {/* </td>
-                            </tr> */}
+                            {
+                                reports.map(report => (
+                                    <ReportListItem key={report.fileNumber} report={report} />
+                                )
+                                )
+                            }
                         </tbody>
                     </table>
                     {loadFailure && <div className='text-center text-danger'>{t('Load Failure')}</div>}
