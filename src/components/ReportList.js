@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getReports, getReportsSortedByLaborant } from '../api/apiCalls';
+import { getReports, searchInReports } from '../api/apiCalls';
 import { useTranslation } from 'react-i18next';
 import ReportListItem from './ReportListItem';
 import { useSelector } from 'react-redux';
@@ -14,20 +14,26 @@ const ReportList = () => {
         number: 0,
         last: true
     });
-
     const [order, setOrder] = useState({
         sortColumn: 'fileNumber',
         sortOrder: 'ASC'
     });
-
     const [loadFailure, setLoadFailure] = useState(false);
-
     const { username, password } = useSelector(store => ({
         username: store.username,
         password: store.password
     }));
-
     const pendingApiCall = useApiProgress('get', '/reports/getAllReports?page');
+    const [search, setSearch] = useState({
+        searchTerm: '',
+        startDate: '',
+        endDate: ''
+    });
+    const { t } = useTranslation();
+    const { content: reports, last, number, totalElements } = page;
+    const { searchTerm, startDate, endDate } = search;
+    let IsItFiltered = searchTerm || startDate || endDate;
+
 
     useEffect(() => {
         loadReports();
@@ -36,40 +42,45 @@ const ReportList = () => {
     const loadReports = async (pageNumber, sortOrder, columnName) => {
         setLoadFailure(false);
         try {
-            console.log(page.number);
-            console.log(order.sortOrder);
-            console.log(order.sortColumn);
-            console.log(pageNumber);
-            console.log(sortOrder);
-            console.log(columnName);
-            if (columnName === 'laborant') {
-                if (pageNumber === undefined) {
-                    console.log('if', pageNumber);
-                    const response = await getReportsSortedByLaborant(0, sortOrder, username, password);
-                    setPage(response.data);
-                } else {
-                    console.log('else', pageNumber);
-                    const response = await getReportsSortedByLaborant(pageNumber, order.sortOrder, username, password);
-                    setPage(previousPage => ({
-                        ...response.data,
-                        content: [...previousPage.content, ...response.data.content]
-                    }));
-                }
+            if (pageNumber === undefined) {
+                const response = await getReports(0, columnName, sortOrder, username, password);
+                setPage(response.data);
             } else {
-                if (pageNumber === undefined) {
-                    const response = await getReports(0, columnName, sortOrder, username, password);
-                    setPage(response.data);
-                } else {
-                    const response = await getReports(pageNumber, order.sortColumn, order.sortOrder, username, password);
-                    setPage(previousPage => ({
-                        ...response.data,
-                        content: [...previousPage.content, ...response.data.content]
-                    }));
-                }
+                const response = await getReports(pageNumber, order.sortColumn, order.sortOrder, username, password);
+                setPage(previousPage => ({
+                    ...response.data,
+                    content: [...previousPage.content, ...response.data.content]
+                }));
             }
         } catch {
             setLoadFailure(true);
         }
+    };
+
+    const filterReports = async (pageNumber, sortOrder, columnName) => {
+        setLoadFailure(false);
+        try {
+            if (pageNumber === undefined) {
+                const response = await searchInReports(0, columnName, sortOrder, search.searchTerm, search.startDate, search.endDate, username, password);
+                setPage(response.data);
+            } else {
+                const response = await searchInReports(pageNumber, order.sortColumn, order.sortOrder, search.searchTerm, search.startDate, search.endDate, username, password);
+                setPage(previousPage => ({
+                    ...response.data,
+                    content: [...previousPage.content, ...response.data.content]
+                }));
+            }
+        } catch {
+            setLoadFailure(true);
+        }
+    };
+
+    const handleSearch = (event) => {
+        const { name, value } = event.target;
+        setSearch(prevSearch => ({
+            ...prevSearch,
+            [name]: value
+        }));
     };
 
     const handleSort = (columnName) => {
@@ -80,13 +91,28 @@ const ReportList = () => {
             setOrder({ sortColumn: columnName, sortOrder: newSortOrder });
         }
 
-        loadReports(undefined, newSortOrder, columnName);
+        if (IsItFiltered) {
+            filterReports(undefined, newSortOrder, columnName);
+        } else {
+            loadReports(undefined, newSortOrder, columnName);
+        }
     };
 
-    const { t } = useTranslation();
-    const { content: reports, last, number, totalElements } = page;
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
+        if (!pendingApiCall) {
+            filterReports(undefined, order.sortOrder, order.sortColumn);
+        }
+    };
+
     let actionDiv = (
-        <div id='showMoreReports' onClick={(pendingApiCall || last) ? () => { } : () => loadReports((number + 1), order.sortOrder, order.sortColumn)} className='mt-1 py-2 alert alert-secondary text-center' style={{ cursor: (pendingApiCall || last) ? 'not-allowed' : 'pointer' }}>
+        <div
+            id='showMoreReports'
+            onClick={(pendingApiCall || last) ? () => { } :
+                IsItFiltered ? () => filterReports((number + 1), order.sortOrder, order.sortColumn) :
+                    () => loadReports((number + 1), order.sortOrder, order.sortColumn)}
+            className='mt-1 py-2 alert alert-secondary text-center'
+            style={{ cursor: (pendingApiCall || last) ? 'not-allowed' : 'pointer' }}>
             {pendingApiCall ? <Spinner size="24px" /> :
                 last ? t("All Reports Displayed") :
                     t("Show More Reports")}
@@ -106,10 +132,55 @@ const ReportList = () => {
 
     return (
         <div className='row'>
-            <h1 className="text-center mb-4">{t('Reports')}</h1>
+            <h1 className="text-center mb-2 mt-3">{t('Reports')}</h1>
             <div className='col-md-1 col-lg-2'></div>
             <div id='reports' className='col-md-10 col-lg-8'>
-                <div className='card table-responsive'>
+                <div className='mb-2 mt-3'>
+                    <div className='d-flex gap-1'>
+                        <div className='input-group text-center'>
+                            <form style={{ width: '100%' }} onSubmit={handleFormSubmit}>
+                                <span className='mx-auto'>Phrase to Search</span>
+                                <div className='input-group'>
+                                    <input
+                                        className='py-1 form-control'
+                                        type='text'
+                                        name='searchTerm'
+                                        placeholder={t('Search in Reports')}
+                                        value={searchTerm}
+                                        onChange={handleSearch}
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="py-1 btn btn-primary"
+                                        disabled={pendingApiCall}
+                                    >
+                                        <i className="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div className='text-center input-group'>
+                            <span className='mx-auto'>{t('Search by Date Range')}</span>
+                            <div className='input-group'>
+                                <input
+                                    className='py-1 form-control filterByDateFontSize'
+                                    type='date'
+                                    name='startDate'
+                                    value={startDate}
+                                    onChange={handleSearch}
+                                />
+                                <input
+                                    className='py-1 form-control filterByDateFontSize'
+                                    type='date'
+                                    name='endDate'
+                                    value={endDate}
+                                    onChange={handleSearch}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id='reports' className='card table-responsive'>
                     <div className='card-header px-2 list-group list-group-flush p-1 pb-2'>
                         <table className='table mb-0'>
                             <tr className='d-flex justify-content-around'>
@@ -138,16 +209,16 @@ const ReportList = () => {
                     </div>
                     <table className='table mb-0'>
                         <tbody>
-                            {/* <tr className='list-group list-group-flush'> */}
-                            <div className='list-group list-group-flush'>
-                                {
-                                    reports.map(report => (
-                                        <ReportListItem key={report.fileNumber} report={report} />
-                                    )
-                                    )
-                                }
-                            </div>
-                            {/* </tr> */}
+                            {/* <tr className='list-group list-group-flush'>
+                                <td className='p-0'> */}
+                                    {
+                                        reports.map(report => (
+                                            <ReportListItem key={report.fileNumber} report={report} />
+                                        )
+                                        )
+                                    }
+                                {/* </td>
+                            </tr> */}
                         </tbody>
                     </table>
                     {loadFailure && <div className='text-center text-danger'>{t('Load Failure')}</div>}

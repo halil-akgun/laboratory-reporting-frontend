@@ -10,7 +10,7 @@ const Input = (props) => {
     return (
         <div className="mb-2 form-group row d-flex">
             <div className="col-md-5 text-start pe-1 ">
-                <label for={name} className="col-form-label pt-1">{label}</label>
+                <label htmlFor={name} className="col-form-label pt-1">{label}</label>
             </div>
             <div className="col-md-7">
                 {type == 'textarea' ?

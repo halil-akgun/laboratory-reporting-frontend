@@ -44,6 +44,7 @@ i18n.use(initReactI18next).init({
                 'Patient Name': 'Patient Name',
                 'Patient Surname': 'Patient Surname',
                 'Laborant Name Surname': 'Laborant Name Surname',
+                'Search in Reports': 'Search in Reports',
                 'Users': 'Users'
             }
         },
@@ -88,6 +89,7 @@ i18n.use(initReactI18next).init({
                 'Patient Name': 'Hasta Adı',
                 'Patient Surname': 'Hasta Soyadı',
                 'Laborant Name Surname': 'Laborant Adı Soyadı',
+                'Search in Reports': 'Raporlarda Arayın',
                 'Users': 'Kullanıcılar'
             }
         }
@@ -99,9 +101,6 @@ i18n.use(initReactI18next).init({
     interpolation: {
         escapeValue: false,
         formatSeparator: ','
-    },
-    react: {
-        wait: true
     }
 });
 

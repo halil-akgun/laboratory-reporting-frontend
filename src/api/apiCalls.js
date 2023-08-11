@@ -39,6 +39,6 @@ export const getReports = (page = 0, sortColumn = 'fileNumber', sortOrder = 'ASC
     return axios.get(`/reports/getAllReports?page=${page}&size=10&sort=${sortColumn},${sortOrder}`, { auth: { username, password } });
 }
 
-export const getReportsSortedByLaborant = (page = 0, sortOrder = 'ASC', username, password) => {
-    return axios.get(`/reports/getReportsSortedByLaborant?page=${page}&size=10&type=${sortOrder}`, { auth: { username, password } });
+export const searchInReports = (page = 0, sortColumn = 'fileNumber', sortOrder = 'ASC', searchTerm, startDate, endDate, username, password) => {
+    return axios.get(`/reports/searchInReports?page=${page}&size=10&sort=${sortColumn},${sortOrder}&searchTerm=${searchTerm}&startDate=${startDate}&endDate=${endDate}`, { auth: { username, password } });
 }

@@ -10,23 +10,25 @@ const UserListItem = (props) => {
     return (
         <Link to={`/users/${username}`} className='list-group-item list-group-item-action' >
             <table>
-                <tr>
-                    <td>
-                        <ProfileImageWithDefault
-                            className='rounded-circle'
-                            width="55"
-                            height="55"
-                            image={image} />
-                    </td>
-                    <td>
-                        <span className='fs-5 ps-2'>
-                            {name} {surname}
-                        </span><br />
-                        <span className='fs-6 ps-2'>
-                            {username}
-                        </span>
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td>
+                            <ProfileImageWithDefault
+                                className='rounded-circle'
+                                width="55"
+                                height="55"
+                                image={image} />
+                        </td>
+                        <td>
+                            <span className='fs-5 ps-2'>
+                                {name} {surname}
+                            </span><br />
+                            <span className='fs-6 ps-2'>
+                                {username}
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </Link>
     );

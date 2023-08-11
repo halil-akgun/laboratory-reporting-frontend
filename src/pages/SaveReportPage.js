@@ -3,7 +3,6 @@ import Input from "../components/Input";
 import { useTranslation } from "react-i18next";
 import ButtonWithProgress from '../components/ButtonWithProgress';
 import { useApiProgress } from "../shared/ApiProgress";
-import { useDispatch } from "react-redux";
 import { saveReport } from "../api/apiCalls";
 import ReportImageWithDefault from '../components/ReportImageWithDefault';
 
@@ -21,8 +20,6 @@ const SaveReportPage = props => {
     })
     const [errors, setErrors] = useState({});
     const [newImage, setNewImage] = useState();
-
-    const dispatch = useDispatch();
 
     const onChange = event => {
 
@@ -49,8 +46,6 @@ const SaveReportPage = props => {
         // The browser's automatic sending of form content is blocked.
         // The content should be taken from the state, not the form.
 
-        const { history } = props;
-        const { push } = history;
         const { fileNumber, patientName, patientSurname, patientIdNumber, diagnosisTitle, diagnosisDetails, dateOfReport } = form;
 
         let imageTemp;
@@ -74,7 +69,6 @@ const SaveReportPage = props => {
         try {
             await saveReport(body);
             props.history.goBack();
-            // push('/');
         } catch (error) {
             if (error.response.data.validationErrors) {
                 setErrors(error.response.data.validationErrors);
@@ -95,7 +89,7 @@ const SaveReportPage = props => {
     return (
         <div className="container">
             <div className="row">
-                <h1 className="text-center mb-4">{t('Save Report')}</h1>
+                <h1 className="text-center mb-3 mt-3">{t('Save Report')}</h1>
                 <div className="col-md-6">
                     <form>
 

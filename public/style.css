@@ -28,9 +28,12 @@
     white-space: nowrap;
 }
 
-@media (max-width: 525px) {
+@media (max-width: 561px) {
     #reports .card-header {
-        width: 500px !important;
+        width: 518px !important;
+    }
+    .filterByDateFontSize {
+        font-size: 9px !important;
     }
 }
 

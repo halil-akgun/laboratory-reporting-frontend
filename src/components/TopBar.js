@@ -63,7 +63,7 @@ const TopBar = (props) => {
     if (isLoggedIn) {
 
         links = (
-            <ul className="navbar-nav ms-auto mb-auto">
+            <ul className="navbar-nav ms-auto mt-auto">
                 <li className='nav-item dropdown'>
                     <div ref={menuArea} className='d-flex' style={{ cursor: 'pointer' }} onClick={() => setMenuVisible(true)}>
                         <ProfileImageWithDefault image={image} width='33' height='33' className='rounded-circle m-auto' />
