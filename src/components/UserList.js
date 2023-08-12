@@ -48,7 +48,7 @@ const UserList = () => {
     };
 
     const { t } = useTranslation();
-    const { content: users, first, last } = page;
+    const { content: users, first, last, totalPages, number } = page;
     let actionDiv = (
         <div>
             {first === false && (<button className='btn btn-sm btn-light' onClick={onClickPrevious}>{t("Previous")}</button>)}
@@ -61,20 +61,25 @@ const UserList = () => {
         );
     };
     return (
-        <div className='card mt-4'>
-            <h3 className='card-header text-center'>
-                {t("Users")}
-            </h3>
-            <div className='list-group list-group-flush'>
-                {
-                    users.map(user => (
-                        <UserListItem key={user.username} user={user} />
-                    )
-                    )
-                }
+        <div>
+            <div className='card mt-4'>
+                <h3 className='card-header text-center'>
+                    {t("Users")}
+                </h3>
+                <div className='list-group list-group-flush'>
+                    {
+                        users.map(user => (
+                            <UserListItem key={user.username} user={user} />
+                        )
+                        )
+                    }
+                </div>
+                {actionDiv}
+                {loadFailure && <div className='text-center text-danger'>{t('Load Failure')}</div>}
             </div>
-            {actionDiv}
-            {loadFailure && <div className='text-center text-danger'>{t('Load Failure')}</div>}
+            <div className='text-end'>
+                <span>{(totalPages !== undefined) ? number + 1 : 0}/{totalPages || 0}</span>
+            </div>
         </div>
     );
 }

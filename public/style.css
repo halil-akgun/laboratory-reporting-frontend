@@ -117,3 +117,16 @@
 .footer {
     background-image: linear-gradient(to bottom, #e4e7e8, #c3c8cb, #757e85);
 }
+
+.tooltip-inner {
+    background-color: #222222 !important;
+    color: #fff !important;
+    border-radius: 4px !important;
+    padding: 7px !important;
+    text-align: start !important;
+    font-size: 14px !important;
+}
+
+.highlighted {
+    color: yellow;
+}

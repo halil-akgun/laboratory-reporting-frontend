@@ -1,7 +1,7 @@
 import React from 'react';
 import UserList from '../components/UserList';
 
-const AllUsersPage = () => {
+const OtherUsersPage = () => {
     return (
         <div className='container'>
             <div className='row'>
@@ -15,4 +15,4 @@ const AllUsersPage = () => {
     );
 };
 
-export default AllUsersPage;
+export default OtherUsersPage;

@@ -7,7 +7,7 @@ import TopBar from "../components/TopBar";
 import UserPage from "../pages/UserPage";
 import { useSelector } from "react-redux";
 import SaveReportPage from "../pages/SaveReportPage";
-import AllUsersPage from "../pages/AllUsersPage";
+import OtherUsersPage from "../pages/OtherUsersPage";
 import AllReportsPage from "../pages/AllReportsPage";
 import { changeLanguage } from '../api/apiCalls';
 import Footer from '../components/Footer';
@@ -41,7 +41,7 @@ const App = () => {
             {!isLoggedIn && <Route path="/register" component={UserRegisterPage} />}
             {/* register page will not open if logged in */}
             {isLoggedIn && <Route path="/reports/save" component={SaveReportPage} />}
-            {isLoggedIn && <Route path="/users/getAllUsers" component={AllUsersPage} />}
+            {isLoggedIn && <Route path="/users/getAllUsers" component={OtherUsersPage} />}
             {isLoggedIn && <Route path="/reports/getAllReports" component={AllReportsPage} />}
             <Route path="/users/:username" component={UserPage} />
             <Redirect to='/' />

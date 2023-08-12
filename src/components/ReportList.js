@@ -213,7 +213,7 @@ const ReportList = () => {
                         <tbody>
                             {
                                 reports.map(report => (
-                                    <ReportListItem key={report.fileNumber} report={report} />
+                                    <ReportListItem key={report.fileNumber} report={report} searchTerm={searchTerm} />
                                 )
                                 )
                             }
