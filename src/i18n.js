@@ -44,7 +44,12 @@ i18n.use(initReactI18next).init({
                 'Patient Name': 'Patient Name',
                 'Patient Surname': 'Patient Surname',
                 'Laborant Name Surname': 'Laborant Name Surname',
+                'Delete User': 'Delete User',
                 'Search in Reports': 'Search in Reports',
+                'Delete User and Reports': 'Delete User and Reports',
+                'Keep the reports. (All reports belonging to the user will be passed to the admin)': 'Keep the reports. (All reports belonging to the user will be passed to the admin)',
+                'Are you sure you want to delete the user?': 'Are you sure you want to delete the user?',
+                'Delete': 'Delete',
                 'Users': 'Users'
             }
         },
@@ -88,8 +93,13 @@ i18n.use(initReactI18next).init({
                 'Date of Report': 'Rapor Tarihi',
                 'Patient Name': 'Hasta Adı',
                 'Patient Surname': 'Hasta Soyadı',
+                'Delete User': 'Kullanıcıyı Sil',
                 'Laborant Name Surname': 'Laborant Adı Soyadı',
                 'Search in Reports': 'Raporlarda Arayın',
+                'Delete User and Reports': 'Raporları ve Kullanıcıyı Sil',
+                'Keep the reports. (All reports belonging to the user will be passed to the admin)': 'Raporları saklayın. (Kullanıcıya ait tüm raporlar admine geçecektir)',
+                'Are you sure you want to delete the user?': 'Kullanıcıyı silmek istediğinizden emin misiniz?',
+                'Delete': 'Sil',
                 'Users': 'Kullanıcılar'
             }
         }

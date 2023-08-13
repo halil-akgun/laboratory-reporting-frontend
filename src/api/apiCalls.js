@@ -42,3 +42,7 @@ export const getReports = (page = 0, sortColumn = 'fileNumber', sortOrder = 'ASC
 export const searchInReports = (page = 0, sortColumn = 'fileNumber', sortOrder = 'ASC', searchTerm, startDate, endDate, username, password) => {
     return axios.get(`/reports/searchInReports?page=${page}&size=10&sort=${sortColumn},${sortOrder}&searchTerm=${searchTerm}&startDate=${startDate}&endDate=${endDate}`, { auth: { username, password } });
 }
+
+export const deleteUser = username => {
+    return axios.delete(`/users/delete/${username}`);
+}
