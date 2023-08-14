@@ -51,7 +51,7 @@ const UserPage = props => {
 
     return (
         <div className='container'>
-            <ProfileCard user={user} />
+            <ProfileCard user={user} history={props.history} />
         </div>
     );
 };

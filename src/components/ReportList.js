@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getReports, searchInReports } from '../api/apiCalls';
+import { getAllReports, searchInReports } from '../api/apiCalls';
 import { useTranslation } from 'react-i18next';
 import ReportListItem from './ReportListItem';
 import { useSelector } from 'react-redux';
@@ -43,10 +43,10 @@ const ReportList = () => {
         setLoadFailure(false);
         try {
             if (pageNumber === undefined) {
-                const response = await getReports(0, columnName, sortOrder, username, password);
+                const response = await getAllReports(0, columnName, sortOrder, username, password);
                 setPage(response.data);
             } else {
-                const response = await getReports(pageNumber, order.sortColumn, order.sortOrder, username, password);
+                const response = await getAllReports(pageNumber, order.sortColumn, order.sortOrder, username, password);
                 setPage(previousPage => ({
                     ...response.data,
                     content: [...previousPage.content, ...response.data.content]
@@ -139,7 +139,7 @@ const ReportList = () => {
                     <div className='d-flex gap-1'>
                         <div className='input-group text-center'>
                             <form style={{ width: '100%' }} onSubmit={handleFormSubmit}>
-                                <span className='mx-auto'>Phrase to Search</span>
+                                <span className='mx-auto'>{t('Phrase to Search')}</span>
                                 <div className='input-group'>
                                     <input
                                         className='py-1 form-control'

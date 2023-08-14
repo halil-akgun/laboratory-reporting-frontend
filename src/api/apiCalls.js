@@ -35,7 +35,7 @@ export const saveReport = (body) => {
     return axios.post('/reports/save', body);
 }
 
-export const getReports = (page = 0, sortColumn = 'fileNumber', sortOrder = 'ASC', username, password) => {
+export const getAllReports = (page = 0, sortColumn = 'fileNumber', sortOrder = 'ASC', username, password) => {
     return axios.get(`/reports/getAllReports?page=${page}&size=10&sort=${sortColumn},${sortOrder}`, { auth: { username, password } });
 }
 
@@ -43,6 +43,18 @@ export const searchInReports = (page = 0, sortColumn = 'fileNumber', sortOrder =
     return axios.get(`/reports/searchInReports?page=${page}&size=10&sort=${sortColumn},${sortOrder}&searchTerm=${searchTerm}&startDate=${startDate}&endDate=${endDate}`, { auth: { username, password } });
 }
 
-export const deleteUser = username => {
-    return axios.delete(`/users/delete/${username}`);
+export const deleteUser = (username, keepReports) => {
+    return axios.delete(`/users/delete/${username}?keepReports=${keepReports}`);
+}
+
+export const getReport = (id) => {
+    return axios.get(`/reports/getReport/${id}`);
+}
+
+export const updateReport = (id, removeImage, body) => {
+    return axios.put(`/reports/updateReport/${id}?removeImage=${removeImage}`, body);
+}
+
+export const deleteReport = (id) => {
+    return axios.delete(`/reports/delete/${id}`);
 }

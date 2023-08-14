@@ -78,7 +78,7 @@ const SaveReportPage = props => {
 
     const onClearImage = () => {
         setNewImage(null);
-        setForm((previousForm) => ({ ...previousForm, imageOfReport: null })); // Formda bulunan resmi temizle
+        setForm((previousForm) => ({ ...previousForm, imageOfReport: null }));
     }
 
     const { t } = useTranslation();
@@ -90,7 +90,7 @@ const SaveReportPage = props => {
         <div className="container">
             <div className="row">
                 <h1 className="text-center mb-3 mt-3">{t('Save Report')}</h1>
-                <div className="col-md-6">
+                <div className="col-md-6 mb-3">
                     <form>
 
                         <Input name="fileNumber" label={t('File Number')} error={fileNumberError} onChange={onChange} />
@@ -108,7 +108,7 @@ const SaveReportPage = props => {
 
                     </form>
                 </div>
-                <div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
+                <div className="col-md-6 mb-3 d-flex flex-column align-items-center justify-content-center">
                     <ReportImageWithDefault
                         width={(newImage || form.imageOfReport) ? "100%" : "67%"}
                         image={form.imageOfReport}

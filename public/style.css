@@ -34,7 +34,15 @@
     }
 
     .filterByDateFontSize {
+        font-size: 11px !important;
+        height: 33.6px;
+    }
+}
+
+@media (max-width: 400px) {
+    .filterByDateFontSize {
         font-size: 9px !important;
+        height: 33.6px;
     }
 }
 

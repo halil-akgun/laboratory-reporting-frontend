@@ -1,19 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ButtonWithProgress from './ButtonWithProgress';
 
 const Modal = props => {
-    const { visible, onClickCancel, message, onClickOk, checkbox, pendingApiCall, title, okButton } = props;
+    const { visible, onClickCancel, message, onClickOk, checkbox, checkboxText, onChangeCheckbox, pendingApiCall, title, okButton } = props;
     const { t } = useTranslation();
 
     let className = 'modal fade';
     if (visible) {
         className += ' show d-block';
     }
-
-    const onChangeAgree = event => {
-        setAgreedClicked(event.target.checked);
-    };
 
 
     return (
@@ -23,13 +19,14 @@ const Modal = props => {
                     <div className="modal-header">
                         <h5 className="modal-title">{title}</h5>
                     </div>
-                    <div className="modal-body">{message}</div>
+                    <div className="modal-body">
+                        {message}
+                        {checkboxText &&
+                            <div className='mt-4'>
+                                <input type="checkbox" checked={checkbox} onChange={event => onChangeCheckbox(event.target.checked)} /> {checkboxText}
+                            </div>}
+                    </div>
                     <div className="modal-footer">
-                        {checkbox &&
-                            <div>
-                                <input type="checkbox" onChange={onChangeAgree} /> {checkbox}
-                            </div>
-                        }
                         <button className="btn btn-secondary" disabled={pendingApiCall} onClick={onClickCancel}>
                             {t('Cancel')}
                         </button>
@@ -38,7 +35,7 @@ const Modal = props => {
                             onClick={onClickOk}
                             pendingApiCall={pendingApiCall}
                             disabled={pendingApiCall}
-                            text={okButton}
+                            text={(okButton && Array.isArray(okButton) && (checkbox ? okButton[0] : okButton[1])) || okButton || t('OK')}
                         />
                     </div>
                 </div>

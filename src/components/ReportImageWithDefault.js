@@ -6,7 +6,7 @@ const ReportImageWithDefault = (props) => {
     const { image, tempimage } = props;
     let imageSource = defaultPicture;
     if (image) {
-        imageSource = 'images/report' + image;
+        imageSource = 'images/report/' + image;
     }
 
     return (

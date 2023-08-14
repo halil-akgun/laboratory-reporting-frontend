@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import ProfileImageWithDefault from './ProfileImageWithDefault';
 import { useTranslation } from 'react-i18next';
 import Input from '../components/Input';
@@ -26,6 +26,7 @@ const ProfileCard = props => {
     const [validationErrors, setValidationErrors] = useState({});
     const [modelVisible, setModelVisible] = useState(false);
     const dispatch = useDispatch();
+    const [keepReports, setKeepReports] = useState(true);
 
     useEffect(() => {
         setUser(props.user);
@@ -100,7 +101,8 @@ const ProfileCard = props => {
     }
 
     const onClickDelete = async () => {
-        await deleteUser(username);
+        await deleteUser(username, keepReports);
+        props.history.goBack();
     }
 
     const onClickCancel = async () => {
@@ -231,8 +233,10 @@ const ProfileCard = props => {
                 onClickCancel={onClickCancel}
                 visible={modelVisible}
                 pendingApiCall={pendingApiCallDelete}
-                okButton={t('Delete User and Reports')}
-                checkbox={t('Keep the reports. (All reports belonging to the user will be passed to the admin)')}
+                okButton={[t('Delete User'), t('Delete User and Reports')]}
+                checkbox={keepReports}
+                onChangeCheckbox={setKeepReports}
+                checkboxText={t('Keep the reports. (All reports belonging to the user will be passed to the admin)')}
                 message={
                     <div>
                         <div>

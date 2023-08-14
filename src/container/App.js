@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import SaveReportPage from "../pages/SaveReportPage";
 import OtherUsersPage from "../pages/OtherUsersPage";
 import AllReportsPage from "../pages/AllReportsPage";
+import ReportPage from "../pages/ReportPage";
 import { changeLanguage } from '../api/apiCalls';
 import Footer from '../components/Footer';
 
@@ -43,7 +44,8 @@ const App = () => {
             {isLoggedIn && <Route path="/reports/save" component={SaveReportPage} />}
             {isLoggedIn && <Route path="/users/getAllUsers" component={OtherUsersPage} />}
             {isLoggedIn && <Route path="/reports/getAllReports" component={AllReportsPage} />}
-            <Route path="/users/:username" component={UserPage} />
+            {isLoggedIn && <Route path="/reports/:id" component={ReportPage} />}
+            {isLoggedIn && <Route path="/users/:username" component={UserPage} />}
             <Redirect to='/' />
           </Switch>
         </div>
