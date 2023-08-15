@@ -7,7 +7,6 @@ import { deleteReport, updateReport } from '../api/apiCalls';
 import { useApiProgress } from '../shared/ApiProgress';
 import ButtonWithProgress from './ButtonWithProgress';
 import Modal from './Model';
-import { type } from '@testing-library/user-event/dist/type';
 
 
 const Report = props => {
@@ -27,10 +26,12 @@ const Report = props => {
     const [validationErrors, setValidationErrors] = useState({});
     const [modelVisible, setModelVisible] = useState(false);
     const { t } = useTranslation();
+    let removeImage = false;
+
 
     const { id, fileNumber, patientName, patientSurname, patientIdNumber,
         diagnosisTitle, diagnosisDetails, dateOfReport, imageOfReport,
-        laborantNameSurname, laborantUsername } = report;
+        laborantNameSurname, laborantUsername } = report || {};
 
 
     useEffect(() => {
@@ -93,8 +94,6 @@ const Report = props => {
             setUpdatedDateOfReport(dateOfReport);
             setCurrentImageOfReport(imageOfReport);
         }
-        console.log(imageOfReport);
-        console.log(updatedImageOfReport);
     }, [editable, fileNumber, patientName, patientSurname, patientIdNumber,
         diagnosisTitle, diagnosisDetails, dateOfReport, imageOfReport])
 
@@ -109,7 +108,7 @@ const Report = props => {
 
         const body = {
             imageOfReport: imageTemp,
-            fileNumber: updatedFileNumber,
+            fileNumberWithId: updatedFileNumber + '-' + id,
             patientName: updatedPatientName,
             patientSurname: updatedPatientSurname,
             patientIdNumber: updatedPatientIdNumber,
@@ -117,10 +116,11 @@ const Report = props => {
             diagnosisDetails: updatedDiagnosisDetails,
             dateOfReport: updatedDateOfReport,
         };
+
         try {
             const response = await updateReport(id, removeImage, body);
             setEditable(false);
-            setReport(response.data.object);
+            setReport(response.data);
         } catch (error) {
             setValidationErrors(error.response.data.validationErrors);
         }
@@ -145,6 +145,7 @@ const Report = props => {
             setUpdatedImageOfReport(fileReader.result);
         }
         fileReader.readAsDataURL(file);
+        removeImage = false;
     }
 
     const pendingApiCall = useApiProgress('put', '/reports/' + id);
@@ -153,6 +154,7 @@ const Report = props => {
     const onClearImage = () => {
         setUpdatedImageOfReport(null);
         setCurrentImageOfReport(null);
+        removeImage = true;
     }
 
     const { fileNumber: fileNumberError, patientName: patientNameError,
