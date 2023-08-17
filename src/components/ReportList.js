@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useApiProgress } from '../shared/ApiProgress';
 import Spinner from '../components/Spinner';
 
-const ReportList = () => {
+const ReportList = (props) => {
 
     const [page, setPage] = useState({
         content: [],
@@ -23,6 +23,12 @@ const ReportList = () => {
         username: store.username,
         password: store.password
     }));
+
+    let myReports = '';
+    if (props.isMyReports) {
+        myReports = username;
+    }
+
     const pendingApiCall = useApiProgress('get', '/reports/getAllReports?page');
     const [search, setSearch] = useState({
         searchTerm: '',
@@ -43,10 +49,10 @@ const ReportList = () => {
         setLoadFailure(false);
         try {
             if (pageNumber === undefined) {
-                const response = await getAllReports(0, columnName, sortOrder, username, password);
+                const response = await getAllReports(0, columnName, sortOrder, myReports, username, password);
                 setPage(response.data);
             } else {
-                const response = await getAllReports(pageNumber, order.sortColumn, order.sortOrder, username, password);
+                const response = await getAllReports(pageNumber, order.sortColumn, order.sortOrder, myReports, username, password);
                 setPage(previousPage => ({
                     ...response.data,
                     content: [...previousPage.content, ...response.data.content]
@@ -61,10 +67,10 @@ const ReportList = () => {
         setLoadFailure(false);
         try {
             if (pageNumber === undefined) {
-                const response = await searchInReports(0, columnName, sortOrder, search.searchTerm, search.startDate, search.endDate, username, password);
+                const response = await searchInReports(0, columnName, sortOrder, search.searchTerm, search.startDate, search.endDate, myReports, username, password);
                 setPage(response.data);
             } else {
-                const response = await searchInReports(pageNumber, order.sortColumn, order.sortOrder, search.searchTerm, search.startDate, search.endDate, username, password);
+                const response = await searchInReports(pageNumber, order.sortColumn, order.sortOrder, search.searchTerm, search.startDate, search.endDate, myReports, username, password);
                 setPage(previousPage => ({
                     ...response.data,
                     content: [...previousPage.content, ...response.data.content]
@@ -132,7 +138,6 @@ const ReportList = () => {
 
     return (
         <div className='row'>
-            <h1 className="text-center mb-2 mt-3">{t('Reports')}</h1>
             <div className='col-md-1 col-lg-2'></div>
             <div id='reports' className='col-md-10 col-lg-8'>
                 <div className='mb-2 mt-3'>

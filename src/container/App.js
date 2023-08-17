@@ -12,6 +12,7 @@ import AllReportsPage from "../pages/AllReportsPage";
 import ReportPage from "../pages/ReportPage";
 import { changeLanguage } from '../api/apiCalls';
 import Footer from '../components/Footer';
+import MyReportsPage from '../pages/MyReportsPage';
 
 /* alias is used in import. Thus, there is no need to make changes
 in the codes below in HashRouter-BrowserRouter transitions. */
@@ -42,6 +43,7 @@ const App = () => {
             {!isLoggedIn && <Route path="/register" component={UserRegisterPage} />}
             {/* register page will not open if logged in */}
             {isLoggedIn && <Route path="/reports/save" component={SaveReportPage} />}
+            {isLoggedIn && <Route path="/reports/getMyReports" component={MyReportsPage} />}
             {isLoggedIn && <Route path="/users/getAllUsers" component={OtherUsersPage} />}
             {isLoggedIn && <Route path="/reports/getAllReports" component={AllReportsPage} />}
             {isLoggedIn && <Route path="/reports/:id" component={ReportPage} />}

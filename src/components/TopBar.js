@@ -74,6 +74,10 @@ const TopBar = (props) => {
                             <i className="fa-solid fa-folder-plus me-2 text-success"></i>
                             {t('Save Report')}
                         </Link>
+                        <Link className="dropdown-item p-2" to={`/reports/getMyReports`}>
+                            <i className="fa-solid fa-file me-2 pe-1 text-success"></i>
+                            {t('My Reports')}
+                        </Link>
                         <Link className="dropdown-item p-2" to={`/reports/getAllReports`}>
                             <i className="fa-solid fa-folder me-2 text-success"></i>
                             {t('All Reports')}

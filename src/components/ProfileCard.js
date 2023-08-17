@@ -144,13 +144,13 @@ const ProfileCard = props => {
                         </div>
                         <div className='card-body'>
                             {!inEditMode &&
-                                <> <span className='fs-5 ps-2'>
+                                <> <span className='fs-5'>
                                     {name} {surname}
                                 </span><br />
-                                    <span className='fs-6 ps-2'>
+                                    <span className='fs-6'>
                                         @{username}
                                     </span><br />
-                                    <span className='fs-6 ps-2'>
+                                    <span className='fs-6'>
                                         {hospitalIdNumber}
                                     </span></>}
                             {inEditMode && (

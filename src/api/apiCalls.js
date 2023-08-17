@@ -35,12 +35,12 @@ export const saveReport = (body) => {
     return axios.post('/reports/save', body);
 }
 
-export const getAllReports = (page = 0, sortColumn = 'fileNumber', sortOrder = 'ASC', username, password) => {
-    return axios.get(`/reports/getAllReports?page=${page}&size=10&sort=${sortColumn},${sortOrder}`, { auth: { username, password } });
+export const getAllReports = (page = 0, sortColumn = 'fileNumber', sortOrder = 'ASC', myReports = '', username, password) => {
+    return axios.get(`/reports/getAllReports?page=${page}&size=10&sort=${sortColumn},${sortOrder}&myReports=${myReports}`, { auth: { username, password } });
 }
 
-export const searchInReports = (page = 0, sortColumn = 'fileNumber', sortOrder = 'ASC', searchTerm, startDate, endDate, username, password) => {
-    return axios.get(`/reports/searchInReports?page=${page}&size=10&sort=${sortColumn},${sortOrder}&searchTerm=${searchTerm}&startDate=${startDate}&endDate=${endDate}`, { auth: { username, password } });
+export const searchInReports = (page = 0, sortColumn = 'fileNumber', sortOrder = 'ASC', searchTerm, startDate, endDate, myReports = null, username, password) => {
+    return axios.get(`/reports/searchInReports?page=${page}&size=10&sort=${sortColumn},${sortOrder}&searchTerm=${searchTerm}&startDate=${startDate}&endDate=${endDate}&myReports=${myReports}`, { auth: { username, password } });
 }
 
 export const deleteUser = (username, keepReports) => {

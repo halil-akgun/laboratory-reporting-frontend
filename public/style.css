@@ -1,4 +1,4 @@
-#reportsTableCol1 {
+/* #reportsTableCol1 {
     width: 83px;
     overflow: hidden;
     white-space: nowrap;
@@ -138,3 +138,7 @@
 .highlighted {
     color: yellow;
 }
+
+#modalImage {
+    width: 800px !important;
+} */

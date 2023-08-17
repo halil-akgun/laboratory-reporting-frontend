@@ -93,13 +93,13 @@ const SaveReportPage = props => {
                 <div className="col-md-6 mb-3">
                     <form>
 
+                        <Input type='date' name="dateOfReport" label={t('Date of Report')} error={dateOfReportError} onChange={onChange} />
                         <Input name="fileNumber" label={t('File Number')} error={fileNumberError} onChange={onChange} />
                         <Input name="patientName" label={t('Patient Name')} error={patientNameError} onChange={onChange} />
                         <Input name="patientSurname" label={t('Patient Surname')} error={patientSurnameError} onChange={onChange} />
                         <Input name="patientIdNumber" label={t('Patient Id Number')} error={patientIdNumberError} onChange={onChange} />
                         <Input name="diagnosisTitle" label={t('Diagnosis Title')} error={diagnosisTitleError} onChange={onChange} />
                         <Input type='textarea' name="diagnosisDetails" label={t('Diagnosis Details')} error={diagnosisDetailsError} onChange={onChange} />
-                        <Input type='date' name="dateOfReport" label={t('Date of Report')} error={dateOfReportError} onChange={onChange} />
                         <Input
                             label={t('Image of Report')}
                             type='file'

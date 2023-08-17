@@ -23,6 +23,7 @@ const Report = props => {
     const { username: loggedInUsername } = useSelector(store => ({ username: store.username }));
     const [report, setReport] = useState({});
     const [editable, setEditable] = useState(false);
+    const [inEditMode, setInEditMode] = useState(false);
     const [validationErrors, setValidationErrors] = useState({});
     const [modelVisible, setModelVisible] = useState(false);
     const { t } = useTranslation();
@@ -39,7 +40,7 @@ const Report = props => {
     }, [props.report])
 
     useEffect(() => {
-        setEditable(laborantUsername === loggedInUsername);
+        setEditable(laborantUsername === loggedInUsername || loggedInUsername === 'admin');
     }, [laborantUsername, loggedInUsername])
 
     useEffect(() => {
@@ -47,7 +48,7 @@ const Report = props => {
             const updatedErrors = { ...previousValidationErrors };
 
             if (updatedFileNumber) {
-                delete updatedErrors['fileNumber'];
+                delete updatedErrors['fileNumberWithId'];
             }
             if (updatedPatientName) {
                 delete updatedErrors['patientName'];
@@ -75,7 +76,7 @@ const Report = props => {
     }, [updatedFileNumber, updatedPatientName, updatedPatientSurname, updatedPatientIdNumber, updatedDiagnosisTitle, updatedDiagnosisDetails, updatedDateOfReport, updatedImageOfReport])
 
     useEffect(() => {
-        if (!editable) {
+        if (!inEditMode) {
             setUpdatedFileNumber(undefined);
             setUpdatedPatientName(undefined);
             setUpdatedPatientSurname(undefined);
@@ -94,7 +95,7 @@ const Report = props => {
             setUpdatedDateOfReport(dateOfReport);
             setCurrentImageOfReport(imageOfReport);
         }
-    }, [editable, fileNumber, patientName, patientSurname, patientIdNumber,
+    }, [inEditMode, fileNumber, patientName, patientSurname, patientIdNumber,
         diagnosisTitle, diagnosisDetails, dateOfReport, imageOfReport])
 
     const onClickSave = async () => {
@@ -119,7 +120,7 @@ const Report = props => {
 
         try {
             const response = await updateReport(id, removeImage, body);
-            setEditable(false);
+            setInEditMode(false);
             setReport(response.data);
         } catch (error) {
             setValidationErrors(error.response.data.validationErrors);
@@ -157,14 +158,14 @@ const Report = props => {
         removeImage = true;
     }
 
-    const { fileNumber: fileNumberError, patientName: patientNameError,
+    const { fileNumberWithId: fileNumberError, patientName: patientNameError,
         patientSurname: patientSurnameError, patientIdNumber: patientIdNumberError,
         diagnosisTitle: diagnosisTitleError, diagnosisDetails: diagnosisDetailsError,
         dateOfReport: dateOfReportError, imageOfReport: imageOfReportError } = validationErrors;
 
-    let typeOfInput = !editable ? 'NonInput' : '';
-    let typeOfTextArea = !editable ? 'NonInput' : 'textarea';
-    let typeOfDate = !editable ? 'NonInput' : 'date';
+    let typeOfInput = !inEditMode ? 'NonInput' : '';
+    let typeOfTextArea = !inEditMode ? 'NonInput' : 'textarea';
+    let typeOfDate = !inEditMode ? 'NonInput' : 'date';
 
     return (
         <>
@@ -173,6 +174,14 @@ const Report = props => {
                     <h1 className="text-center mb-3 mt-3">{t('Report')}</h1>
                     <div className="col-md-6 mb-3">
                         <form>
+                            <Input
+                                name="dateOfReport"
+                                type={typeOfDate}
+                                text={dateOfReport}
+                                label={t('Date of Report')}
+                                defaultValue={dateOfReport}
+                                error={dateOfReportError}
+                                onChange={event => { setUpdatedDateOfReport(event.target.value); }} />
                             <Input
                                 name="fileNumber"
                                 type={typeOfInput}
@@ -221,15 +230,7 @@ const Report = props => {
                                 defaultValue={diagnosisDetails}
                                 error={diagnosisDetailsError}
                                 onChange={event => { setUpdatedDiagnosisDetails(event.target.value); }} />
-                            <Input
-                                name="dateOfReport"
-                                type={typeOfDate}
-                                text={dateOfReport}
-                                label={t('Date of Report')}
-                                defaultValue={dateOfReport}
-                                error={dateOfReportError}
-                                onChange={event => { setUpdatedDateOfReport(event.target.value); }} />
-                            {editable &&
+                            {inEditMode &&
                                 <Input
                                     label={t('Image of Report')}
                                     type='file'
@@ -240,12 +241,12 @@ const Report = props => {
                     </div>
                     <div className="col-md-6 mb-3 d-flex flex-column align-items-center justify-content-center">
                         <ReportImageWithDefault
-                            width={(updatedImageOfReport || currentImageOfReport) ? "100%" : "67%"}
+                            width={"73%"}
                             image={currentImageOfReport}
                             tempimage={updatedImageOfReport}
                         />
-                        {((updatedImageOfReport || imageOfReport) && editable) && <button
-                            className='btn btn-light mb-2 text-danger p-0  mt-1'
+                        {((updatedImageOfReport || currentImageOfReport) && inEditMode) && <button
+                            className='btn btn-light mb-2 text-danger p-1  mt-1'
                             onClick={onClearImage}>
                             <i className="fa-regular fa-trash-can fa-sm me-2"></i>
                             {t("Remove Image")}
@@ -253,7 +254,7 @@ const Report = props => {
                     </div>
                 </div>
                 <div className="text-center mt-2">
-                    {editable ?
+                    {!editable ? '' : inEditMode ?
                         <>
                             <ButtonWithProgress
                                 className='btn btn-primary'
@@ -269,7 +270,7 @@ const Report = props => {
                             />
                             <button
                                 className='btn btn-light ms-2'
-                                onClick={() => setEditable(false)}
+                                onClick={() => setInEditMode(false)}
                                 disabled={pendingApiCall}>
                                 <i className="me-2 fa-solid fa-xmark fa-sm"></i>
                                 {t("Cancel")}
@@ -279,13 +280,12 @@ const Report = props => {
                         <>
                             <button
                                 className='btn btn-primary'
-                                onClick={() => setEditable(true)} >
-                                <i className="me-2 fa-sharp fa-solid fa-pen fa-sm"></i>
+                                onClick={() => setInEditMode(true)} >                                <i className="me-2 fa-sharp fa-solid fa-pen fa-sm"></i>
                                 {t("Update")}
                             </button>
                             <button
                                 className='btn btn-danger ms-2'
-                                onClick={() => setEditable(false)}
+                                onClick={() => setModelVisible(true)}
                                 disabled={pendingApiCall}>
                                 <i className="me-2 fa-trash-can fa-sharp fa-solid fa-sm"></i>
                                 {t("Delete")}

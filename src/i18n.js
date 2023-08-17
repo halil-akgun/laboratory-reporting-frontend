@@ -56,6 +56,7 @@ i18n.use(initReactI18next).init({
                 'Delete Report': 'Delete Report',
                 'OK': 'OK',
                 'Report': 'Report',
+                'My Reports': 'My Reports',
                 'Update': 'Update',
                 'Report not found.': 'Report not found.',
                 'Users': 'Users'
@@ -115,6 +116,7 @@ i18n.use(initReactI18next).init({
                 'Delete Report': 'Raporu Sil',
                 'Report not found.': 'Rapor bulunamadı.',
                 'Report': 'Rapor',
+                'My Reports': 'Raporlarım',
                 'Update': 'Güncelle',
                 'Users': 'Kullanıcılar'
             }
