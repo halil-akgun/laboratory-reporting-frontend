@@ -2,7 +2,7 @@ import React from 'react';
 
 const ButtonWithProgress = (props) => {
 
-    const { onClick, pendingApiCall, disabled, text } = props;
+    const { onClick, pendingApiCall, disabled, text, countdown = '' } = props;
 
     return (
         <button
@@ -11,6 +11,7 @@ const ButtonWithProgress = (props) => {
             disabled={disabled}>
             {pendingApiCall && <span className="spinner-border spinner-border-sm"></span>}
             {text}
+            <span className='ms-2'>{countdown}</span>
         </button>
     );
 };

@@ -11,6 +11,7 @@ const LoginPage = props => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [error, setError] = useState();
+    const { t } = useTranslation();
 
     const dispatch = useDispatch();
 
@@ -36,11 +37,10 @@ const LoginPage = props => {
             await dispatch(loginHandler(creds))
             push('/'); // redirect after successful login
         } catch (apiError) {
-            setError(apiError.response.data.message);
+            setError(t('Login failed. Please check your credentials.'));
         }
     };
 
-    const { t } = useTranslation();
     const pendingApiCall = useApiProgress('post', "/auth");
 
     const buttonEnabled = username && password;

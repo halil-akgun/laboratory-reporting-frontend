@@ -13,6 +13,7 @@ import ReportPage from "../pages/ReportPage";
 import { changeLanguage } from '../api/apiCalls';
 import Footer from '../components/Footer';
 import MyReportsPage from '../pages/MyReportsPage';
+import SessionTimeout from '../components/SessionTimeout';
 
 /* alias is used in import. Thus, there is no need to make changes
 in the codes below in HashRouter-BrowserRouter transitions. */
@@ -33,7 +34,6 @@ const App = () => {
   return (
     <div>
       <Router>
-        {/* <TopBar isLoggedIn={isLoggedIn} onLogoutSucces={this.onLogoutSucces} username={username} /> */}
         <div style={{ marginBottom: '65px' }}>
           <TopBar />
           <Switch>
@@ -54,6 +54,7 @@ const App = () => {
         <footer>
           <Footer />
         </footer>
+        <SessionTimeout />
       </Router>
     </div>
   );

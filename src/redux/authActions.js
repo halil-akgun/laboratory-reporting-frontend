@@ -1,11 +1,18 @@
 import * as ACTIONS from './Constants';
-import { login, register } from '../api/apiCalls';
+import { login, register, logout } from '../api/apiCalls';
 
 export const logoutSuccess = () => {
-    return {
-        type: ACTIONS.LOGOUT_SUCCESS
-    };
-}
+    return async function (dispatch) {
+        try {
+            await logout();
+        } catch (err) {
+        }
+        dispatch({
+            type: ACTIONS.LOGOUT_SUCCESS
+        })
+        sessionStorage.removeItem('lastTimeStamp');
+    }
+};
 
 export const loginSuccess = (authState) => {
     return {
@@ -14,7 +21,7 @@ export const loginSuccess = (authState) => {
     };
 }
 
-export const updateSuccess = ({name, surname, image}) => {
+export const updateSuccess = ({ name, surname, image }) => {
     return {
         type: ACTIONS.UPDATE_SUCCESS,
         payload: {
@@ -29,9 +36,10 @@ export const loginHandler = (credentials) => {
     return async function (dispatch) {
         const response = await login(credentials);
         const authState = {
-            ...response.data,
-            password: credentials.password
+            ...response.data.user,
+            token: response.data.token
         };
+        sessionStorage.setItem('lastTimeStamp', new Date());
         dispatch(loginSuccess(authState));
         return response;
     }

@@ -1,0 +1,147 @@
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  Fragment,
+} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutSuccess } from '../redux/authActions';
+import Modal from './Model';
+import { useTranslation } from 'react-i18next';
+
+const SessionTimeout = () => {
+  const [events, setEvents] = useState(['click', 'load', 'scroll']);
+  const [second, setSecond] = useState(0);
+  const [isOpen, setOpen] = useState(false);
+  const { t } = useTranslation();
+  const { isLoggedIn: isAuthenticated } = useSelector((store) => ({
+    isLoggedIn: store.isLoggedIn,
+  }));
+
+  const dispatch = useDispatch();
+  const onLogoutSuccess = () => {
+    dispatch(logoutSuccess());
+  };
+
+  let timeStamp;
+  let warningInactiveInterval = useRef();
+  let startTimerInterval = useRef();
+
+  // start inactive check
+  let timeChecker = () => {
+    startTimerInterval.current = setTimeout(() => {
+      let storedTimeStamp = sessionStorage.getItem('lastTimeStamp');
+      warningInactive(storedTimeStamp);
+    }, 60000);
+  };
+
+  // warning timer
+  let warningInactive = (timeString) => {
+    clearTimeout(startTimerInterval.current);
+
+    warningInactiveInterval.current = setInterval(() => {
+      const maxTime = 2;
+      const popTimeInSeconds = 30;
+
+      const currentTime = new Date();
+      const storedTime = new Date(timeString);
+      const timeDiff = currentTime - storedTime;
+
+      const secondsPassed = Math.floor(timeDiff / 1000);
+
+      if ((maxTime * 60) - secondsPassed <= popTimeInSeconds) {
+        setSecond((maxTime * 60) - secondsPassed);
+        setOpen(true);
+      }
+
+      if (secondsPassed >= (maxTime * 60)) {
+        clearInterval(warningInactiveInterval.current);
+        // setOpen(false);
+        sessionStorage.removeItem('lastTimeStamp');
+        onLogoutSuccess();
+      }
+    }, 1000);
+  };
+
+
+  // reset interval timer
+  let resetTimer = useCallback(() => {
+    clearTimeout(startTimerInterval.current);
+    clearInterval(warningInactiveInterval.current);
+
+    if (isAuthenticated) {
+      timeStamp = new Date().toISOString();
+      sessionStorage.setItem('lastTimeStamp', timeStamp);
+    } else {
+      clearInterval(warningInactiveInterval.current);
+      sessionStorage.removeItem('lastTimeStamp');
+    }
+    if (isAuthenticated) {
+      timeChecker();
+    }
+    setOpen(false);
+  }, [isAuthenticated]);
+
+  // handle close popup
+  const handleClose = () => {
+    setOpen(false);
+    resetTimer();
+  };
+  const handleCloseAfterLoggedOut = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    events.forEach((event) => {
+      window.addEventListener(event, resetTimer);
+    });
+
+    if (isAuthenticated) {
+      timeChecker();
+    }
+
+    return () => {
+      clearTimeout(startTimerInterval.current);
+    };
+  }, [resetTimer, events, timeChecker, isAuthenticated]);
+
+
+  if (!isOpen) {
+    return null;
+  }
+
+  return (
+    <Modal
+      title={isAuthenticated ?
+        t('Your session is about to expire!')
+        :
+        t("Your session has expired.")
+      }
+      onClickOk={isAuthenticated ? onLogoutSuccess : handleCloseAfterLoggedOut}
+      okButton={isAuthenticated ?
+        t('Log out now.')
+        :
+        t("OK")
+      }
+      countdown={isAuthenticated && second}
+      onClickCancel={handleClose}
+      visible={isOpen}
+      showCancelButton={isAuthenticated}
+      message={
+        <div>
+          <strong>
+            {isAuthenticated ?
+              t("Your session is about to expire. You'll be automatically signed out.")
+              :
+              t("Your session has been automatically logged out due to inactivity for 2 minutes.")
+            }
+          </strong>
+        </div>
+      }
+    />
+  );
+};
+
+export default SessionTimeout;
+

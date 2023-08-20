@@ -44,32 +44,32 @@ code {
 
 @media (max-width: 561px) {
   #reports .card-header {
-      width: 494px !important;
+    width: 494px !important;
   }
 
   .filterByDateFontSize {
-      font-size: 11px !important;
-      height: 33.6px;
+    font-size: 11px !important;
+    height: 33.6px;
   }
 }
 
 @media (max-width: 400px) {
   .filterByDateFontSize {
-      font-size: 9px !important;
-      height: 33.6px;
+    font-size: 9px !important;
+    height: 33.6px;
   }
 }
 
 @media (min-width: 800px) {
   #reportsTableCol5 {
-      width: 145px;
-      overflow: hidden;
-      white-space: nowrap;
+    width: 145px;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   #reportsTableH5 {
-      width: 145px !important;
-      cursor: pointer;
+    width: 145px !important;
+    cursor: pointer;
   }
 }
 

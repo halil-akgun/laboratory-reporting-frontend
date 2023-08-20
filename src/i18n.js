@@ -58,6 +58,12 @@ i18n.use(initReactI18next).init({
                 'Report': 'Report',
                 'My Reports': 'My Reports',
                 'Update': 'Update',
+                'Login failed. Please check your credentials.': 'Login failed. Please check your credentials.',
+                "Your session is about to expire. You'll be automatically signed out.": "Your session is about to expire. You'll be automatically signed out.",
+                'Log out now.': 'Log out now.',
+                'Your session has expired.': 'Your session has expired.',
+                'Your session is about to expire!': 'Your session is about to expire!',
+                'Your session has been automatically logged out due to inactivity for 2 minutes.': 'Your session has been automatically logged out due to inactivity for 2 minutes.',
                 'Report not found.': 'Report not found.',
                 'Users': 'Users'
             }
@@ -117,7 +123,13 @@ i18n.use(initReactI18next).init({
                 'Report not found.': 'Rapor bulunamadı.',
                 'Report': 'Rapor',
                 'My Reports': 'Raporlarım',
+                "Your session is about to expire. You'll be automatically signed out.": "Oturumunuz sona ermek üzere. Oturumunuz otomatik olarak kapatılacak.",
+                'Your session has expired.': 'Oturumunuz sona erdi.',
                 'Update': 'Güncelle',
+                'Login failed. Please check your credentials.': 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.',
+                'Log out now.': 'Şimdi oturumu kapatın.',
+                'Your session is about to expire!': 'Oturumunuz sona ermek üzere!',
+                'Your session has been automatically logged out due to inactivity for 2 minutes.': '2 dakika boyunca etkinlik olmadığından oturumunuz otomatik olarak kapatıldı.',
                 'Users': 'Kullanıcılar'
             }
         }

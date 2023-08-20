@@ -283,13 +283,13 @@ const Report = props => {
                                 onClick={() => setInEditMode(true)} >                                <i className="me-2 fa-sharp fa-solid fa-pen fa-sm"></i>
                                 {t("Update")}
                             </button>
-                            <button
+                            {loggedInUsername === 'admin' && <button
                                 className='btn btn-danger ms-2'
                                 onClick={() => setModelVisible(true)}
                                 disabled={pendingApiCall}>
                                 <i className="me-2 fa-trash-can fa-sharp fa-solid fa-sm"></i>
                                 {t("Delete")}
-                            </button>
+                            </button>}
                         </>
                     }
                 </div>

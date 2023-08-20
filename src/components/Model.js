@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import ButtonWithProgress from './ButtonWithProgress';
 
 const Modal = props => {
-    const { visible, onClickCancel, message, onClickOk, checkbox, checkboxText, onChangeCheckbox, pendingApiCall, title, okButton } = props;
+    const { visible, onClickCancel, message, onClickOk, checkbox, checkboxText, onChangeCheckbox, pendingApiCall, title, okButton, countdown, showCancelButton = true } = props;
     const { t } = useTranslation();
 
     let className = 'modal fade';
@@ -27,16 +27,19 @@ const Modal = props => {
                             </div>}
                     </div>
                     <div className="modal-footer">
-                        <button className="btn btn-secondary" disabled={pendingApiCall} onClick={onClickCancel}>
-                            {t('Cancel')}
-                        </button>
                         <ButtonWithProgress
                             className="btn btn-danger"
                             onClick={onClickOk}
+                            countdown={countdown}
                             pendingApiCall={pendingApiCall}
                             disabled={pendingApiCall}
                             text={(okButton && Array.isArray(okButton) && (checkbox ? okButton[0] : okButton[1])) || okButton || t('OK')}
                         />
+                        {showCancelButton &&
+                            <button className="btn btn-secondary" disabled={pendingApiCall} onClick={onClickCancel}>
+                                {t('Cancel')}
+                            </button>
+                        }
                     </div>
                 </div>
             </div>
