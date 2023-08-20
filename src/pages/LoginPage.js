@@ -46,7 +46,7 @@ const LoginPage = props => {
     const buttonEnabled = username && password;
 
     return (
-        <div className='container'>
+        <div className='container mt-4'>
             <div className='row'>
                 <div className='col-md-4'></div>
                 <div className='col-md-4'>
@@ -54,7 +54,7 @@ const LoginPage = props => {
                         <h1 className="text-center mb-4">{t('Login')}</h1>
                         <Input label={t('Username')} onChange={event => setUsername(event.target.value)} />
                         <Input label={t('Password')} type="password" onChange={event => setPassword(event.target.value)} />
-                        {error && <div className="alert alert-danger"> {error} </div>}
+                        {error && <div className="alert alert-danger py-2"> {error} </div>}
                         <br />
                         <div className="text-center">
                             <ButtonWithProgress

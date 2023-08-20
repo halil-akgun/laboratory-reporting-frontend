@@ -246,7 +246,7 @@ const Report = props => {
                             tempimage={updatedImageOfReport}
                         />
                         {((updatedImageOfReport || currentImageOfReport) && inEditMode) && <button
-                            className='btn btn-light mb-2 text-danger p-1  mt-1'
+                            className='btn btn-light mb-2 text-danger p-1  mt-2'
                             onClick={onClearImage}>
                             <i className="fa-regular fa-trash-can fa-sm me-2"></i>
                             {t("Remove Image")}

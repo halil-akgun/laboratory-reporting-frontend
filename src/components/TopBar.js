@@ -67,9 +67,9 @@ const TopBar = (props) => {
                 <li className='nav-item dropdown'>
                     <div ref={menuArea} className='d-flex' style={{ cursor: 'pointer' }} onClick={() => setMenuVisible(true)}>
                         <ProfileImageWithDefault image={image} width='33' height='33' className='rounded-circle m-auto' />
-                        <span className='nav-link dropdown-toggle'>{name} {surname}</span>
+                        <span className='nav-link ms-2 dropdown-toggle px-0'>{name} {surname}</span>
                     </div>
-                    <div className={`dropdown-menu ${menuVisible ? 'show' : ''} p-0 shadow`} style={{ right: 4 }} >
+                    <div className={`dropdown-menu ${menuVisible ? 'show' : ''} p-0 shadow`} style={{ right: 0 }} >
                         <Link className="dropdown-item p-2" to={`/reports/save`}>
                             <i className="fa-solid fa-folder-plus me-2 text-success"></i>
                             {t('Save Report')}
@@ -102,11 +102,11 @@ const TopBar = (props) => {
 
     return (
         <div className="shadow-sm bg-light mb-2">
-            <nav className="navbar navbar-light container navbar-expand">
+            <nav className="navbar navbar-light container py-2 px-3 navbar-expand">
                 <Link className="navbar-brand" to="/">
                     {/* <a className="navbar-brand" href="#/"> */}
                     <span className='d-flex align-items-center'>
-                        <img src={logo} width='35' alt='logo' />
+                        <img src={logo} height='36' alt='logo' className='me-2' />
                         LABORATORY
                     </span>
                 </Link>

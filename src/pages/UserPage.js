@@ -38,7 +38,7 @@ const UserPage = props => {
 
     if (notFound) {
         return (
-            <div className='container'>
+            <div className='container mt-4'>
                 <div className="text-center alert alert-danger" role="alert">
                     <div className='mb-3 mt-2'>
                         <i className="fa-solid fa-circle-exclamation fa-2xl" style={{ color: '#9f2325' }}></i>
@@ -50,7 +50,7 @@ const UserPage = props => {
     }
 
     return (
-        <div className='container'>
+        <div className='container mt-4'>
             <ProfileCard user={user} history={props.history} />
         </div>
     );

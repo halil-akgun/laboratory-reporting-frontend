@@ -76,9 +76,9 @@ const UserRegisterPage = props => {
     }
 
     return (
-        <div className="container">
+        <div className="container mt-4">
             <form>
-                <h1 className="text-center">{t('Register')}</h1>
+                <h1 className="text-center mb-4">{t('Register')}</h1>
 
                 <Input name="name" label={t('Name')} error={nameError} onChange={onChange} />
                 <Input name="surname" label={t('Surname')} error={surnameError} onChange={onChange} />

@@ -6,7 +6,7 @@ const AllReportsPage = () => {
     const { t } = useTranslation();
     return (
         <div className='container'>
-            <h1 className="text-center mb-2 mt-5">{t('All Reports')}</h1>
+            <h1 className="text-center mb-2 mt-4">{t('All Reports')}</h1>
             <ReportList />
         </div>
     );

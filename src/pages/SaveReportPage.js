@@ -87,9 +87,9 @@ const SaveReportPage = props => {
     const pendingApiCall = useApiProgress('post', "/reports/save");
 
     return (
-        <div className="container">
+        <div className="container mt-4">
             <div className="row">
-                <h1 className="text-center mb-3 mt-3">{t('Save Report')}</h1>
+                <h1 className="text-center mb-3">{t('Save Report')}</h1>
                 <div className="col-md-6 mb-3">
                     <form>
 

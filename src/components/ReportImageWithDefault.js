@@ -14,6 +14,7 @@ const ReportImageWithDefault = (props) => {
     return (
         <div className='text-center'>
             <img
+                style={{ cursor: 'zoom-in' }}
                 data-bs-target='#image'
                 data-bs-toggle='modal'
                 alt={`report picture`}

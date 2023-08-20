@@ -62,7 +62,7 @@ const UserList = () => {
     };
     return (
         <div>
-            <div className='card mt-4'>
+            <div className='card'>
                 <h3 className='card-header text-center'>
                     {t("Users")}
                 </h3>
