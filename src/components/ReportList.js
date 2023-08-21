@@ -165,7 +165,7 @@ const ReportList = (props) => {
                             </form>
                         </div>
                         <div className='text-center input-group'>
-                            <span className='mx-auto'>{t('Search by Date Range')}</span>
+                            <span className='mx-auto'>{t('Date Range')}</span>
                             <div className='input-group'>
                                 <input
                                     className='py-1 form-control filterByDateFontSize'
