@@ -17,7 +17,7 @@ const ReportImageWithDefault = (props) => {
                 style={{ cursor: 'zoom-in' }}
                 data-bs-target='#image'
                 data-bs-toggle='modal'
-                alt={`report picture`}
+                alt={`report`}
                 src={tempimage || imageSource}
                 {...props}
                 onError={event => event.target.src = defaultPicture}
