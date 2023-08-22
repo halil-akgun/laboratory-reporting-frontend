@@ -30,9 +30,8 @@ const Report = props => {
     let removeImage = false;
 
 
-    const { id, fileNumber, patientName, patientSurname, patientIdNumber,
-        diagnosisTitle, diagnosisDetails, dateOfReport, imageOfReport,
-        laborantNameSurname, laborantUsername } = report || {};
+    const { id, fileNumber, patientName, patientSurname, patientIdNumber, diagnosisTitle,
+        diagnosisDetails, dateOfReport, imageOfReport, laborantUsername } = report || {};
 
 
     useEffect(() => {
@@ -100,7 +99,7 @@ const Report = props => {
 
     const onClickSave = async () => {
         let imageTemp;
-        let removeImage = false;
+        removeImage = false;
         if (updatedImageOfReport) {
             imageTemp = updatedImageOfReport.split(',')[1];
         } else if (currentImageOfReport === null || currentImageOfReport === undefined) {

@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useCallback,
   useRef,
-  Fragment,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutSuccess } from '../redux/authActions';
@@ -11,7 +10,7 @@ import Modal from './Model';
 import { useTranslation } from 'react-i18next';
 
 const SessionTimeout = () => {
-  const [events, setEvents] = useState(['click', 'load', 'scroll']);
+  const [events] = useState(['click', 'load', 'scroll']);
   const [second, setSecond] = useState(0);
   const [isOpen, setOpen] = useState(false);
   const { t } = useTranslation();
@@ -24,17 +23,17 @@ const SessionTimeout = () => {
     dispatch(logoutSuccess());
   };
 
-  let timeStamp;
+  let timeStamp = useRef();
   let warningInactiveInterval = useRef();
   let startTimerInterval = useRef();
 
   // start inactive check
-  let timeChecker = () => {
+  let timeChecker = useCallback(() => {
     startTimerInterval.current = setTimeout(() => {
       let storedTimeStamp = sessionStorage.getItem('lastTimeStamp');
       warningInactive(storedTimeStamp);
     }, 60000);
-  };
+  }, []);
 
   // warning timer
   let warningInactive = (timeString) => {

@@ -25,7 +25,7 @@ const ReportImageWithDefault = (props) => {
 
             <div className='modal fade' id='image' tabIndex={-1} aria-hidden='true'>
                 <div className='modal-dialog modal-lg'>
-                    <img src={tempimage || imageSource} className='w-100' />
+                    <img src={tempimage || imageSource} className='w-100' alt={`report`} />
                 </div>
             </div>
         </div>

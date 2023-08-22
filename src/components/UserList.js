@@ -25,7 +25,7 @@ const UserList = () => {
 
     useEffect(() => {
         loadUsers();
-    }, [])
+    })
 
     const onClickNext = () => {
         const nextPage = page.number + 1;

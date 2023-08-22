@@ -43,7 +43,7 @@ const ReportList = (props) => {
 
     useEffect(() => {
         loadReports();
-    }, []);
+    });
 
     const loadReports = async (pageNumber, sortOrder, columnName) => {
         setLoadFailure(false);
