@@ -13,3 +13,4 @@
 - Shouldn't need to use an IDE to make the app executable.
 - Users must log in to the system with their username/password.
 - It should include an authorization mechanism. For example, standard users can create and associate records, but not delete them. Let the administrator perform all actions.
+
