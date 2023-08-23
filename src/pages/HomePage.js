@@ -5,7 +5,7 @@ const HomePage = () => {
     return (
         <div className='container mt-4'>
             <div className='row'>
-                <div className='col-md-1'></div>
+                <div className='col-md-1'>.</div>
                 <div className='col-md-10'>
                     <img
                         alt={`by Freepik`}
