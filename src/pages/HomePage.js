@@ -5,8 +5,8 @@ const HomePage = () => {
     return (
         <div className='container mt-4'>
             <div className='row'>
-                <div className='col-md-1'></div>
-                <div className='col-md-10'>
+                <div className='col-md-2'></div>
+                <div className='col-md-8'>
                     <img
                         alt={`by Freepik`}
                         src={picture}
@@ -14,7 +14,7 @@ const HomePage = () => {
                     // Image by < a href = "https://www.freepik.com/free-vector/flat-laboratory-room-illustrated_13176170.htm#query=laboratory&position=32&from_view=keyword&track=sph" > Freepik</ >
                     />
                 </div>
-                <div className='col-md-1'></div>
+                <div className='col-md-2'></div>
             </div>
         </div>
     );
