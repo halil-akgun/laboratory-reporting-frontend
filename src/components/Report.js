@@ -26,6 +26,7 @@ const Report = props => {
     const [inEditMode, setInEditMode] = useState(false);
     const [validationErrors, setValidationErrors] = useState({});
     const [modelVisible, setModelVisible] = useState(false);
+    const [isInconsistentModalOpen, setInconsistentModalOpen] = useState(false);
     const { t } = useTranslation();
     let removeImage = false;
 
@@ -115,6 +116,11 @@ const Report = props => {
             diagnosisTitle: updatedDiagnosisTitle,
             diagnosisDetails: updatedDiagnosisDetails,
             dateOfReport: updatedDateOfReport,
+            patientInfoForUniqueControl: {
+                idNumber: updatedPatientIdNumber,
+                name: updatedPatientName,
+                surname: updatedPatientSurname
+            }
         };
 
         try {
@@ -123,6 +129,9 @@ const Report = props => {
             setReport(response.data);
         } catch (error) {
             setValidationErrors(error.response.data.validationErrors);
+            if (error.response.data.validationErrors.patientInfoForUniqueControl) {
+                setInconsistentModalOpen(true);
+            }
         }
     }
 
@@ -133,6 +142,7 @@ const Report = props => {
 
     const onClickCancel = async () => {
         setModelVisible(false);
+        setInconsistentModalOpen(false);
     }
 
     const onChangeFile = (event) => {
@@ -157,10 +167,10 @@ const Report = props => {
         removeImage = true;
     }
 
-    const { fileNumberWithId: fileNumberError, patientName: patientNameError,
+    const { fileNumberWithId: fileNumberError, patientName: patientNameError, dateOfReport: dateOfReportError,
         patientSurname: patientSurnameError, patientIdNumber: patientIdNumberError,
         diagnosisTitle: diagnosisTitleError, diagnosisDetails: diagnosisDetailsError,
-        dateOfReport: dateOfReportError, imageOfReport: imageOfReportError } = validationErrors;
+        imageOfReport: imageOfReportError, patientInfoForUniqueControl: patientInfoForUniqueControlError } = validationErrors;
 
     let typeOfInput = !inEditMode ? 'NonInput' : '';
     let typeOfTextArea = !inEditMode ? 'NonInput' : 'textarea';
@@ -294,25 +304,32 @@ const Report = props => {
                 </div>
             </div>
 
-
-            <Modal
-                onClickOk={onClickDelete}
-                title={t('Delete Report')}
-                onClickCancel={onClickCancel}
-                visible={modelVisible}
-                pendingApiCall={pendingApiCallDelete}
-                okButton={t('Delete Report')}
-                message={
-                    <div>
+            {isInconsistentModalOpen ?
+                <Modal
+                    title={t('Inconsistency in Patient Information')}
+                    onClickOk={onClickCancel}
+                    visible={isInconsistentModalOpen}
+                    showCancelButton={false}
+                    message={patientInfoForUniqueControlError}
+                />
+                :
+                <Modal
+                    onClickOk={onClickDelete}
+                    title={t('Delete Report')}
+                    onClickCancel={onClickCancel}
+                    visible={modelVisible}
+                    pendingApiCall={pendingApiCallDelete}
+                    okButton={t('Delete Report')}
+                    message={
                         <div>
-                            <strong>{t('Are you sure you want to delete the report?')}</strong>
+                            <div>
+                                <strong>{t('Are you sure you want to delete the report?')}</strong>
+                            </div>
                         </div>
-                    </div>
-                } />
+                    } />
+            }
         </>
     );
 };
 
 export default Report;
-
-

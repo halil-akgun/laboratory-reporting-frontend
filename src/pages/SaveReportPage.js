@@ -5,6 +5,7 @@ import ButtonWithProgress from '../components/ButtonWithProgress';
 import { useApiProgress } from "../shared/ApiProgress";
 import { saveReport } from "../api/apiCalls";
 import ReportImageWithDefault from '../components/ReportImageWithDefault';
+import Modal from "../components/Model";
 
 const SaveReportPage = props => {
 
@@ -20,6 +21,7 @@ const SaveReportPage = props => {
     })
     const [errors, setErrors] = useState({});
     const [newImage, setNewImage] = useState();
+    const [isInconsistentModalOpen, setInconsistentModalOpen] = useState(false);
 
     const onChange = event => {
 
@@ -63,15 +65,25 @@ const SaveReportPage = props => {
             diagnosisTitle,
             diagnosisDetails,
             dateOfReport,
-            imageOfReport: imageTemp
+            imageOfReport: imageTemp,
+            patientInfoForUniqueControl: {
+                idNumber: patientIdNumber,
+                name: patientName,
+                surname: patientSurname
+            }
         };
 
         try {
-            await saveReport(body);
-            props.history.goBack();
+            const response = await saveReport(body);
+            const newReportId = response.data.object.id;
+            const newReportUrl = `/reports/${newReportId}`;
+            props.history.push(newReportUrl);
         } catch (error) {
             if (error.response.data.validationErrors) {
                 setErrors(error.response.data.validationErrors);
+            }
+            if (error.response.data.validationErrors.patientInfoForUniqueControl) {
+                setInconsistentModalOpen(true);
             }
         } // "await" is used because axios.post works asynchronously. "then/catch" could also be used.
     }
@@ -81,9 +93,16 @@ const SaveReportPage = props => {
         setForm((previousForm) => ({ ...previousForm, imageOfReport: null }));
     }
 
+    const handleClose = () => {
+        setInconsistentModalOpen(false);
+    };
+
     const { t } = useTranslation();
 
-    const { fileNumber: fileNumberError, patientName: patientNameError, patientSurname: patientSurnameError, patientIdNumber: patientIdNumberError, diagnosisTitle: diagnosisTitleError, diagnosisDetails: diagnosisDetailsError, dateOfReport: dateOfReportError, imageOfReport: imageOfReportError } = errors;
+    const { fileNumber: fileNumberError, patientName: patientNameError, dateOfReport: dateOfReportError,
+        patientSurname: patientSurnameError, patientIdNumber: patientIdNumberError,
+        diagnosisTitle: diagnosisTitleError, diagnosisDetails: diagnosisDetailsError,
+        imageOfReport: imageOfReportError, patientInfoForUniqueControl: patientInfoForUniqueControlError } = errors;
     const pendingApiCall = useApiProgress('post', "/reports/save");
 
     return (
@@ -142,6 +161,13 @@ const SaveReportPage = props => {
                     {t("Cancel")}
                 </button>
             </div>
+            <Modal
+                title={t('Inconsistency in Patient Information')}
+                onClickOk={handleClose}
+                visible={isInconsistentModalOpen}
+                showCancelButton={false}
+                message={patientInfoForUniqueControlError}
+            />
         </div>
     )
 }

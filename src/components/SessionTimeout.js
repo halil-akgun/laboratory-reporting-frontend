@@ -49,7 +49,7 @@ const SessionTimeout = () => {
       if (secondsPassed >= (maxTime * 60)) {
         clearInterval(warningInactiveInterval.current);
         // setOpen(false);
-        sessionStorage.removeItem('lastTimeStamp');
+        localStorage.removeItem('lastTimeStamp');
         onLogoutSuccess();
       }
     }, 1000);
@@ -59,7 +59,7 @@ const SessionTimeout = () => {
   // start inactive check
   let timeChecker = useCallback(() => {
     startTimerInterval.current = setTimeout(() => {
-      let storedTimeStamp = sessionStorage.getItem('lastTimeStamp');
+      let storedTimeStamp = localStorage.getItem('lastTimeStamp');
       warningInactive(storedTimeStamp);
     }, 60000);
   }, [warningInactive]);
@@ -72,10 +72,10 @@ const SessionTimeout = () => {
 
     if (isAuthenticated) {
       timeStamp.current = new Date().toISOString();
-      sessionStorage.setItem('lastTimeStamp', timeStamp.current);
+      localStorage.setItem('lastTimeStamp', timeStamp.current);
     } else {
       clearInterval(warningInactiveInterval.current);
-      sessionStorage.removeItem('lastTimeStamp');
+      localStorage.removeItem('lastTimeStamp');
     }
     if (isAuthenticated) {
       timeChecker();
