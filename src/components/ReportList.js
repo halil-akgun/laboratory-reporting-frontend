@@ -43,7 +43,7 @@ const ReportList = (props) => {
 
     useEffect(() => {
         loadReports();
-    });
+    }, []); // Infinite loop occurs when we don't add "[]"
 
     const loadReports = async (pageNumber, sortOrder, columnName) => {
         setLoadFailure(false);

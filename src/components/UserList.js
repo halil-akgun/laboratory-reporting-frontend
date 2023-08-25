@@ -25,7 +25,7 @@ const UserList = () => {
 
     useEffect(() => {
         loadUsers();
-    })
+    }, []); // Infinite loop occurs when we don't add "[]"
 
     const onClickNext = () => {
         const nextPage = page.number + 1;

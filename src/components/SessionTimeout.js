@@ -27,16 +27,8 @@ const SessionTimeout = () => {
   let warningInactiveInterval = useRef();
   let startTimerInterval = useRef();
 
-  // start inactive check
-  let timeChecker = useCallback(() => {
-    startTimerInterval.current = setTimeout(() => {
-      let storedTimeStamp = sessionStorage.getItem('lastTimeStamp');
-      warningInactive(storedTimeStamp);
-    }, 60000);
-  }, []);
-
   // warning timer
-  let warningInactive = (timeString) => {
+  let warningInactive = useCallback((timeString) => {
     clearTimeout(startTimerInterval.current);
 
     warningInactiveInterval.current = setInterval(() => {
@@ -61,17 +53,26 @@ const SessionTimeout = () => {
         onLogoutSuccess();
       }
     }, 1000);
-  };
+  }, []);
+
+
+  // start inactive check
+  let timeChecker = useCallback(() => {
+    startTimerInterval.current = setTimeout(() => {
+      let storedTimeStamp = sessionStorage.getItem('lastTimeStamp');
+      warningInactive(storedTimeStamp);
+    }, 60000);
+  }, [warningInactive]);
 
 
   // reset interval timer
-  let resetTimer = useCallback(() => {
+  const resetTimer = useCallback(() => {
     clearTimeout(startTimerInterval.current);
     clearInterval(warningInactiveInterval.current);
 
     if (isAuthenticated) {
-      timeStamp = new Date().toISOString();
-      sessionStorage.setItem('lastTimeStamp', timeStamp);
+      timeStamp.current = new Date().toISOString();
+      sessionStorage.setItem('lastTimeStamp', timeStamp.current);
     } else {
       clearInterval(warningInactiveInterval.current);
       sessionStorage.removeItem('lastTimeStamp');
@@ -80,7 +81,8 @@ const SessionTimeout = () => {
       timeChecker();
     }
     setOpen(false);
-  }, [isAuthenticated]);
+  }, [isAuthenticated, timeChecker, onLogoutSuccess]);
+
 
   // handle close popup
   const handleClose = () => {
