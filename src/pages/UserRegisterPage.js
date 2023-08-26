@@ -77,28 +77,34 @@ const UserRegisterPage = props => {
 
     return (
         <div className="container mt-4">
-            <form>
-                <h1 className="text-center mb-4">{t('Register')}</h1>
+            <div className='row'>
+                <div className='col-md-2 col-lg-3'></div>
+                <div className='col-md-8 col-lg-6'>
+                    <form>
+                        <h1 className="text-center mb-4">{t('Register')}</h1>
 
-                <Input name="name" label={t('Name')} error={nameError} onChange={onChange} />
-                <Input name="surname" label={t('Surname')} error={surnameError} onChange={onChange} />
-                <Input name="username" label={t('Username')} error={usernameError} onChange={onChange} />
-                <Input name="hospitalIdNumber" label={t('Hospital ID Number')} error={hospitalIdNumberError} onChange={onChange} />
-                <Input name="password" label={t('Password')} error={passwordError} onChange={onChange} type="password" />
-                <Input name="passwordRepeat" label={t('Password Repeat')} error={passwordRepeatError} onChange={onChange} type="password" />
+                        <Input name="name" label={t('Name')} error={nameError} onChange={onChange} />
+                        <Input name="surname" label={t('Surname')} error={surnameError} onChange={onChange} />
+                        <Input name="username" label={t('Username')} error={usernameError} onChange={onChange} />
+                        <Input name="hospitalIdNumber" label={t('Hospital ID Number')} error={hospitalIdNumberError} onChange={onChange} />
+                        <Input name="password" label={t('Password')} error={passwordError} onChange={onChange} type="password" />
+                        <Input name="passwordRepeat" label={t('Password Repeat')} error={passwordRepeatError} onChange={onChange} type="password" />
 
-                <input type="checkbox" onChange={onChangeAgree} /> {t('I accept the accuracy of the above information.')}
-                <br />
-                <br />
-                <div className="text-center">
-                    <ButtonWithProgress
-                        onClick={onClickRegister}
-                        disabled={!agreedClicked || pendingApiCall || passwordRepeatError !== undefined}
-                        pendingApiCall={pendingApiCall}
-                        text={t('Register')}
-                    />
+                        <input type="checkbox" onChange={onChangeAgree} /> {t('I accept the accuracy of the above information.')}
+                        <br />
+                        <br />
+                        <div className="text-center">
+                            <ButtonWithProgress
+                                onClick={onClickRegister}
+                                disabled={!agreedClicked || pendingApiCall || passwordRepeatError !== undefined}
+                                pendingApiCall={pendingApiCall}
+                                text={t('Register')}
+                            />
+                        </div>
+                    </form>
                 </div>
-            </form>
+                <div className='col-md-2 col-lg-3'></div>
+            </div>
         </div>
     )
 }
