@@ -89,25 +89,25 @@ code {
   cursor: pointer;
 }
 
-#reportsTableH2 {
+#reports .card #reportsTableH2 {
   padding: 1px;
   width: 87px;
   cursor: pointer;
 }
 
-#reportsTableH3 {
+#reports .card #reportsTableH3 {
   padding: 1px;
   width: 97px !important;
   cursor: pointer;
 }
 
-#reportsTableH4 {
+#reports .card #reportsTableH4 {
   padding: 1px;
   width: 97px;
   cursor: pointer;
 }
 
-#reportsTableH5 {
+#reports .card #reportsTableH5 {
   padding: 1px;
   width: 121px;
   cursor: pointer;

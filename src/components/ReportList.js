@@ -186,7 +186,7 @@ const ReportList = (props) => {
                     </div>
                 </div>
                 <div id='reports' className='card table-responsive'>
-                    <div className='card-header py-0 px-2 list-group list-group-flush p-1 pb-2'>
+                    <div className='card-header pb-0 px-1 list-group list-group-flush p-1 pb-2'>
                         <table className='table mb-0'>
                             <thead>
                                 <tr className='d-flex justify-content-around'>
@@ -194,18 +194,22 @@ const ReportList = (props) => {
                                         {t('File Number')}
                                         {order.sortColumn === 'fileNumber' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
                                     </th>
+                                    <span className='p-0' style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                                     <th onClick={() => handleSort('dateOfReport')} id='reportsTableH2'>
                                         {t('Date of Report')}
                                         {order.sortColumn === 'dateOfReport' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
                                     </th>
+                                    <span className='p-0' style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                                     <th onClick={() => handleSort('patientName')} id='reportsTableH3'>
                                         <span>{t('Patient Name')}</span>
                                         <span id='orderIcon'>{order.sortColumn === 'patientName' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}</span>
                                     </th>
+                                    <span className='p-0' style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                                     <th onClick={() => handleSort('patientSurname')} id='reportsTableH4'>
                                         {t('Patient Surname')}
                                         {order.sortColumn === 'patientSurname' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}
                                     </th>
+                                    <span className='p-0' style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                                     <th onClick={() => handleSort('laborant')} id='reportsTableH5'>
                                         {t('Laborant Name Surname')}
                                         {order.sortColumn === 'laborant' ? (order.sortOrder === 'ASC' ? sortAsc : sortDesc) : ('')}

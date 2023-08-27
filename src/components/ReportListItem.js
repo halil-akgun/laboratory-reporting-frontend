@@ -24,7 +24,7 @@ const ReportListItem = (props) => {
             className='list-group list-group-flush'>
             <OverlayTrigger
                 placement="bottom"
-                show={showTooltip}
+                delay={{ show: 350 }}
                 overlay={
                     <Tooltip style={{ position: "fixed" }}>
                         {/* position:"fixed" => For the problem of scrollbar appearing and disappearing suddenly on the right side */}
@@ -70,9 +70,13 @@ const ReportListItem = (props) => {
                 <td className='p-0'>
                     <Link to={`/reports/${id}`} className='list-group-item list-group-item-action p-1 d-flex justify-content-around' >
                         <span id='reportsTableCol1'> {fileNumber} </span>
+                        <span style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                         <span id='reportsTableCol2'> {dateOfReport} </span>
+                        <span style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                         <span id='reportsTableCol3'> {patientName} </span>
+                        <span style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                         <span id='reportsTableCol4'> {patientSurname} </span>
+                        <span style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                         <span id='reportsTableCol5'> {laborantNameSurname} </span>
                     </Link>
                 </td>
