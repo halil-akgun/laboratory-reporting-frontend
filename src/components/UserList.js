@@ -64,7 +64,7 @@ const UserList = () => {
         <div>
             <div className='card'>
                 <h3 className='card-header text-center'>
-                    {t("Users")}
+                    {t("Other Users")}
                 </h3>
                 <div className='list-group list-group-flush'>
                     {

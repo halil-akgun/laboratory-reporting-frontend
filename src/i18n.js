@@ -22,6 +22,7 @@ i18n.use(initReactI18next).init({
                 'User not found.': 'User not found.',
                 'Edit': 'Edit',
                 'Save': 'Save',
+                'Other Users': 'Other Users',
                 'Choose A Profile Picture': 'Choose A Profile Picture',
                 'Cancel': 'Cancel',
                 'My Profile': 'My Profile',
@@ -124,6 +125,7 @@ i18n.use(initReactI18next).init({
                 'Log out now.': 'Şimdi oturumu kapatın.',
                 'Your session is about to expire!': 'Oturumunuz sona ermek üzere!',
                 'Your session has been automatically logged out due to inactivity for 2 minutes.': '2 dakika boyunca etkinlik olmadığından oturumunuz otomatik olarak kapatıldı.',
+                'Other Users': 'Diğer Kullanıcılar',
                 'Users': 'Kullanıcılar'
             }
         }
