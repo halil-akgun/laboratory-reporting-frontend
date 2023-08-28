@@ -5,12 +5,17 @@ import ButtonWithProgress from '../components/ButtonWithProgress';
 import { useApiProgress } from '../shared/ApiProgress';
 import { useDispatch } from 'react-redux';
 import { loginHandler } from '../redux/authActions';
+import { checkSessionOnAnotherDevice, closeOtherSessions } from '../api/apiCalls';
+import Modal from '../components/Model';
 
 const LoginPage = props => {
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
+    const [isThereAnotherSession, setIsThereAnotherSession] = useState(false);
+    const [isOpen, setOpen] = useState(false);
     const [error, setError] = useState();
+    const [closeSessions, setCloseSessions] = useState(false);
     const { t } = useTranslation();
 
     const dispatch = useDispatch();
@@ -22,7 +27,7 @@ const LoginPage = props => {
     // username or password after an invalid login attempt.
 
     const onClickLogin = async event => {
-        event.preventDefault();
+        // event.preventDefault();
         const creds = {
             username,
             password
@@ -34,11 +39,37 @@ const LoginPage = props => {
         setError(undefined);
 
         try {
+            if (closeSessions) {
+                await closeOtherSessions(creds);
+            }
             await dispatch(loginHandler(creds))
             push('/'); // redirect after successful login
         } catch (apiError) {
             setError(t('Login failed. Please check your credentials.'));
         }
+    };
+
+    const loginControl = async event => {
+        event.preventDefault();
+        const creds = {
+            username,
+            password
+        }
+
+        try {
+            const response = await checkSessionOnAnotherDevice(creds);
+            if (response.data.isThereAnotherSession) {
+                setIsThereAnotherSession(true)
+                setOpen(true);
+            } else {
+                onClickLogin();
+            }
+        } catch (er) {
+        }
+    };
+
+    const handleClose = () => {
+        setOpen(false);
     };
 
     const pendingApiCall = useApiProgress('post', "/auth");
@@ -60,7 +91,7 @@ const LoginPage = props => {
                             <ButtonWithProgress
                                 disabled={!buttonEnabled || pendingApiCall}
                                 pendingApiCall={pendingApiCall}
-                                onClick={onClickLogin}
+                                onClick={loginControl}
                                 text={t('Login')}
                             />
                         </div>
@@ -69,6 +100,20 @@ const LoginPage = props => {
                 <div className='col-md-4'></div>
             </div>
 
+            <Modal
+                title={t('Attention')}
+                onClickCancel={handleClose}
+                onClickOk={onClickLogin}
+                visible={isOpen}
+                checkbox={closeSessions}
+                onChangeCheckbox={setCloseSessions}
+                checkboxText={t('Close other sessions.')}
+                message={
+                    <div>
+                        {t("You have other active sessions.")}
+                    </div>
+                }
+            />
         </div>
     );
 }

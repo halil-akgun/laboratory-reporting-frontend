@@ -12,8 +12,25 @@ export const login = creds => {
     return axios.post('/auth', creds);
 }
 
+export const checkSessionOnAnotherDevice = creds => {
+    return axios.post('/checkSessionOnAnotherDevice', creds);
+}
+
+export const closeOtherSessions = creds => {
+    return axios.post('/closeOtherSessions', creds);
+}
+
 export const logout = () => {
     return axios.post('/logout2');
+}
+
+export const checkSessionValidity = () => {
+    const config = {
+        headers: {
+            'Session-Validity-Check': true
+        }
+    };
+    return axios.post('/sessionValidityCheck', null, config);
 }
 
 export const getUsers = (page = 0, size = 5) => {

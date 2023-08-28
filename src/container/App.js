@@ -14,6 +14,7 @@ import { changeLanguage } from '../api/apiCalls';
 import Footer from '../components/Footer';
 import MyReportsPage from '../pages/MyReportsPage';
 import SessionTimeout from '../components/SessionTimeout';
+import SessionValidityCheck from '../components/SessionValidityCheck';
 
 /* alias is used in import. Thus, there is no need to make changes
 in the codes below in HashRouter-BrowserRouter transitions. */
@@ -55,6 +56,7 @@ const App = () => {
           <Footer />
         </footer>
         <SessionTimeout />
+        <SessionValidityCheck />
       </Router>
     </div>
   );
