@@ -36,6 +36,8 @@ const App = () => {
     <div>
       <Router>
         <div style={{ marginBottom: '65px' }}>
+          <SessionTimeout />
+          <SessionValidityCheck />
           <TopBar />
           <Switch>
             <Route exact path="/" component={HomePage} />
@@ -55,8 +57,6 @@ const App = () => {
         <footer>
           <Footer />
         </footer>
-        <SessionTimeout />
-        <SessionValidityCheck />
       </Router>
     </div>
   );

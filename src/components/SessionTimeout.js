@@ -53,7 +53,7 @@ const SessionTimeout = () => {
         onLogoutSuccess();
       }
     }, 1000);
-  }, []);
+  }, [isAuthenticated]);
 
 
   // start inactive check
@@ -82,6 +82,13 @@ const SessionTimeout = () => {
     }
     setOpen(false);
   }, [isAuthenticated, timeChecker, onLogoutSuccess]);
+
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      resetTimer();
+    }
+  }, [isAuthenticated]);
 
 
   // handle close popup
