@@ -44,7 +44,7 @@ code {
 
 @media (max-width: 561px) {
   #reports .card-header {
-    width: 494px !important;
+    width: 530px !important;
   }
 
   .filterByDateFontSize {
