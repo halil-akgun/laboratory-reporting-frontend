@@ -1,7 +1,7 @@
 import React from "react";
 
 const Input = (props) => {
-    const { label, error, name, onChange, type, defaultValue, text } = props;
+    const { label, error, name, onChange, type, defaultValue, placeholder, text } = props;
     let className = 'pt-1 pb-1 form-control';
     if (error !== undefined) {
         className += ' is-invalid';
@@ -17,7 +17,7 @@ const Input = (props) => {
                     <textarea id={name} className={className} name={name} onChange={onChange} defaultValue={defaultValue}></textarea>
                     : type === 'NonInput' ?
                         <p> {text} </p>
-                        : <input id={name} className={className} name={name} onChange={onChange} type={type} defaultValue={defaultValue} />}
+                        : <input id={name} placeholder={placeholder} className={className} name={name} onChange={onChange} type={type} defaultValue={defaultValue} />}
                 <div className="invalid-feedback">
                     {error}
                 </div>

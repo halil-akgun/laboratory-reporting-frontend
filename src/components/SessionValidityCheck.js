@@ -30,7 +30,7 @@ const SessionValidityCheck = () => {
 
       intervalId = setInterval(() => {
         checkValidity();
-      }, 2000);
+      }, 3000);
     }
 
     return () => {

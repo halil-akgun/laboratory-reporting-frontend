@@ -83,8 +83,8 @@ const LoginPage = props => {
                 <div className='col-md-4'>
                     <form>
                         <h1 className="text-center mb-4">{t('Login')}</h1>
-                        <Input label={t('Username')} onChange={event => setUsername(event.target.value)} />
-                        <Input label={t('Password')} type="password" onChange={event => setPassword(event.target.value)} />
+                        <Input label={t('Username')} placeholder={'admin'} onChange={event => setUsername(event.target.value)} />
+                        <Input label={t('Password')} placeholder={'12345678'} type="password" onChange={event => setPassword(event.target.value)} />
                         {error && <div className="alert alert-danger py-2"> {error} </div>}
                         <br />
                         <div className="text-center">

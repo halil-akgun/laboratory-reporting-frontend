@@ -70,13 +70,13 @@ const ReportListItem = (props) => {
                 <td className='p-0'>
                     <Link to={`/reports/${id}`} className='list-group-item list-group-item-action p-1 d-flex justify-content-around' >
                         <span id='reportsTableCol1'> {fileNumber} </span>
-                        <span style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
+                        <span className=' mx-1' style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                         <span id='reportsTableCol2'> {dateOfReport} </span>
-                        <span style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
+                        <span className=' mx-1' style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                         <span id='reportsTableCol3'> {patientName} </span>
-                        <span style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
+                        <span className=' mx-1' style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                         <span id='reportsTableCol4'> {patientSurname} </span>
-                        <span style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
+                        <span className=' mx-1' style={{ borderRight: '1px solid rgba(128, 128, 128, 0.656)' }}></span>
                         <span id='reportsTableCol5'> {laborantNameSurname} </span>
                     </Link>
                 </td>
