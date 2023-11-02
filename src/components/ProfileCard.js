@@ -236,7 +236,7 @@ const ProfileCard = props => {
                 okButton={[t('Delete User'), t('Delete User and Reports')]}
                 checkbox={keepReports}
                 onChangeCheckbox={setKeepReports}
-                checkboxText={t('Keep the reports. (All reports belonging to the user will be passed to the admin)')}
+                checkboxText={t('Keep the reports. (All reports belonging to the user will be transferred to the admin)')}
                 message={
                     <div>
                         <div>
